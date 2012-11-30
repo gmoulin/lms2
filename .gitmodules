@@ -13,3 +13,6 @@
 [submodule "sub/less"]
 	path = sub/less
 	url = https://gmoulin@github.com/gmoulin/less.js.git
+[submodule "sub/bootstrap-sass"]
+	path = sub/bootstrap-sass
+	url = https://github.com/jlong/sass-twitter-bootstrap.git
