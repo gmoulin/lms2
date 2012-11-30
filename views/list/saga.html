@@ -1,0 +1,44 @@
+<script id="sagaPaginateTemplate" type="text/x-jquery-tmpl">
+	{{if nb > 0}}
+		<section class="paginate {{if nb == total}}end{{/if}}">
+			<span>
+				{{if nb > total}}${total}{{else}}${nb}{{/if}} saga{{if nb > 1}}s{{/if}} sur ${total}
+				{{if nb != total}}- descendez en bas de la liste pour en afficher plus{{/if}}
+			</span>
+		</section>
+	{{else}}
+		<section class="paginate end">
+			<span>aucun saga trouvé</span>
+		</section>
+	{{/if}}
+</script>
+<script id="sagaListTemplate" type="text/x-jquery-tmpl">
+	<section class="listContent">
+		{{each(i, saga) list}}
+			<article class="item">
+				<div class="block">
+					<dl class="info">
+						<dd>
+							${saga.sagaTitle}
+							{{if saga.sagaSearchURL != null}}
+							<a class="button icon externalLink" data-icon="/" rel="${saga.sagaID}" href="${saga.sagaSearchURL}" title="Rechercher les livres de la saga sur internet" target="_blank"></a>
+							{{/if}}
+
+							<a class="button icon update" data-icon="P" href="${saga.sagaID}" title="Mettre à jour les informations de cette saga" rel="saga"></a>
+							<a class="button icon delete" data-icon="t" href="${saga.sagaID}" title="Supprimer cette saga" rel="saga"></a>
+							<a class="button icon move" data-icon="b" href="${saga.sagaID}" title="Déplacer cette saga" rel="saga"></a>
+
+							<fieldset class="rating">
+								<input type="radio" id="saga${saga.sagaID}_star5" name="rating" value="5" {{if saga.sagaRating == 5}}checked="checked"{{/if}}/><label for="saga${saga.sagaID}_star5" title="Rocks!">5 stars</label>
+								<input type="radio" id="saga${saga.sagaID}_star4" name="rating" value="4" {{if saga.sagaRating == 4}}checked="checked"{{/if}}/><label for="saga${saga.sagaID}_star4" title="Pretty good">4 stars</label>
+								<input type="radio" id="saga${saga.sagaID}_star3" name="rating" value="3" {{if saga.sagaRating == 3}}checked="checked"{{/if}}/><label for="saga${saga.sagaID}_star3" title="Meh">3 stars</label>
+								<input type="radio" id="saga${saga.sagaID}_star2" name="rating" value="2" {{if saga.sagaRating == 2}}checked="checked"{{/if}}/><label for="saga${saga.sagaID}_star2" title="Kinda bad">2 stars</label>
+								<input type="radio" id="saga${saga.sagaID}_star1" name="rating" value="1" {{if saga.sagaRating == 1}}checked="checked"{{/if}}/><label for="saga${saga.sagaID}_star1" title="Sucks big time">1 star</label>
+							</fieldset>
+						</dd>
+					</dl>
+				</div>
+			</article>
+		{{/each}}
+	</section>
+</script>
