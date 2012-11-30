@@ -1,0 +1,15 @@
+[submodule "sub/html5boilerplate"]
+	path = sub/html5boilerplate
+	url = https://gmoulin@github.com/gmoulin/html5-boilerplate.git
+[submodule "sub/bootstrap"]
+	path = sub/bootstrap
+	url = https://gmoulin@github.com/gmoulin/bootstrap
+[submodule "sub/h5b-build-script"]
+	path = sub/h5b-build-script
+	url = https://gmoulin@github.com/gmoulin/ant-build-script
+[submodule "sub/fontawesome"]
+	path = sub/fontawesome
+	url = https://gmoulin@github.com/gmoulin/Font-Awesome.git
+[submodule "sub/less"]
+	path = sub/less
+	url = https://gmoulin@github.com/gmoulin/less.js.git
