@@ -1,7 +1,7 @@
 <?php
 //manage books related ajax requests
 try {
-	require_once('../conf.ini.php');
+	require_once('../inc/conf.ini.php');
 
 	$action = filter_has_var(INPUT_POST, 'action');
 	if( is_null($action) || $action === false ){

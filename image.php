@@ -1,6 +1,6 @@
 <?php
 try {
-	require_once('conf.ini.php');
+	require_once('inc/conf.ini.php');
 
 	if( filter_has_var(INPUT_GET, 'id') && filter_has_var(INPUT_GET, 'cover') ){
 		$id = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);

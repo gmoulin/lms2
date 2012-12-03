@@ -9,11 +9,10 @@ rescue Bundler::BundlerError => e
 end
 require 'rake'
 
-VERSION = "2.2.1"
-BOOTSTRAP_CSS = "../css/vendor/bootstrap-#{VERSION}.css"
-BOOTSTRAP_MIN_CSS = "../css/vendor/bootstrap-#{VERSION}.min.css"
-BOOTSTRAP_RESPONSIVE_CSS = "../css/vendor/bootstrap-responsive-#{VERSION}.css"
-BOOTSTRAP_RESPONSIVE_MIN_CSS = "../css/vendor/bootstrap-responsive-#{VERSION}.min.css"
+BOOTSTRAP_CSS = "../css/vendor/bootstrap.css"
+BOOTSTRAP_MIN_CSS = "../css/vendor/bootstrap.min.css"
+BOOTSTRAP_RESPONSIVE_CSS = "../css/vendor/bootstrap-responsive.css"
+BOOTSTRAP_RESPONSIVE_MIN_CSS = "../css/vendor/bootstrap-responsive.min.css"
 LMS2_CSS = "../css/lms2.css"
 LMS2_MIN_CSS = "../css/lms2.min.css"
 
@@ -58,8 +57,7 @@ task :build => [BOOTSTRAP_CSS, BOOTSTRAP_MIN_CSS, BOOTSTRAP_RESPONSIVE_CSS, BOOT
 
 desc "rebuild regular version of bootstrap when modifications are made"
 task :watch do
-  sh "#{SASS_COMMAND} expanded --watch lib/bootstrap.scss:#{BOOTSTRAP_CSS}"
-  sh "#{SASS_COMMAND} expanded --watch lib/lms2.scss:#{LMS2_CSS}"
+  sh "#{SASS_COMMAND} expanded --watch lib/bootstrap.scss:#{BOOTSTRAP_CSS} lib/responsive.scss:#{BOOTSTRAP_RESPONSIVE_CSS} lib/lms2.scss:#{LMS2_CSS}"
 end
 
 task :default => :build

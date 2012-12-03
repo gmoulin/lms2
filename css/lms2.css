@@ -1,0 +1,72 @@
+body {
+  padding-top: 40px;
+}
+
+.container-list {
+  padding: 0 15px;
+  min-height: 60px;
+  margin: 0 auto;
+}
+
+.list {
+  display: none;
+  text-align: center;
+}
+.list.withCover .item {
+  margin: 0 -2px;
+  padding: 0;
+  position: relative;
+  display: inline-block;
+  background-size: 100% 100%;
+  text-align: left;
+}
+
+@media (min-width: 1400px) {
+  .withCover .item {
+    width: 312px;
+    height: 416px;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1399px) {
+  .withCover .item {
+    width: 273px;
+    height: 364px;
+  }
+}
+@media (min-width: 980px) and (max-width: 1199px) {
+  .withCover .item {
+    width: 234px;
+    height: 312px;
+  }
+}
+@media (min-width: 768px) and (max-width: 979px) {
+  .withCover .item {
+    width: 195px;
+    height: 260px;
+  }
+}
+@media (max-width: 767px) {
+  .withCover .item {
+    width: 156px;
+    height: 208px;
+  }
+}
+@media (max-width: 480px) {
+  .withCover .item {
+    width: 117px;
+    height: 156px;
+  }
+}
+.dropdown-menu.filters {
+  padding: 15px;
+}
+
+.filter-form {
+  display: none;
+}
+.filter-form .input-append.controls-row .span2 {
+  width: 186px;
+}
+.filter-form .input-append.controls-row .span2 + .span1 {
+  margin-left: -1px;
+}

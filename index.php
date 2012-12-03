@@ -9,8 +9,9 @@ try {
 
 	//only for dev to assure last version
 	if( file_exists(LMS_PATH.'/css/lms2.css') ) $cssTS = filemtime( LMS_PATH.'/css/lms2.css' );
-	if( file_exists(LMS_PATH.'/js/script.js') ) $scriptTS = filemtime( LMS_PATH.'/js/script.js' );
-	if( file_exists(LMS_PATH.'/js/plugins.js') ) $pluginTS = filemtime( LMS_PATH.'/js/plugins.js' );
+	if( file_exists(LMS_PATH.'/css/vendor/bootstrap.css') ) $bsTS = filemtime( LMS_PATH.'/css/vendor/bootstrap.css' );
+	if( file_exists(LMS_PATH.'/css/vendor/bootstrap-responsive.css') ) $bsrTS = filemtime( LMS_PATH.'/css/vendor/bootstrap-responsive.css' );
+	if( file_exists(LMS_PATH.'/js/main.js') ) $scriptTS = filemtime( LMS_PATH.'/js/main.js' );
 
 } catch (Exception $e) {
 	echo $e->getMessage();

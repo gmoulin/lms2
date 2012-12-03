@@ -1,0 +1,47 @@
+<script type="text/html" id="list_book_tmpl">
+<%
+	var item, i, j, id, author;
+	for( i = 0; i < list.length; i += 1 ){
+		item = list[i];
+	%>
+		<article class="item" style="background-image: url(<%=getFullUrl('image.php?cover=book&id=', item.bookID)%>);">
+			<dl>
+				<dt>Title</dt>
+				<dd><%=item.bookTitle%></dd>
+
+				<dt>Author<% if( item.authors.length > 1 ){ %>s<% } %></dt>
+				<% for( id in item.authors ){
+					if( item.authors.hasOwnProperty(id) ){
+						author = item.authors[ id ];
+				%>
+					<dd>
+						<%=author.authorFirstName%> <%=author.authorLastName%>
+					</dd>
+				<%  }
+				} %>
+
+				<% if( item.sagaTitle !== null ){ %>
+					<dt>Saga</dt>
+					<dd>
+						<%=item.sagaTitle%> - <%=item.bookSagaPosition%> / <%=item.bookSagaSize%>
+					</dd>
+				<% } %>
+
+				<dt>Format</dt>
+				<dd><%=item.bookSize%></dd>
+
+				<dt>Storage</dt>
+				<dd>
+					<%=item.storageRoom%> - <%=item.storageType%>
+					<% if( item.storageColumn !== null || item.storageLine !== null ){ %> - <%=item.storageColumn%><%=item.storageLine%><% } %>
+				</dd>
+
+				<% if( item.loanHolder !== null ){ %>
+					<dt>Loan</dt>
+					<dd><%=item.loanHolder%> - <%=item.loanDate%></dd>
+				<% } %>
+			</dl>
+		</article>
+	<% } %>
+</script>
+
