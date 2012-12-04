@@ -42,21 +42,35 @@ include('html_header.php');
 				</ul>
 
 				<ul class="nav pull-right">
+					<li>
+						<!-- add buttons -->
+						<button data-target="#edit_book" id="add_book" class="btn add" data-toggle="modal" data-manage="book"><i class="icon-plus-sign"></i>Add a book</button>
+					</li>
 					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-filter icon-large"></i></a>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-sort"></i></a>
+						<div class="dropdown-menu sorts">
+							<!-- sort links -->
+							<?php
+								include('views/sorts/book.php');
+							?>
+						</div>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-filter"></i></a>
 						<div class="dropdown-menu filters">
 							<!-- filter forms -->
 							<?php
 								include('views/filters/book.php');
 							?>
 						</div>
+					</li>
 				</ul>
 			</div><!--/.nav-collapse -->
 		</div>
 	</div>
 </div>
 
-<div class="container-list">
+<div class="container-list clearfix">
 	<section id="list_book" class="list withCover"></section>
 	<section id="list_movies" class="list withCover"></section>
 	<section id="list_album" class="list withCover"></section>
@@ -70,6 +84,9 @@ include('html_header.php');
 <?php
 //list templates
 include('lists/book.html');
+
+//edit forms
+include('forms/book.html');
 
 //scripts and footer
 include('html_footer.php');

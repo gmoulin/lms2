@@ -1,7 +1,7 @@
 <?php
 //manage dropdown lists content for ajax requests
 try {
-    require_once('../conf.ini.php');
+    require_once('../inc/conf.ini.php');
 
     header('Content-type: application/json');
 	$expires = 60*60*24*7; //1 weeks

@@ -10,15 +10,29 @@ body {
 
 .list {
   display: none;
-  text-align: center;
 }
 .list.withCover .item {
-  margin: 0 -2px;
-  padding: 0;
   position: relative;
-  display: inline-block;
+  float: left;
+  /* to avoid white-space madness */
   background-size: 100% 100%;
-  text-align: left;
+}
+
+.withCover dl {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #fff;
+  margin: 0;
+  padding: 6px 4px;
+  width: calc(100% - 8px);
+  height: calc(100% - 12px);
+}
+
+.withCover .item:hover dl {
+  display: block;
 }
 
 @media (min-width: 1400px) {
@@ -57,8 +71,21 @@ body {
     height: 156px;
   }
 }
-.dropdown-menu.filters {
+.dropdown-menu.filters,
+.dropdown-menu.sorts {
   padding: 15px;
+}
+
+.sort-links {
+  display: none;
+  white-space: nowrap;
+}
+.sort-links label {
+  margin-top: 5px;
+}
+
+.navbar .sort-links .btn-group {
+  margin-top: 0;
 }
 
 .filter-form {
@@ -69,4 +96,10 @@ body {
 }
 .filter-form .input-append.controls-row .span2 + .span1 {
   margin-left: -1px;
+}
+
+.edit-form .cover-status {
+  margin: 0;
+  padding: 4px 6px;
+  width: 156px;
 }

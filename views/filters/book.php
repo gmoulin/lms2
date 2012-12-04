@@ -7,29 +7,29 @@
 	</div>
 
 	<label for="bookTitleFilter">Title</label>
-	<input type="search" name="bookTitleFilter" id="bookTitleFilter" class="span3" value="" list="bookTitleFilterList" placeholder="book title" />
+	<input type="search" name="bookTitleFilter" id="bookTitleFilter" class="span3" value="" list="bookTitleFilterList" placeholder="book title" autocomplete="off">
 	<datalist id="bookTitleFilterList"></datalist>
 
 	<label for="bookSagaFilter">Saga</label>
-	<input type="search" name="bookSagaFilter" id="bookSagaFilter" class="span3" value="" list="bookSagaFilterList" placeholder="book saga" />
+	<input type="search" name="bookSagaFilter" id="bookSagaFilter" class="span3" value="" list="bookSagaFilterList" placeholder="book saga" autocomplete="off">
 	<datalist id="bookSagaFilterList"></datalist>
 
 	<label for="bookAuthorFilter">Author</label>
-	<input type="search" name="bookAuthorFilter" id="bookAuthorFilter" class="span3" value="" list="bookAuthorFilterList" placeholder="book author" />
+	<input type="search" name="bookAuthorFilter" id="bookAuthorFilter" class="span3" value="" list="bookAuthorFilterList" placeholder="book author" autocomplete="off">
 	<datalist id="bookAuthorFilterList"></datalist>
 
 	<label for="bookLoanFilter">Loan</label>
-	<input type="search" name="bookLoanFilter" id="bookLoanFilter" class="span3" value="" list="bookLoanFilterList" placeholder="book loaned to" />
+	<input type="search" name="bookLoanFilter" id="bookLoanFilter" class="span3" value="" list="bookLoanFilterList" placeholder="book loaned to" autocomplete="off">
 	<datalist id="bookLoanFilterList"></datalist>
 
 	<label for="bookStorageFilter">Storage</label>
-	<select name="bookStorageFilter" id="bookStorageFilter" class="span3">
+	<select name="bookStorageFilter" id="bookStorageFilter" class="span3" autocomplete="off">
 		<option value="">Book stored where</option>
 	</select>
 
 	<div class="controls pull-right">
 		<button type="submit" name="bookSearchSubmit" class="btn btn-primary">Search</button>
-		<button type="reset" name="bookSearchCancel" class="btn">Reset</button>
+		<button type="reset" name="bookSearchCancel" class="btn btn-warning">Reset</button>
 	</div>
 </form>
 
