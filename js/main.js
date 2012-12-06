@@ -5,12 +5,14 @@ var $nav,
 	$doc,
 	$parts,
 	$dropOverlay,
+	$detailItem,
 	activeTab,
 	target,
 	updating = 0,
 	dropTimeout,
 	scrolling = false,
-	end = false;
+	end = false,
+	$help;
 
 var subDomains = ['s1', 's2', 's3'],
 	useSubDomains = false;
@@ -23,8 +25,10 @@ $(document).ready(function(){
 	$navLinks = $nav.find('a');
 	$parts = $('.list, .filter-form, .sort-links, .add');
 	$dropOverlay = $('#drop-overlay');
+	$help = $('<span class="help-block"></span>');
 
-	//improve image loading using subdomains
+	/** _____________________________________________ IMG SUBDOMAINS **/
+		//improve image loading using subdomains
 		var i;
 		if( window.location.host == 'lms.dev' || window.location.host == 'lms' ){
 			useSubDomains = true;
@@ -38,10 +42,14 @@ $(document).ready(function(){
 			}
 		}
 
-	//tab change via menu and url#hash
+	//initial load
+		tabSwitch();
+
+	/** _____________________________________________ NAV **/
+		//tab change via menu and url#hash
 		window.addEventListener("hashchange", tabSwitch, false);
 
-	//menu link
+		//menu link
 		$navLinks.click(function(e){
 			//refresh current tab if already active (url#hash will not change)
 			target = $(this).attr('href').substr(1);
@@ -51,30 +59,7 @@ $(document).ready(function(){
 			}
 		});
 
-	//infinite scroll
-		$win.scroll(function(){
-			if( end || scrolling ){
-				return true;
-			} else {
-				scrolling = true;
-			}
-
-			if( document.body.scrollHeight - $win.height() - $doc.scrollTop() < 300 ){
-				getList(3);
-			} else {
-				scrolling = false;
-			}
-		});
-
-	//initial load
-		tabSwitch();
-
-	//prevent dropdown hide on inside input click
-		$('.dropdown').find('input, label').click(function(e){
-			e.stopPropagation();
-		});
-
-	//sort links
+		//sort links
 		$('.sorts')
 			.find('.sort-links').each(function(){ //sort init if present
 				var $this = $(this),
@@ -143,8 +128,23 @@ $(document).ready(function(){
 				getList(1);
 			});
 
+	/** _____________________________________________ LIST INFINITE SCROLL **/
+		//infinite scroll
+		$win.scroll(function(){
+			if( end || scrolling ){
+				return true;
+			} else {
+				scrolling = true;
+			}
 
-	//author, band and artist inputs in forms
+			if( document.body.scrollHeight - $win.height() - $doc.scrollTop() < 300 ){
+				getList(3);
+			} else {
+				scrolling = false;
+			}
+		});
+
+	/** _____________________________________________ EDIT FORM **/
 		$('.edit-form')
 			.on('click', '.add-another', function(e){
 				e.preventDefault();
@@ -174,71 +174,8 @@ $(document).ready(function(){
 				} else { //reset the input
 					$this.siblings('input').val('');
 				}
-			});
-
-	//add, update, delete, relocate, move, addLoan
-		$('.add').click(function(e){
-			e.preventDefault();
-
-			var $this = $(this),
-				rel = $this.attr('data-manage'),
-				$form = $('#edit_' + rel),
-				$another = $form.find('.another');
-
-			$another.filter(':gt(0)').remove();
-
-			$another.first()
-				.find('input')
-					.attr('id', function(i, id){ return id.replace(/_[0-9]+/, '_1'); })
-					.attr('name', function(i, name){ return name.replace(/_[0-9]+/, '_1'); })
-				.end()
-				.find('label')
-					.attr('for', function(i, attr){ return attr.replace(/_[0-9]+/, '_1'); });
-
-			$form
-				.data('save_clicked', 0)
-				.find(':input').val('').end()
-				.find('.quicklink-append').removeClass('input-append')
-				.find('.quicklink').remove();
-
-			//setting action
-			$form.find('#'+ rel +'Action').val('add');
-
-			if( $form.find('.cover-status').length > 0 ){
-				$('html, .modal-backdrop')
-					.bind('dragenter', dragEnter)
-					.bind('dragover', dragOver)
-					.bind('dragleave', dragLeave);
-
-				$('html')[0].addEventListener("drop", dropCover, true);
-			}
-
-			$form.find('datalist, select').loadList();
-		});
-
-
-		$('.modal').on('hide', function(){
-			if( $(this).find('.cover-status').length > 0 ){
-				$('html, .modal-backdrop')
-					.unbind('dragenter')
-					.unbind('dragover')
-					.unbind('dragleave');
-
-				$('html')[0].removeEventListener("drop", dropCover, true);
-			}
-		});
-
-	//forms actions
-		$('.edit-form')
-			.each(function(){
-				//add event listener for dynamic form validation
-				this.addEventListener("invalid", checkField, true);
-				this.addEventListener("blur", checkField, true);
-				this.addEventListener("input", checkField, true);
-			});
-
-		$body
-			.on('submit', '.edit-form', function(e){
+			})
+			.on('submit', function(e){
 				var $this = $(this),
 					rel = $this.attr('data-manage');
 
@@ -272,32 +209,52 @@ $(document).ready(function(){
 				} else {
 					e.preventDefault();
 				}
+			})
+			.each(function(){
+				//add event listener for dynamic form validation
+				this.addEventListener("invalid", checkField, true);
+				this.addEventListener("blur", checkField, true);
+				this.addEventListener("input", checkField, true);
 			});
 
-	//quick links for title in form
-		var $quickLink = $('<a class="btn btn-small quicklink" target="_blank"><i class="icon-link"></i></a>');
+		$('.modal').on('hide', function(){
+			if( $(this).find('.cover-status').length > 0 ){
+				$('html, .modal-backdrop')
+					.unbind('dragenter')
+					.unbind('dragover')
+					.unbind('dragleave');
 
-		$('#bookTitle')[0].addEventListener('input', function(){
-			var $this = $(this);
+				$('html')[0].removeEventListener("drop", dropCover, true);
+			}
+		});
+
+		//quick links for title in form
+		var $quickLink = $('<a class="btn btn-info quicklink" target="_blank"><i class="icon-link"></i></a>');
+
+		$body.on('change', '.title', function(){
+			var $this = $(this),
+				rel = $this.closest('.edit-form').attr('data-manage');
 			if( $this.val() === '' ){
-				$this
-					.parent().removeClass('input-append')
+				$this.parent().removeClass('input-append')
 					.find('.quicklink').remove();
 			}
 
 			if( $this.siblings('.quicklink').length === 0 ){
 				$this.parent().addClass('input-append');
-				$quickLink.clone().attr('title', 'Rechercher sur Google Image').appendTo( $this.parent() );
-				$quickLink.clone().attr('title', 'Rechercher sur Fantastic Fiction').appendTo( $this.parent() );
+				if( rel == 'book' ){
+					$quickLink.clone().attr('title', 'Search on Google Image').appendTo( $this.parent() );
+					$quickLink.clone().attr('title', 'Search on Fantastic Fiction').appendTo( $this.parent() );
+				}
 			}
 
-			$this.siblings('.quicklink')
-					.first().attr('href', 'http://www.google.com/images?q=' + $this.val() + ' movie').end()
-					.last().attr('href', 'http://www.fantasticfiction.co.uk/search/?searchfor=book&keywords='+ $this.val() +' movie');
-		}, false);
+			if( rel == 'book' ){
+				$this.siblings('.quicklink')
+					.first().attr('href', 'http://www.google.com/images?q=' + $this.val() + ' book').end()
+					.last().attr('href', 'http://www.fantasticfiction.co.uk/search/?searchfor=book&keywords='+ $this.val() +' book');
+			}
+		});
 
-
-	//saga title in form
+		//saga title in form
 		$('#bookSagaTitle, #movieSagaTitle').change(function(){
 			var $this = $(this),
 				$form = $this.closest('.edit-form'),
@@ -306,8 +263,7 @@ $(document).ready(function(){
 				decoder = $('<textarea>'),
 				$addAnother = $form.find('.add-another');
 
-			$this
-				.parent().removeClass('input-append')
+			$this.parent().removeClass('input-append')
 				.siblings('.quickLink').remove();
 
 			//is the saga present in the database
@@ -351,6 +307,259 @@ $(document).ready(function(){
 				});
 			}
 		});
+
+	/** _____________________________________________ DETAIL **/
+		$body.on('click', '.detail', function(){
+			console.log('button');
+			var $this = $(this),
+				$modal = $( $this.attr('data-target') );
+
+			$detailItem = $this.closest('.item');
+			fillDetailModal( $modal );
+		});
+
+	/** _____________________________________________ ADD / EDIT ACTIONS **/
+		$body.on('click', '.add, .edit', function(e){
+			e.preventDefault();
+
+			var $this = $(this),
+				rel = $this.attr('data-manage'),
+				$form = $('#edit_' + rel),
+				$another = $form.find('.another');
+
+			//hide detail if visible
+			$('#detail_'+ rel).modal('hide');
+
+			$another.filter(':gt(0)').remove();
+
+			$another.first()
+				.find('input')
+					.attr('id', function(i, id){ return id.replace(/_[0-9]+/, '_1'); })
+					.attr('name', function(i, name){ return name.replace(/_[0-9]+/, '_1'); })
+				.end()
+				.find('label')
+					.attr('for', function(i, attr){ return attr.replace(/_[0-9]+/, '_1'); });
+
+			//reseting form
+			$form
+				.data('save_clicked', 0)
+				.find(':input').val('').end()
+				.find('.help-inline').remove().end()
+				.find('.control-group').attr('class', 'control-group').end()
+				.find('.quicklink-append').removeClass('input-append')
+				.find('.quicklink').remove();
+
+			if( $form.find('.cover-status').length > 0 ){
+				$('html, #drop-overlay')
+					.bind('dragenter', dragEnter)
+					.bind('dragover', dragOver)
+					.bind('dragleave', dragLeave);
+
+				$('html')[0].addEventListener("drop", dropCover, true);
+
+				$form.find('.cover-preview').empty();
+			}
+
+			$form.find('datalist, select').loadList();
+
+			if( $this.is('.edit') ){
+				//set action
+				$('#' + rel + 'Action').val('update');
+
+				var decoder = $('<textarea>'),
+					indice = 1;
+				//load the data and set the form fields with it
+				$.post('ajax/manage'+ rel.capitalize() +'.php', 'action=get&id=' + $this.attr('data-itemId'), function(data){
+					switch( rel ){
+						case 'book':
+								$('#bookID').val( data.bookID );
+								$('#bookTitle').val( decoder.html(data.bookTitle).val() ).change();
+								$('#bookSize').val( data.bookSize );
+								$('#bookCover').val( data.bookCover );
+								$form.find('.cover-preview').html( $('<img>', { src: 'image.php?cover=book&id='+ data.bookID }) );
+								$('#bookSagaTitle').val( decoder.html(data.sagaTitle).val() ).change();
+								$('#bookSagaPosition').val( data.bookSagaPosition );
+
+								//options for this select are reseted by loadList()
+								//at this point the list can be empty
+								$('#bookStorage').data('selectedId', data.storageID);
+
+								$.each(data.authors, function(i, author){
+									if( indice > 1 ) $another.click();
+									$('#bookAuthor_'+ indice).val( decoder.html(author.authorFirstName+' '+author.authorLastName).val() );
+									indice++;
+								});
+							break;
+						case 'movie':
+								$('#movieID').val( data.movieID );
+								$('#movieTitle').val( decoder.html(data.movieTitle).val() ).change();
+								$('#movieGenre').val( decoder.html(data.movieGenre).val() );
+								$('#movieMediaType').val( decoder.html(data.movieMediaType ).val());
+								$('#movieLength').val( data.movieLength );
+								$('#movieCover').val( data.movieCover );
+								$form.find('.cover-preview').html( $('<img>', { src: 'image.php?cover=movie&id='+ data.movieID }) );
+								$('#movieSagaTitle').val( decoder.html(data.sagaTitle).val() ).change();
+								$('#movieSagaPosition').val( data.movieSagaPosition );
+
+								//options for this select are reseted by initMovieFormList()
+								//at this point the list can be empty
+								$('#movieStorage').data('selectedId', data.storageID);
+
+								$.each(data.artists, function(i, artist){
+									if( indice > 1 ) $another.click();
+									$('#movieArtist_'+ indice).val( decoder.html(artist.artistFirstName+' '+artist.artistLastName).val() );
+									indice++;
+								});
+							break;
+						case 'album':
+								$('#albumID').val( data.albumID );
+								$('#albumTitle').val( decoder.html(data.albumTitle).val() ).change();
+								$('#albumType').val( data.albumType );
+								$('#albumCover').val( data.albumCover );
+								$form.find('.cover-preview').html( $('<img>', { src: 'image.php?cover=album&id='+ data.albumID }) );
+
+								//options for this select are reseted by initAlbumFormList()
+								//at this point the list can be empty
+								$('#albumStorage').data('selectedId', data.storageID);
+
+								$.each(data.bands, function(i, band){
+									if( indice > 1 ) $another.click();
+									$('#albumBand_'+ indice).val( decoder.html(band.bandName).val() );
+									indice++;
+								});
+							break;
+						case 'author':
+								$('#authorID').val( data.authorID );
+								$('#authorFirstName').val( decoder.html(data.authorFirstName).val() );
+								$('#authorLastName').val( decoder.html(data.authorLastName).val() );
+								$('#authorWebSite').val( data.authorWebSite );
+								$('#authorSearchURL').val( data.authorSearchURL );
+							break;
+						case 'band':
+								$('#bandID').val( data.bandID);
+								$('#bandName').val( decoder.html(data.bandName).val() ).change();
+								$('#bandGenre').val( decoder.html(data.bandGenre).val() );
+								$('#bandWebSite').val( data.bandWebSite );
+							break;
+						case 'artist':
+								$('#artistID').val( data.artistID );
+								$('#artistFirstName').val( decoder.html(data.artistFirstName).val() );
+								$('#artistLastName').val( decoder.html(data.artistLastName).val() );
+							break;
+						case 'saga':
+								$('#sagaID').val( data.sagaID );
+								$('#sagaTitle').val( decoder.html(data.sagaTitle).val() );
+								$('#sagaSearchURL').val( data.sagaSearchURL );
+								if( data.sagaRating >= 1 ){
+									$('#star'+ data.sagaRating).prop('checked', true);
+								}
+							break;
+						case 'storage':
+								$('#storageID').val( data.storageID );
+								$('#storageRoom').val( data.storageRoom );
+								$('#storageType').val( data.storageType );
+								$('#storageColumn').val( data.storageColumn );
+								$('#storageLine').val( data.storageLine );
+								$form.find('.cover-preview').html( $('<img>', { src: 'image.php?cover=storage&id='+ data.storageID }) );
+							break;
+						default:
+							break;
+					}
+				});
+			} else {
+				//set action
+				$('#'+ rel +'Action').val('add');
+
+				if( rel == 'loan' ){
+					$form
+						.find('#loanFor').val( $this.attr('data-relation') ).end()
+						.find('#itemID').val( $this.attr('data-itemId') );
+				}
+			}
+		});
+
+	/** _____________________________________________ DELETE ACTIONS **/
+		$body.on('click', '.delete', function(e){
+			var $this = $(this),
+				$modal = $( $this.attr('data-target') ),
+				$form = $modal.find('.delete-form'),
+				rel = $this.attr('data-manage'),
+				itemId = $this.attr('data-itemId');
+
+			$form.data('save_clicked', 0)
+				.find('#'+ rel +'ID').val( itemId );
+		});
+
+		$body.on('submit', '.delete-form', function(e){
+			e.preventDefault();
+			var $this = $(this),
+				$modal = $this.closest('.modal'),
+				rel = $this.attr('data-manage');
+
+			//multiple call protection
+			if( $this.data('save_clicked') != 1 ){
+				$this.data('save_clicked', 1);
+
+				//send delete
+				$.post('ajax/manage'+ rel.capitalize() +'.php', $this.serialize(), function(data){
+					if( data == 'ok' ){
+						//refresh list
+						getList(2);
+						//modal close
+						$modal.modal('hide');
+					} else {
+						//form errors display
+						formErrors(data);
+					}
+				});
+			}
+		});
+
+	/** _____________________________________________ SEARCH & FILTERS BUTTONS **/
+		$body.on('click', '.filter', function(e){
+			e.preventDefault();
+			var $this = $(this),
+				filter = $this.attr('data-filter').capitalize();
+
+			//hide all popup
+			$('.modal').filter(':visible').modal('hide');
+
+			//set filter value in filter form
+			$('#'+ activeTab + filter +'Filter').val( $this.attr('data-value') );
+
+			getList(1);
+
+			//open filter dropdown
+			window.setTimeout(function(){
+				$('.navbar').find('.filters').dropdown('toggle').closest('.dropdown').addClass('open');
+			}, 300);
+		});
+
+		$('.filter-form')
+			.on('click', '.search', function(e){
+				e.preventDefault();
+				getList(1);
+			})
+			.on('click', '.reset', function(e){
+				e.preventDefault();
+				$(this).closest('.filter-form').find('input[type="search"], select').val('');
+				getList(1);
+			})
+			.on('click', '.clear', function(e){
+				e.preventDefault();
+				$(this).siblings('input, select').val('');
+				getList(1);
+			})
+			.submit(function(e){
+				e.preventDefault();
+			});
+
+		$('.filter-form, .sort-links')
+			//prevent dropdown hide on inside element click
+			.on('click', 'input, select, label, button', function(e){
+				e.stopPropagation();
+			});
+
 });
 
 /**
@@ -502,6 +711,11 @@ $.fn.loadList = function(){
 			});
 
 			if( isFilter ) $this.val( savedVal );
+
+			if( $this.data('selectedId') ){
+				$this.val( $this.data('selectedId') );
+				$this.removeData('selectedId');
+			}
 		});
 	});
 };
@@ -544,9 +758,9 @@ var formErrors = function( data ){
 			.closest('.control-group').addClass( error[2] == 'required' ? 'warning' : error[2] )
 			.find('.controls')
 				//remove previous error message if present
-				.find('.help-inline').remove().end()
+				.find('.help-block').remove().end()
 				//add error message
-				.append( $('<span>', { 'class': 'help-inline', 'text': error[1] }) );
+				.append( $help.clone().text(error[1]) );
 	});
 };
 
@@ -565,7 +779,7 @@ function dragEnter(event){
 		event.originalEvent.dataTransfer.dropEffect = "copy";
 	}
 
-	dropTimeout = window.setTimeout(function(){ $dropOverlay.hide(); }, 3000);
+	dropTimeout = window.setTimeout(function(){ $dropOverlay.hide(); }, 10000);
 }
 
 /**
@@ -577,7 +791,7 @@ function dragOver(event){
 	if( $dropOverlay.is(':hidden') ) $dropOverlay.show();
 
 	clearTimeout(dropTimeout);
-	dropTimeout = window.setTimeout(function(){ $dropOverlay.hide(); }, 3000);
+	dropTimeout = window.setTimeout(function(){ $dropOverlay.hide(); }, 10000);
 }
 
 /**
@@ -607,8 +821,8 @@ function dropCover(event){
 
 	//reset validation visual infos and error tip
 	$coverStatus
-		.siblings('.help-block, .help-inline').remove();
-	$controlGroup.removeClass('warning error success info upload');
+		.siblings('.help-block').remove();
+	$controlGroup.removeClass('error success warning info upload');
 
 	var dt = event.dataTransfer,
 		files = dt.files;
@@ -624,16 +838,15 @@ function dropCover(event){
 			data: 'url='+ dt.getData("application/x-moz-file-promise-url")
 		})
 		.always(function(){
-			$controlGroup.removeClass('upload');
+			$controlGroup.removeClass('upload error success warning info upload');
 		})
 		.done(function(result){
-			//var timestamp = new Date().getTime();
-			//$('#editPreview').empty().append( $('<img>', { src: 'covers/' + result + '?' + timestamp }) );
+			$controlGroup.addClass('success')
+				.find('.cover-preview').html( $('<img>', { src: 'covers/' + file.name + '?' + (new Date().getTime()) }) );
 			$('#'+ rel +'Cover').val( result );
-			$controlGroup.addClass('success');
 		})
 		.fail(function(XMLHttpRequest, textStatus, errorThrown){
-			$coverStatus.parent().append('<div class="help-block">'+ errorThrown +'</div>');
+			$coverStatus.parent().append( $help.clone().text(errorThrown) );
 			$controlGroup.addClass('error');
 		});
 		return;
@@ -676,13 +889,17 @@ function upload(file, rel, $coverStatus, $controlGroup){
 					if( xhr.readyState == 4 ){
 						$controlGroup.removeClass('upload');
 						if( xhr.status == 200 ){
-							$coverStatus.siblings('.help-inline, .help-block').remove();
-							$controlGroup.addClass('valid');
-							//var timestamp = new Date().getTime();
-							//$('#editPreview').empty().append( $('<img>', { src: 'covers/' + file.name + '?' + timestamp }) );
+							$coverStatus.siblings('.help-block').remove();
+							$controlGroup.addClass('success')
+								.find('.cover-preview').html( $('<img>', { src: 'covers/' + file.name + '?' + (new Date().getTime()) }) );
 							$('#'+ rel +'Cover').val( file.name );
 						} else {
-							$coverStatus.parent().append('<div class="help-block">'+ xhr.responseText +'</div>');
+							$coverStatus.siblings('.help-block').remove();
+							if( xhr.status == 500 || xhr.responseText === '' ){
+								$coverStatus.parent().append( $help.clone().text(xhr.statusText) );
+							} else {
+								$coverStatus.parent().append( $help.clone().text(xhr.responseText) );
+							}
 							$controlGroup.addClass('error');
 						}
 					}
@@ -690,19 +907,20 @@ function upload(file, rel, $coverStatus, $controlGroup){
 			}, true);
 
 			reader.addEventListener('error', function(event){
+				$coverStatus.siblings('.help-block').remove();
 				switch(event.target.error.code){
 					case event.target.error.NOT_FOUND_ERR:
-							$coverStatus.parent().append('<div class="help-block">File not found !</div>');
+							$coverStatus.parent().append( $help.clone().text('File not found !') );
 							$controlGroup.addClass('error').removeClass('upload');
 						break;
 					case event.target.error.NOT_READABLE_ERR:
-							$coverStatus.parent().append('<div class="help-block">File not readable !</div>');
+							$coverStatus.parent().append( $help.clone().text('File not readable !') );
 							$controlGroup.addClass('error').removeClass('upload');
 						break;
 					case event.target.error.ABORT_ERR:
 						break;
 					default:
-							$coverStatus.parent().append('<div class="help-block">Reading error !</div>');
+							$coverStatus.parent().append( $help.clone().text('Reading error !') );
 							$controlGroup.addClass('error').removeClass('upload');
 						break;
 				}
@@ -710,13 +928,15 @@ function upload(file, rel, $coverStatus, $controlGroup){
 
 			reader.addEventListener('progress', function(event){
 				if( event.lengthComputable ){
-					$coverStatus.parent().append('<div class="help-block">Chargement : '+ Math.round((event.loaded * 100) / event.total) +'%</div>');
+					$coverStatus.siblings('.help-block').remove();
+					$coverStatus.parent().append( $help.clone().text('Loading: '+ Math.round((event.loaded * 100) / event.total) +'%') );
 				}
 			}, true);
 
 			reader.addEventListener('loadProgress', function(event){
 				if( event.lengthComputable ){
-					$coverStatus.parent().append('<div class="help-block">Chargement : '+ Math.round((event.loaded * 100) / event.total) +'%</div>');
+					$coverStatus.siblings('.help-block').remove();
+					$coverStatus.parent().append( $help.clone().text('Loading: '+ Math.round((event.loaded * 100) / event.total) +'%') );
 				}
 			}, true);
 
@@ -737,16 +957,19 @@ function upload(file, rel, $coverStatus, $controlGroup){
 					if( xhr.readyState == 4 ){
 						$controlGroup.removeClass('upload');
 						if( xhr.status == 200 ){
-							$coverStatus.siblings('.help-inline, .help-block').remove();
-							$controlGroup.addClass('valid');
-							//var timestamp = new Date().getTime();
-							//$('#editPreview').empty().append( $('<img>', { src: 'covers/' + file.name + '?' + timestamp }) );
+							$coverStatus.siblings('.help-block').remove();
+							$controlGroup.addClass('success')
+								.find('.cover-preview').html( $('<img>', { src: 'covers/' + file.name + '?' + (new Date().getTime()) }) );
 							$('#'+ rel +'Cover').val( file.name );
 						} else {
-							$coverStatus.parent().append('<div class="help-block">'+ xhr.responseText +'</div>');
+							$coverStatus.parent().append( $help.clone().text(xhr.responseText) );
 							$controlGroup.addClass('error');
 						}
 					}
+				};
+
+				xhr.onerror = function(){
+					console.log('webkit error');
 				};
 			};
 		}
@@ -755,61 +978,19 @@ function upload(file, rel, $coverStatus, $controlGroup){
 		reader.readAsBinaryString( file );
 	} else {
 		$controlGroup.removeClass('upload').addClass('error');
-		$coverStatus.parent().append('<div class="help-block">Upload functionnality is not supported</div>');
+		$coverStatus.parent().append( $help.clone().text('Upload functionnality is not supported') );
 	}
 }
 
-/* helpers */
-String.prototype.capitalize = function(){
-	return this.charAt(0).toUpperCase() + this.substr(1);
-};
-
 /**
- * localStorage method for caching javascript objects
+ * fill detail modal parts from item code in list
  */
-Storage.prototype.setObject = function(key, value){
-	this.setItem(key, JSON.stringify(value));
+var fillDetailModal = function( $modal ){
+	console.log('filling');
+	var $clone = $detailItem.clone();
+	$detailItem = null;
+
+	$modal.find('.modal-body')
+		.find('.cover').html( $clone.find('img') ).end()
+		.find('.data').html( $clone.find('dl') );
 };
-
-Storage.prototype.getObject = function(key){
-	return this.getItem(key) && JSON.parse( this.getItem(key) );
-};
-
-/* templating */
-// Simple JavaScript Templating
-// John Resig - http://ejohn.org/ - MIT Licensed
-(function(){
-	var cache = {};
-
-	this.tmpl = function tmpl(str, data){
-		// Figure out if we're getting a template, or if we need to
-		// load the template - and be sure to cache the result.
-		var fn = !/\W/.test(str) ?
-			cache[str] = cache[str] ||
-				tmpl(document.getElementById(str).innerHTML) :
-
-	// Generate a reusable function that will serve as a template
-	// generator (and which will be cached).
-	new Function("obj",
-		"var p=[],print=function(){p.push.apply(p,arguments);};" +
-
-		// Introduce the data as local variables using with(){}
-		"with(obj){p.push('" +
-
-		// Convert the template into pure JavaScript
-		str
-			.replace(/[\r\t\n]/g, " ")
-			.split("<%").join("\t")
-			.replace(/((^|%>)[^\t]*)'/g, "$1\r")
-			.replace(/\t=(.*?)%>/g, "',$1,'")
-			.split("\t").join("');")
-			.split("%>").join("p.push('")
-			.split("\r").join("\\'")
-		+ "');}return p.join('');");
-
-		// Provide some basic currying to the user
-		return data ? fn( data ) : fn;
-	};
-})();
-
-

@@ -1,10 +1,12 @@
+/** _____________________________________________ BODY **/
 body {
   padding-top: 40px;
 }
 
+/** _____________________________________________ LIST **/
 .container-list {
-  padding: 0 15px;
   min-height: 60px;
+  padding: 0 15px;
   margin: 0 auto;
 }
 
@@ -17,24 +19,28 @@ body {
   /* to avoid white-space madness */
   background-size: 100% 100%;
 }
+.list .list-hide {
+  display: none;
+}
 
 .withCover dl {
-  display: none;
   position: absolute;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.9);
-  color: #fff;
+  display: none;
   margin: 0;
   padding: 6px 4px;
   width: calc(100% - 8px);
   height: calc(100% - 12px);
+  background-color: rgba(0, 0, 0, 0.9);
+  color: #fff;
 }
 
 .withCover .item:hover dl {
   display: block;
 }
 
+/** _____________________________________________ LIST ITEM DIMESIONS **/
 @media (min-width: 1400px) {
   .withCover .item {
     width: 312px;
@@ -71,6 +77,7 @@ body {
     height: 156px;
   }
 }
+/** _____________________________________________ FILTERS & SORTS **/
 .dropdown-menu.filters,
 .dropdown-menu.sorts {
   padding: 15px;
@@ -91,15 +98,74 @@ body {
 .filter-form {
   display: none;
 }
-.filter-form .input-append.controls-row .span2 {
+.filter-form .span2 {
   width: 186px;
 }
-.filter-form .input-append.controls-row .span2 + .span1 {
-  margin-left: -1px;
+
+/** _____________________________________________ EDIT FORM **/
+.edit-form .cover-status {
+  width: 156px;
+  padding: 4px 6px;
+  margin: 0;
 }
 
-.edit-form .cover-status {
+.control-group .help-inline {
+  padding-top: 5px;
+  margin-bottom: 5px;
+}
+
+.control-group.success .well {
+  border-color: #d6e9c6;
+  color: #468847;
+}
+.control-group.error .well {
+  border-color: #eed3d7;
+  color: #b94a48;
+}
+.control-group.upload .well {
+  border-color: #bce8f1;
+  color: #3a87ad;
+}
+
+.form-horizontal .controls .help-block {
+  clear: left;
+}
+
+.modal.with-cover {
+  width: 760px;
+  margin-left: -380px;
+}
+.modal.with-cover .form-horizontal .control-label {
+  width: 75px;
+  padding-right: 10px;
+}
+.modal.with-cover .form-horizontal .controls {
+  margin-left: 80px;
+}
+
+/** _____________________________________________ DROP OVERLAY **/
+#drop-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1060;
+  display: none;
+  width: 100%;
+  height: 100%;
+  opacity: 0.8;
+  background: none repeat scroll 0 0 #424242;
+}
+
+#drop-overlay h1 {
+  position: fixed;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  padding: 0;
   margin: 0;
-  padding: 4px 6px;
-  width: 156px;
+  color: #FFFFFF;
+  font-size: 10em;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 1px 1px 2px #000000;
 }

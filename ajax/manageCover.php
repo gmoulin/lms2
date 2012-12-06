@@ -1,5 +1,5 @@
 <?php
-require_once('../conf.ini.php');
+require_once('../inc/conf.ini.php');
 header('Content-type: text/html; charset=UTF-8');
 
 //manage cover upload via ajax posts

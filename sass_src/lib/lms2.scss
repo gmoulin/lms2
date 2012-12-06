@@ -1,123 +1,205 @@
-@import "variables";
+@import "variables"; //use bootstrap variables
 
-body {
-	padding-top: 40px;
-}
+/** _____________________________________________ BODY **/
+	body {
+		padding-top: 40px;
+	}
 
-.container-list {
-	padding: 0 15px;
-	min-height: 60px;
-	margin: 0 auto;
-}
+/** _____________________________________________ LIST **/
+	.container-list {
+		min-height: 60px;
+		padding: 0 15px;
+		margin: 0 auto;
+	}
 
-.list {
-	display: none;
+	.list {
+		display: none;
 
-	&.withCover {
-		.item {
-			position: relative;
-			float: left; /* to avoid white-space madness */
-			background-size: 100% 100%;
+		&.withCover {
+			.item {
+				position: relative;
+
+				float: left; /* to avoid white-space madness */
+
+				background-size: 100% 100%;
+			}
+		}
+
+		.list-hide {
+			display: none;
 		}
 	}
-}
 
-.withCover dl {
-	display: none;
-	position: absolute;
-	top: 0;
-	left: 0;
-	background-color: rgba(0, 0, 0, 0.9);
-	color: #fff;
-	margin: 0;
-	padding: 6px 4px;
-	width: calc(100% - 8px);
-	height: calc(100% - 12px);
-}
+	.withCover dl {
+		position: absolute;
+		top: 0;
+		left: 0;
 
-.withCover .item:hover dl {
-	display: block;
-}
+		display: none;
+		margin: 0;
+		padding: 6px 4px;
+		width: calc(100% - 8px);
+		height: calc(100% - 12px);
 
-$itemWith: 195px;
-$itemHeight: 260px;
-
-@media (min-width: 1400px) {
-	.withCover .item {
-		width: $itemWith * 1.6;
-		height: $itemHeight * 1.6;
+		background-color: rgba(0, 0, 0, 0.9);
+		color: #fff;
 	}
-}
 
-@media (min-width: 1200px) and (max-width: 1399px) {
-	.withCover .item {
-		width: $itemWith * 1.4;
-		height: $itemHeight * 1.4;
+	.withCover .item:hover dl {
+		display: block;
 	}
-}
 
-@media (min-width: 980px) and (max-width: 1199px) {
-	.withCover .item {
-		width: $itemWith * 1.2;
-		height: $itemHeight * 1.2;
+/** _____________________________________________ LIST ITEM DIMESIONS **/
+	$itemWith: 195px;
+	$itemHeight: 260px;
+
+	@media (min-width: 1400px) {
+		.withCover .item {
+			width: $itemWith * 1.6;
+			height: $itemHeight * 1.6;
+		}
 	}
-}
 
-@media (min-width: 768px) and (max-width: 979px) {
-	.withCover .item {
-		width: $itemWith * 1;
-		height: $itemHeight * 1;
+	@media (min-width: 1200px) and (max-width: 1399px) {
+		.withCover .item {
+			width: $itemWith * 1.4;
+			height: $itemHeight * 1.4;
+		}
 	}
-}
 
-@media (max-width: 767px) {
-	.withCover .item {
-		width: $itemWith * 0.8;
-		height: $itemHeight * 0.8;
+	@media (min-width: 980px) and (max-width: 1199px) {
+		.withCover .item {
+			width: $itemWith * 1.2;
+			height: $itemHeight * 1.2;
+		}
 	}
-}
 
-@media (max-width: 480px) {
-	.withCover .item {
-		width: $itemWith * 0.6;
-		height: $itemHeight * 0.6;
+	@media (min-width: 768px) and (max-width: 979px) {
+		.withCover .item {
+			width: $itemWith * 1;
+			height: $itemHeight * 1;
+		}
 	}
-}
 
-.dropdown-menu.filters,
-.dropdown-menu.sorts {
-	padding: 15px;
-}
-
-.sort-links {
-	display: none;
-	white-space: nowrap;
-
-	label {
-		margin-top: 5px;
+	@media (max-width: 767px) {
+		.withCover .item {
+			width: $itemWith * 0.8;
+			height: $itemHeight * 0.8;
+		}
 	}
-}
 
-.navbar .sort-links .btn-group {
-	margin-top: 0;
-}
+	@media (max-width: 480px) {
+		.withCover .item {
+			width: $itemWith * 0.6;
+			height: $itemHeight * 0.6;
+		}
+	}
 
-.filter-form {
-	display: none;
+/** _____________________________________________ FILTERS & SORTS **/
+	.dropdown-menu.filters,
+	.dropdown-menu.sorts {
+		padding: 15px;
+	}
 
-	.input-append.controls-row {
+	.sort-links {
+		display: none;
+
+		white-space: nowrap;
+
+		label {
+			margin-top: 5px;
+		}
+	}
+
+	.navbar .sort-links .btn-group {
+		margin-top: 0;
+	}
+
+	.filter-form {
+		display: none;
+
 		.span2 {
 			width: 186px;
 		}
+	}
 
-		.span2 + .span1 {
-			margin-left: -1px;
+/** _____________________________________________ EDIT FORM **/
+	.edit-form .cover-status {
+		width: 156px;
+		padding: 4px 6px;
+		margin: 0;
+	}
+
+	.control-group .help-inline {
+		padding-top: 5px;
+		margin-bottom: 5px;
+	}
+
+	.control-group {
+		&.success .well {
+			border-color: $successBorder;
+			color: $successText;
+		}
+
+		&.error .well {
+			border-color: $errorBorder;
+			color: $errorText;
+		}
+
+		&.upload .well {
+			border-color: $infoBorder;
+			color: $infoText;
 		}
 	}
-}
 
-.edit-form .cover-status {
-	margin: 0;
-	padding: 4px 6px;
-	width: 156px;
-}
+	.form-horizontal .controls .help-block {
+		clear: left;
+	}
+
+	.modal.with-cover {
+		width: 760px;
+		margin-left: -380px;
+
+		.form-horizontal {
+			.control-label {
+				width: 75px;
+				padding-right: 10px;
+			}
+
+			.controls {
+				margin-left: 80px;
+			}
+		}
+	}
+
+/** _____________________________________________ DROP OVERLAY **/
+	#drop-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		z-index: 1060;
+
+		display: none;
+		width: 100%;
+		height: 100%;
+		opacity: 0.8;
+
+		background: none repeat scroll 0 0 #424242;
+	}
+
+	#drop-overlay h1 {
+		position: fixed;
+		top: 50%;
+		left: 0;
+		width: 100%;
+
+		padding: 0;
+		margin: 0;
+
+		color: #FFFFFF;
+
+		font-size: 10em;
+		font-weight: bold;
+		text-align: center;
+		text-shadow: 1px 1px 2px #000000;
+	}

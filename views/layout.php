@@ -70,7 +70,7 @@ include('html_header.php');
 	</div>
 </div>
 
-<div class="container-list clearfix">
+<div class="container-fluid container-list clearfix">
 	<section id="list_book" class="list withCover"></section>
 	<section id="list_movies" class="list withCover"></section>
 	<section id="list_album" class="list withCover"></section>
@@ -81,12 +81,22 @@ include('html_header.php');
 	<section id="list_brand" class="list"></section>
 </div> <!-- /container -->
 
+<div id="drop-overlay">
+	<h1>Drop</h1>
+</div>
+
 <?php
 //list templates
 include('lists/book.html');
 
 //edit forms
 include('forms/book.html');
+
+//delete confirms
+include('deletes/book.html');
+
+//details popup
+include('details/book.html');
 
 //scripts and footer
 include('html_footer.php');

@@ -1,81 +1,88 @@
-<div id="edit_book" class="modal hide fade">
+<div id="edit_book" class="modal hide fade modal-edit with-cover">
 	<div class="modal-header">
 		<button class="close" data-dismiss="modal"><i class="icon-remove-sign"></i></button>
 		<h3>Book management form</h3>
 	</div>
 	<div class="modal-body">
-		<form id="book_form" name="book_form" method="post" action="" class="edit-form form-horizontal" data-manage="book">
-			<input type="hidden" id="bookAction" name="action" value="" />
-			<input type="hidden" id="bookID" name="id" value="" />
-			<div class="control-group">
-				<label class="control-label" for="bookTitle">Title *</label>
-				<div class="controls">
-					<div class="quicklink-append">
-						<input type="text" id="bookTitle" name="title" class="control span2" value="" placeholder="Book title" required autocomplete="off">
-					</div>
-				</div>
+		<div class="row-fluid">
+			<div class="span4">
+				<span class="cover-preview"></span>
 			</div>
-			<div class="control-group">
-				<label class="control-label" for="bookSize">Format *</label>
-				<div class="controls">
-					<input type="text" id="bookSize" name="size" class="control span2" list="bookSizeList" placeholder="Book format" required autocomplete="off">
-					<datalist id="bookSizeList">
-						<option value="">Known formats</option>
+			<div class="span8">
+				<form id="book_form" name="book_form" method="post" action="" class="edit-form form-horizontal" data-manage="book">
+					<input type="hidden" id="bookAction" name="action" value="" />
+					<input type="hidden" id="bookID" name="id" value="" />
+					<div class="control-group">
+						<label class="control-label" for="bookTitle">Title *</label>
+						<div class="controls">
+							<div class="quicklink-append">
+								<input type="text" id="bookTitle" name="title" class="control input-large title" value="" placeholder="Book title" required autocomplete="off">
+							</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="bookSize">Format *</label>
+						<div class="controls">
+							<input type="text" id="bookSize" name="size" class="control input-large" list="bookSizeList" placeholder="Book format" required autocomplete="off">
+							<datalist id="bookSizeList">
+								<option value="">Known formats</option>
+							</datalist>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="bookCoverStatus">Image</label>
+						<div class="controls">
+							<input type="hidden" id="bookCover" name="cover" class="" value="" />
+							<div id="bookCoverStatus" class="cover-status control well input-large">
+								<i class="icon-picture"></i> Drop the cover
+							</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="bookSagaTitleInput">Saga</label>
+						<div class="controls">
+							<div class="quicklink-append">
+								<input type="text" id="bookSagaTitle" name="saga" class="control input-large" list="bookSagaList" placeholder="Book saga" autocomplete="off">
+							</div>
+							<datalist id="bookSagaList">
+								<option value="">Known sagas</option>
+							</datalist>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="bookSagaPosition">Position</label>
+						<div class="controls">
+							<input type="number" id="bookSagaPosition" name="position" value="" class="control input-large" placeholder="Position du livre" min="1" max="999" autocomplete="off">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="bookStorage">Storage *</label>
+						<div class="controls">
+							<select id="bookStorage" name="storage" class="control input-large" required autocomplete="off">
+								<option value="">Known storages</option>
+							</select>
+						</div>
+					</div>
+					<div class="control-group another" id="bookAuthors">
+						<label class="control-label" for="bookAuthor_1">Author *</label>
+						<div class="controls">
+							<div class="input-append">
+								<input type="text" id="bookAuthor_1" name="author_1" class="control input-large" list="bookAuthorList" placeholder="Firstname and lastname of the author" required autocomplete="off">
+								<button class="btn btn-warning delete-another"><i class="icon-trash"></i></button>
+							</div>
+						</div>
+					</div>
+					<datalist id="bookAuthorList">
+						<option value="">Known authors</option>
 					</datalist>
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="bookCoverStatus">Image</label>
-				<div class="controls">
-					<input type="hidden" id="bookCover" name="cover" class="" value="" />
-					<div id="bookCoverStatus" class="cover-status control well span2">
-						<i class="icon-picture"></i> Drop the cover
+					<div class="control-group">
+						<div class="controls">
+							<button class="btn add-another"><i class="icon-plus-sign"></i> Add another author</button>
+						</div>
 					</div>
-				</div>
+				</form>
 			</div>
-			<div class="control-group">
-				<label class="control-label" for="bookSagaTitleInput">Saga</label>
-				<div class="controls">
-					<div class="quicklink-append">
-						<input type="text" id="bookSagaTitle" name="saga" class="control span2" list="bookSagaList" placeholder="Book saga" autocomplete="off">
-					</div>
-					<datalist id="bookSagaList">
-						<option value="">Known sagas</option>
-					</datalist>
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="bookSagaPosition">Position</label>
-				<div class="controls">
-					<input type="number" id="bookSagaPosition" name="position" value="" class="control span2" placeholder="Position du livre" min="1" max="999" autocomplete="off">
-				</div>
-			</div>
-			<div class="control-group">
-				<label class="control-label" for="bookStorage">Storage *</label>
-				<div class="controls">
-					<select id="bookStorage" name="storage" class="control span2" required autocomplete="off">
-						<option value="">Known storages</option>
-					</select>
-				</div>
-			</div>
-			<div class="control-group another" id="bookAuthors">
-				<label class="control-label" for="bookAuthor_1">Author *</label>
-				<div class="controls">
-					<div class="input-append">
-						<input type="text" id="bookAuthor_1" name="author_1" class="control span2" list="bookAuthorList" placeholder="Firstname and lastname of the author" required autocomplete="off">
-						<button class="btn delete-another"><i class="icon-trash"></i></button>
-					</div>
-				</div>
-			</div>
-			<datalist id="bookAuthorList">
-				<option value="">Known authors</option>
-			</datalist>
-			<div class="control-group">
-				<div class="controls">
-					<button class="btn add-another"><i class="icon-plus-sign"></i> Add another author</button>
-				</div>
-			</div>
-		</form>
+		</div>
 	</div>
 	<div class="modal-footer">
 		<button type="reset" class="btn btn-warning" data-dismiss="modal">Cancel</button>

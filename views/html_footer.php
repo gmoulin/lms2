@@ -6,6 +6,7 @@
 		<!-- scripts concatenated and minified via build script -->
 		<script src="js/vendor/bootstrap.min.js"></script>
 
+		<script src="js/plugins.js"></script>
 		<script src="js/main.js?v=<?php echo $scriptTS; ?>"></script>
 		<!-- end scripts -->
 	</body>
