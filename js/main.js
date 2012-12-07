@@ -12,7 +12,8 @@ var $nav,
 	dropTimeout,
 	scrolling = false,
 	end = false,
-	$help;
+	$help,
+	centeringDone = false;
 
 var subDomains = ['s1', 's2', 's3'],
 	useSubDomains = false;
@@ -244,13 +245,20 @@ $(document).ready(function(){
 				if( rel == 'book' ){
 					$quickLink.clone().attr('title', 'Rechercher dans Google Image').appendTo( $this.parent() );
 					$quickLink.clone().attr('title', 'Rechercher dans Fantastic Fiction').appendTo( $this.parent() );
+				} else if( rel == 'movie' ){
+					$quickLink.clone().attr('title', 'Rechercher dans Google Image').appendTo( $this.parent() );
+					$quickLink.clone().attr('title', 'Rechercher dans IMDB').appendTo( $this.parent() );
 				}
 			}
 
 			if( rel == 'book' ){
 				$this.siblings('.quicklink')
 					.first().attr('href', 'http://www.google.com/images?q=' + $this.val() + ' book').end()
-					.last().attr('href', 'http://www.fantasticfiction.co.uk/search/?searchfor=book&keywords='+ $this.val() +' book');
+					.last().attr('href', 'http://www.fantasticfiction.co.uk/search/?searchfor=book&keywords='+ $this.val());
+			} else if( rel == 'movie' ){
+				$this.siblings('.quicklink')
+					.first().attr('href', 'http://www.google.com/images?q=' + $this.val() + ' movie').end()
+					.last().attr('href', 'http://www.imdb.com/find?s=all&q='+ $this.val());
 			}
 		});
 
@@ -619,6 +627,8 @@ var tabSwitch = function(){
 	$parts.hide()
 		.filter('[id$="_'+ target +'"]').show();
 
+	if( target != activeTab ) centeringDone = false;
+
 	activeTab = target;
 
 	if( $('#list_'+ target).length > 0 ){ // Argument is a valid tab name
@@ -675,6 +685,16 @@ var getList = function( type ){
 			end = (data.nb == data.total);
 
 			$list.append( tmpl('list_'+ target +'_tmpl', data) );
+
+			if( !centeringDone ){
+				var $listContainer = $('.container-list'),
+					containerWidth = $listContainer.width(),
+					itemWidth = $listContainer.find('#list_'+ activeTab).find('.item').first().width();
+
+				$listContainer.width( Math.floor(containerWidth / itemWidth) * itemWidth );
+
+				centeringDone = true;
+			 }
 		});
 	}
 };

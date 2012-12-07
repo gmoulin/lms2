@@ -5,6 +5,15 @@
 		padding-top: 40px;
 	}
 
+/** _____________________________________________ NAV **/
+	.add {
+		display: none;
+	}
+
+	.navbar .sort-links .btn-group {
+		margin-top: 0;
+	}
+
 /** _____________________________________________ LIST **/
 	.container-fluid.override {
 		text-align: center;
@@ -114,10 +123,6 @@
 		label {
 			margin-top: 5px;
 		}
-	}
-
-	.navbar .sort-links .btn-group {
-		margin-top: 0;
 	}
 
 	.filter-form {

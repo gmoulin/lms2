@@ -1,0 +1,106 @@
+<div id="edit_movie" class="modal hide fade modal-edit with-cover">
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal"><i class="icon-remove-sign"></i></button>
+		<h3>Formulaire de gestion des films</h3>
+	</div>
+	<div class="modal-body">
+		<div class="row-fluid">
+			<div class="span4">
+				<span class="cover-preview"></span>
+			</div>
+			<div class="span8">
+				<form id="movie_form" name="movie_form" method="post" action="" class="edit-form form-horizontal" data-manage="movie">
+					<input type="hidden" id="movieAction" name="action" value="" />
+					<input type="hidden" id="movieID" name="id" value="" />
+					<div class="control-group">
+						<label class="control-label" for="movieTitle">Titre *</label>
+						<div class="controls">
+							<div class="quicklink-append">
+								<input type="text" id="movieTitle" name="title" class="control input-large title" value="" placeholder="titre du film" required autocomplete="off">
+							</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="movieGenre">Genre *</label>
+						<div class="controls">
+							<input type="text" id="movieGenre" name="genre" class="control input-large" list="movieGenreList" placeholder="genre du film" required autocomplete="off">
+							<datalist id="movieGenreList">
+								<option value="">Genres déjà présents</option>
+							</datalist>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="movieMediaType">Format *</label>
+						<div class="controls">
+							<input type="text" id="movieMediaType" name="mediaType" class="control input-large" list="movieMediaTypeList" placeholder="format du film" required autocomplete="off">
+							<datalist id="movieMediaTypeList">
+								<option value="">Formats déjà présents</option>
+							</datalist>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="movieLength">Durée *</label>
+						<div class="controls">
+							<input type="number" id="movieLength" name="length" class="control input-large" placeholder="durée du film" required autocomplete="off"> min
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="movieCoverStatus">Couverture</label>
+						<div class="controls">
+							<input type="hidden" id="movieCover" name="cover" class="" value="" />
+							<div id="movieCoverStatus" class="cover-status control well input-large">
+								<i class="icon-picture"></i> Déposer l'image
+							</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="movieSagaTitleInput">Saga</label>
+						<div class="controls">
+							<div class="quicklink-append">
+								<input type="text" id="movieSagaTitle" name="saga" class="control input-large" list="movieSagaList" placeholder="Saga du film" autocomplete="off">
+							</div>
+							<datalist id="movieSagaList">
+								<option value="">Sagas déjà présentes</option>
+							</datalist>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="movieSagaPosition">Position</label>
+						<div class="controls">
+							<input type="number" id="movieSagaPosition" name="position" value="" class="control input-large" placeholder="Position du film" min="1" max="999" autocomplete="off">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="movieStorage">Rangement *</label>
+						<div class="controls">
+							<select id="movieStorage" name="storage" class="control input-large" required autocomplete="off">
+								<option value="">Choississez</option>
+							</select>
+						</div>
+					</div>
+					<div class="control-group another" id="movieArtists">
+						<label class="control-label" for="movieArtist_1">Artiste(s) *</label>
+						<div class="controls">
+							<div class="input-append">
+								<input type="text" id="movieArtist_1" name="artist_1" class="control input-large" list="movieArtistList" placeholder="Prénom et nom" required autocomplete="off">
+								<button class="btn btn-warning delete-another" title="Supprimer cet artiste"><i class="icon-trash"></i></button>
+							</div>
+						</div>
+					</div>
+					<datalist id="movieArtistList">
+						<option value="">Artistes déjà présents</option>
+					</datalist>
+					<div class="control-group">
+						<div class="controls">
+							<button class="btn add-another"><i class="icon-plus-sign"></i> Ajouter un autre artiste</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="reset" class="btn btn-warning" data-dismiss="modal">Annuler</button>
+		<button type="submit" class="btn btn-primary" form="movie_form">Enregistrer</button>
+	</div>
+</div>
