@@ -8,10 +8,10 @@
 		<article class="item" style="background-image: url(<%=url%>);">
 			<img src="<%=url%>" class="list-hide">
 			<dl>
-				<dt>Title</dt>
+				<dt>Titre</dt>
 				<dd><%=item.bookTitle%></dd>
 
-				<dt>Author<% if( item.authors.length > 1 ){ %>s<% } %></dt>
+				<dt>Auteur<% if( item.authors.length > 1 ){ %>s<% } %></dt>
 				<%  j = 0;
 					for( id in item.authors ){
 						if( item.authors.hasOwnProperty(id) ){
@@ -41,7 +41,7 @@
 				<dt>Format</dt>
 				<dd><%=item.bookSize%></dd>
 
-				<dt>Storage</dt>
+				<dt>Rangement</dt>
 				<dd>
 					<%=item.storageRoom%> - <%=item.storageType%>
 					<% if( item.storageColumn !== null || item.storageLine !== null ){ %>
@@ -52,14 +52,14 @@
 							<button class="btn storage-picture btn-info btn-small"
 								data-toggle="modal" data-target="#storage_picture" data-manage="book"
 								data-storageID="<%=item.storageID%>"
-								title="View storage picture"
+								title="Voir la photo du rangement"
 							><i class="icon-map-marker"></i></button>
 						<% } %>
 						<% if( item.sagaTitle !== null && item.storageRoom == 'aucun' ){ %>
 							<button class="btn store btn-warning btn-small"
-								data-toggle="modal" data-target="#store_with_saga" data-manage="book"
+								data-toggle="modal" data-target="#store_book" data-manage="book"
 								data-itemId="<%=item.bookID%>" data-sagaID="<%=item.sagaID%>"
-								title="Store with saga"
+								title="Ranger avec la saga"
 							><i class="icon-inbox"></i></button>
 						<% } %>
 					</div>
@@ -69,13 +69,13 @@
 				</dd>
 
 				<% if( item.loanHolder !== null ){ %>
-					<dt>Loan</dt>
+					<dt>Prêt</dt>
 					<dd>
 						<%=item.loanHolder%> - <%=item.loanDate%>
 						<button class="btn delete btn-danger dtn-small list-hide"
 							data-toggle="modal" data-target="#delete_loan" data-manage="loan"
 							data-itemId="<%=item.bookID%>"
-							title="Delete loan"
+							title="Supprimer le prêt"
 						><i class="icon-trash"></i></button>
 						<button class="btn btn-small btn-info filter"
 							data-filter="loan" data-value="<%=item.loanHolder%>"
@@ -87,23 +87,23 @@
 				<dd>
 					<div class="btn-group">
 						<button class="btn detail btn-info btn-small" data-toggle="modal" data-target="#detail_book" data-manage="book">
-							<i class="icon-eye-open"></i> Detail
+							<i class="icon-eye-open"></i> Détail
 						</button>
 
 						<button class="btn edit btn-warning btn-small"
 							data-toggle="modal" data-target="#edit_book" data-manage="book"
 							data-itemId="<%=item.bookID%>"
-						><i class="icon-edit"></i> Edit</button>
+						><i class="icon-edit"></i> Modifier</button>
 
 						<button class="btn delete btn-danger btn-small"
 							data-toggle="modal" data-target="#delete_book" data-manage="book"
 							data-itemId="<%=item.bookID%>"
-						><i class="icon-trash"></i> Delete</button>
+						><i class="icon-trash"></i> Supprimer</button>
 
 						<button class="btn add btn-info btn-small"
 							data-toggle="modal" data-target="#edit_loan" data-manage="loan"
 							data-itemId="<%=item.bookID%>" data-relation="book"
-						><i class="icon-user"></i> Loan</button>
+						><i class="icon-user"></i> Prêt</button>
 					</div>
 				</dd>
 			</dl>

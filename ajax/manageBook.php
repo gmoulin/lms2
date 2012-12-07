@@ -53,6 +53,55 @@ try {
 				$oBook->delBook( $id );
 				$response = 'ok';
 			break;
+		case 'getSagaStorage':
+				$sagaId = filter_has_var(INPUT_POST, 'sagaId');
+				if( is_null($sagaId) || $sagaId === false ){
+					throw new Exception('Gestion des livres : identitifant de la saga manquant.');
+				}
+
+				$sagaId = filter_var($_POST['sagaId'], FILTER_VALIDATE_INT, array('min_range' => 1));
+				if( $sagaId === false ){
+					throw new Exception('Gestion des livres : identifiant de la saga incorrect.');
+				}
+
+				$oSaga = new saga();
+				if( $oSaga->exists( $sagaId ) ){
+					$oBook = new book();
+					$response = $oBook->getStorageIdForSagaId( $sagaId );
+				} else {
+					throw new Exception('Gestion des livres : saga inconnue.');
+				}
+			break;
+		case 'store':
+				$id = filter_has_var(INPUT_POST, 'id');
+				if( is_null($id) || $id === false ){
+					throw new Exception('Gestion des livres : identitifant du livre manquant.');
+				}
+
+				$id = filter_var($_POST['id'], FILTER_VALIDATE_INT, array('min_range' => 1));
+				if( $id === false ){
+					throw new Exception('Gestion des livres : identifiant incorrect.');
+				}
+
+				$storageId = filter_has_var(INPUT_POST, 'storageId');
+				if( is_null($storageId) || $storageId === false ){
+					throw new Exception('Gestion des livres : identitifant du rangement manquant.');
+				}
+
+				$storageId = filter_var($_POST['storageId'], FILTER_VALIDATE_INT, array('min_range' => 1));
+				if( $storageId === false ){
+					throw new Exception('Gestion des livres : identifiant du rangement incorrect.');
+				}
+
+				$oStorage = new storage();
+				if( $oStorage->exists( $storageId ) ){
+					$oBook = new book();
+					$oBook->setStorage( $id, $storageId );
+					$response = 'ok';
+				} else {
+					throw new Exception('Gestion des livres : rangement inconnu.');
+				}
+			break;
 		case 'get' :
 				$id = filter_has_var(INPUT_POST, 'id');
 				if( is_null($id) || $id === false ){

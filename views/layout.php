@@ -14,12 +14,12 @@ include('html_header.php');
 				<ul class="nav">
 					<li>
 						<a href="#book">
-							Books
+							Livres
 						</a>
 					</li>
 					<li>
 						<a href="#movie">
-							Movies
+							Films
 						</a>
 					</li>
 					<li>
@@ -30,13 +30,13 @@ include('html_header.php');
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="#storage">Storages</a></li>
+							<li><a href="#storage">Rangements</a></li>
 							<li class="divider"></li>
 							<li><a href="#saga">Sagas</a></li>
 							<li class="divider"></li>
-							<li><a href="#author">Author</a></li>
-							<li><a href="#artist">Artist</a></li>
-							<li><a href="#band">Bands</a></li>
+							<li><a href="#author">Auteurs</a></li>
+							<li><a href="#artist">Artistes</a></li>
+							<li><a href="#band">Groupes</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -44,7 +44,7 @@ include('html_header.php');
 				<ul class="nav pull-right">
 					<li>
 						<!-- add buttons -->
-						<button data-target="#edit_book" id="add_book" class="btn add" data-toggle="modal" data-manage="book"><i class="icon-plus-sign"></i>Add a book</button>
+						<button data-target="#edit_book" id="add_book" class="btn add" data-toggle="modal" data-manage="book"><i class="icon-plus-sign"></i>Ajouter un livre</button>
 					</li>
 					<li class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-sort"></i></a>
@@ -70,15 +70,17 @@ include('html_header.php');
 	</div>
 </div>
 
-<div class="container-fluid container-list clearfix">
-	<section id="list_book" class="list withCover"></section>
-	<section id="list_movies" class="list withCover"></section>
-	<section id="list_album" class="list withCover"></section>
-	<section id="list_storage" class="list withCover"></section>
-	<section id="list_saga" class="list"></section>
-	<section id="list_author" class="list"></section>
-	<section id="list_artist" class="list"></section>
-	<section id="list_brand" class="list"></section>
+<div class="container-fluid smaller-padding">
+	<div class="container-list">
+		<section id="list_book" class="list withCover"></section>
+		<section id="list_movies" class="list withCover"></section>
+		<section id="list_album" class="list withCover"></section>
+		<section id="list_storage" class="list withCover"></section>
+		<section id="list_saga" class="list"></section>
+		<section id="list_author" class="list"></section>
+		<section id="list_artist" class="list"></section>
+		<section id="list_brand" class="list"></section>
+	</div>
 </div> <!-- /container -->
 
 <div id="drop-overlay">
@@ -97,6 +99,9 @@ include('deletes/book.html');
 
 //details popup
 include('details/book.html');
+
+//store with saga confirms
+include('stores/book.html');
 
 //scripts and footer
 include('html_footer.php');

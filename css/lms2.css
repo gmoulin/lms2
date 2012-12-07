@@ -4,9 +4,14 @@ body {
 }
 
 /** _____________________________________________ LIST **/
+.container-fluid.override {
+  text-align: center;
+  padding: 0 10px;
+}
+
 .container-list {
   min-height: 60px;
-  padding: 0 15px;
+  text-align: left;
   margin: 0 auto;
 }
 
@@ -99,7 +104,7 @@ body {
   display: none;
 }
 .filter-form .span2 {
-  width: 186px;
+  width: 212px;
 }
 
 /** _____________________________________________ EDIT FORM **/
@@ -136,11 +141,11 @@ body {
   margin-left: -380px;
 }
 .modal.with-cover .form-horizontal .control-label {
-  width: 75px;
+  width: 85px;
   padding-right: 10px;
 }
 .modal.with-cover .form-horizontal .controls {
-  margin-left: 80px;
+  margin-left: 95px;
 }
 
 /** _____________________________________________ DROP OVERLAY **/

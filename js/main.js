@@ -242,8 +242,8 @@ $(document).ready(function(){
 			if( $this.siblings('.quicklink').length === 0 ){
 				$this.parent().addClass('input-append');
 				if( rel == 'book' ){
-					$quickLink.clone().attr('title', 'Search on Google Image').appendTo( $this.parent() );
-					$quickLink.clone().attr('title', 'Search on Fantastic Fiction').appendTo( $this.parent() );
+					$quickLink.clone().attr('title', 'Rechercher dans Google Image').appendTo( $this.parent() );
+					$quickLink.clone().attr('title', 'Rechercher dans Fantastic Fiction').appendTo( $this.parent() );
 				}
 			}
 
@@ -310,12 +310,49 @@ $(document).ready(function(){
 
 	/** _____________________________________________ DETAIL **/
 		$body.on('click', '.detail', function(){
-			console.log('button');
 			var $this = $(this),
 				$modal = $( $this.attr('data-target') );
 
 			$detailItem = $this.closest('.item');
 			fillDetailModal( $modal );
+		});
+
+	/** _____________________________________________ STORE WITH SAGA ACTION **/
+		$body.on('click', '.store', function(){
+			var $this = $(this),
+				sagaId = $this.attr('data-sagaId'),
+				itemId = $this.attr('data-itemId'),
+				rel = $this.attr('data-manage'),
+				$modal = $( $this.attr('data-target') ),
+				$inputs = $modal.find('input');
+
+			$inputs.filter('[name="id"]').val( itemId );
+
+			//hide detail if visible
+			$('#detail_'+ rel).modal('hide');
+
+			$.post('ajax/manage'+ rel.capitalize() +'.php', 'action=getSagaStorage&sagaId='+ sagaId, function(data){
+				if( data.storageID && data.storageID > 0 ){
+					$inputs.filter('[name="storageId"]').val( data.storageID );
+
+					var $decoder = $('<textarea/>');
+
+					$modal.find('.storage-description').html( $decoder.html(data.storageRoom +' '+ data.storageType +' - '+ data.storageColumn + data.storageLine).val() );
+				}
+			});
+		});
+
+		$body.on('submit', '.store-form', function(e){
+			e.preventDefault();
+			var $form = $(this),
+				rel = $form.attr('data-manage');
+
+			$.post('ajax/manage'+ rel.capitalize() +'.php', $form.serialize(), function(data){
+				if( data == 'ok' ){
+					$form.closest('.modal').modal('hide');
+					getList(2);
+				}
+			});
 		});
 
 	/** _____________________________________________ ADD / EDIT ACTIONS **/
@@ -476,6 +513,14 @@ $(document).ready(function(){
 						.find('#itemID').val( $this.attr('data-itemId') );
 				}
 			}
+
+			window.setTimeout(function(){
+				//remove validation classes and focus the first field
+				$form
+					.find('select').blur().end()
+					.find('input').filter('[type="text"]').first().focus().end()
+					.find('.control-group').attr('class', 'control-group');
+			}, 300);
 		});
 
 	/** _____________________________________________ DELETE ACTIONS **/
@@ -585,6 +630,11 @@ var tabSwitch = function(){
 
 /**
  * load the list
+ * @param integer type
+ * 		0: new list
+ * 		1: search or sort
+ * 		2: list refresh after item modification
+ * 		3: new page on current list (infinite scroll)
  */
 var getList = function( type ){
 	if( !$nav.length ) return;
@@ -986,7 +1036,6 @@ function upload(file, rel, $coverStatus, $controlGroup){
  * fill detail modal parts from item code in list
  */
 var fillDetailModal = function( $modal ){
-	console.log('filling');
 	var $clone = $detailItem.clone();
 	$detailItem = null;
 

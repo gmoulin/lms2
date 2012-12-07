@@ -469,6 +469,49 @@ class book extends commun {
 	}
 
 	/**
+	 * @param $sagaId
+	 * @return integer $storageID
+	 */
+	public function getStorageIdForSagaId( $sagaId ){
+		try {
+			$getStorage = $this->db->prepare("
+				SELECT storageID, storageRoom, storageType, storageColumn, storageLine
+				FROM books_view
+				WHERE sagaID = :sagaId
+				AND storageRoom != 'aucun'
+			");
+
+			$getStorage->execute(array( ':sagaId' => $sagaId ));
+
+			return $getStorage->fetch();
+
+		} catch ( PDOException $e ){
+			erreur_pdo( $e, get_class( $this ), __FUNCTION__ );
+		}
+	}
+
+	/**
+	 * @param integer $storageId
+	 * @param integer $id: book identifier
+	 */
+	public function setStorage( $id, $storageId ){
+		try {
+			$setStorage = $this->db->prepare("
+				UPDATE book
+				SET bookStorageFK = :storageId
+				WHERE bookID = :id
+			");
+
+			$setStorage->execute(array( ':id' => $id, ':storageId' => $storageId ));
+
+			$this->_cleanCaches();
+
+		} catch ( PDOException $e ){
+			erreur_pdo( $e, get_class( $this ), __FUNCTION__ );
+		}
+	}
+
+	/**
 	 * @param array $data
 	 * @return integer or null
 	 */
