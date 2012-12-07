@@ -10,8 +10,44 @@ include('html_header.php');
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</a>
+
 			<a class="brand" href="#">LMS2</a>
-			<div class="nav-collapse collapse">
+
+				<ul class="nav">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-filter"></i></a>
+						<div class="dropdown-menu filters">
+							<!-- filter forms -->
+							<?php
+								foreach( $parts as $p ){
+									if( file_exists('views/filters/'.$p.'.php') ){
+										include('views/filters/'.$p.'.php');
+									}
+								}
+							?>
+						</div>
+					</li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-sort"></i></a>
+						<div class="dropdown-menu sorts">
+							<!-- sort links -->
+							<?php
+								foreach( $parts as $p ){
+									if( file_exists('views/sorts/'.$p.'.php') ){
+										include('views/sorts/'.$p.'.php');
+									}
+								}
+							?>
+						</div>
+					</li>
+					<li class="hidden-phone hidden-tablet">
+						<!-- add buttons -->
+						<button data-target="#edit_book" id="add_book" class="btn add" data-toggle="modal" data-manage="book"><i class="icon-plus-sign"></i><span>Ajouter un livre</span></button>
+						<button data-target="#edit_movie" id="add_movie" class="btn add" data-toggle="modal" data-manage="movie"><i class="icon-plus-sign"></i><span>Ajouter un film</span></button>
+					</li>
+				</ul>
+
+			<div class="nav-collapse">
 				<ul class="nav">
 					<li>
 						<a href="#book">Livres</a>
@@ -35,46 +71,12 @@ include('html_header.php');
 						</ul>
 					</li>
 				</ul>
-
-				<ul class="nav pull-right">
-					<li>
-						<!-- add buttons -->
-						<button data-target="#edit_book" id="add_book" class="btn add" data-toggle="modal" data-manage="book"><i class="icon-plus-sign"></i>Ajouter un livre</button>
-						<button data-target="#edit_movie" id="add_movie" class="btn add" data-toggle="modal" data-manage="movie"><i class="icon-plus-sign"></i>Ajouter un film</button>
-					</li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-sort"></i></a>
-						<div class="dropdown-menu sorts">
-							<!-- sort links -->
-							<?php
-								foreach( $parts as $p ){
-									if( file_exists('views/sorts/'.$p.'.php') ){
-										include('views/sorts/'.$p.'.php');
-									}
-								}
-							?>
-						</div>
-					</li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-filter"></i></a>
-						<div class="dropdown-menu filters">
-							<!-- filter forms -->
-							<?php
-								foreach( $parts as $p ){
-									if( file_exists('views/filters/'.$p.'.php') ){
-										include('views/filters/'.$p.'.php');
-									}
-								}
-							?>
-						</div>
-					</li>
-				</ul>
 			</div><!--/.nav-collapse -->
 		</div>
 	</div>
 </div>
 
-<div class="container-fluid smaller-padding">
+<div class="container-fluid override">
 	<div class="container-list">
 		<section id="list_book" class="list withCover"></section>
 		<section id="list_movie" class="list withCover"></section>

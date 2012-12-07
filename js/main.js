@@ -5,6 +5,7 @@ var $nav,
 	$doc,
 	$parts,
 	$dropOverlay,
+	$listContainer,
 	$detailItem,
 	activeTab,
 	target,
@@ -13,7 +14,7 @@ var $nav,
 	scrolling = false,
 	end = false,
 	$help,
-	centeringDone = false;
+	centeringDone = true;
 
 var subDomains = ['s1', 's2', 's3'],
 	useSubDomains = false;
@@ -22,11 +23,16 @@ $(document).ready(function(){
 	$win = $(window);
 	$body = $('body');
 	$doc = $(document);
-	$nav = $('.nav').filter(':not(.pull-right)');
+	$nav = $('.nav-collapse');
 	$navLinks = $nav.find('a');
 	$parts = $('.list, .filter-form, .sort-links, .add');
 	$dropOverlay = $('#drop-overlay');
 	$help = $('<span class="help-block"></span>');
+	$listContainer = $('.container-list');
+
+	$win.resize(function(){
+		responseToResize();
+	});
 
 	/** _____________________________________________ IMG SUBDOMAINS **/
 		//improve image loading using subdomains
@@ -619,6 +625,8 @@ $(document).ready(function(){
  * change the current tab
  */
 var tabSwitch = function(){
+	var onLoad = target === undefined;
+
 	target = window.location.hash.substr(1) || $navLinks.eq(0).attr('href').substr(1);
 
 	$navLinks.parents().removeClass('active');
@@ -627,14 +635,18 @@ var tabSwitch = function(){
 	$parts.hide()
 		.filter('[id$="_'+ target +'"]').show();
 
-	if( target != activeTab ) centeringDone = false;
+	if( target != activeTab && $listContainer.width() > 767 ) centeringDone = false;
 
 	activeTab = target;
 
 	if( $('#list_'+ target).length > 0 ){ // Argument is a valid tab name
 		window.location.hash = '#' + target; //security if hash empty
 
-		getList(0);
+		if( !onLoad ){
+			getList(0);
+		} else {
+			responseToResize();
+		}
 	}
 };
 
@@ -687,8 +699,7 @@ var getList = function( type ){
 			$list.append( tmpl('list_'+ target +'_tmpl', data) );
 
 			if( !centeringDone ){
-				var $listContainer = $('.container-list'),
-					containerWidth = $listContainer.width(),
+				var containerWidth = $listContainer.width(),
 					itemWidth = $listContainer.find('#list_'+ activeTab).find('.item').first().width();
 
 				$listContainer.width( Math.floor(containerWidth / itemWidth) * itemWidth );
@@ -1062,4 +1073,15 @@ var fillDetailModal = function( $modal ){
 	$modal.find('.modal-body')
 		.find('.cover').html( $clone.find('img') ).end()
 		.find('.data').html( $clone.find('dl') );
+};
+
+/**
+ * called when window resize
+ */
+var responseToResize = function(){
+	if( matchMedia('screen and (max-width: 480px)').matches ){
+		$('.sorts').find('.btn-group').addClass('responseTo').removeClass('btn-group');
+
+		getList(1);
+	}
 };

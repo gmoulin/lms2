@@ -1,6 +1,21 @@
 <script type="text/html" id="list_book_tmpl">
-<%
-	var item, i, j, url, id, author;
+<%	var item, i, j, url, id, author,
+		partsToHide = {
+			authors: false,
+			size: false,
+			loan: false
+		},
+		shrinkActions = false;
+
+	if( matchMedia('screen and (max-width: 480px)').matches ){
+		partsToHide.authors = true;
+		partsToHide.size = true;
+		partsToHide.loan = true;
+
+		if( matchMedia('screen and (orientation: portrait)').matches ){
+			shrinkActions = true;
+		}
+	}
 	for( i = 0; i < list.length; i += 1 ){
 		item = list[i];
 		url = getFullUrl('image.php?cover=book&id=', item.bookID);
@@ -21,13 +36,13 @@
 					</dd>
 				<% } %>
 
-				<dt>Auteur<% if( item.authors.length > 1 ){ %>s<% } %></dt>
+				<dt class="<% if( partsToHide.authors ) { %>list-hide<% } %>">Auteur<% if( item.authors.length > 1 ){ %>s<% } %></dt>
 				<%  j = 0;
 					for( id in item.authors ){
 						if( item.authors.hasOwnProperty(id) ){
 							author = item.authors[ id ];
 				%>
-					<dd class="<% if( j > 3 ){ %>list-hide<% } %>">
+					<dd class="<% if( partsToHide.authors || j > 3 ){ %>list-hide<% } %>">
 						<%=author.authorFirstName%> <%=author.authorLastName%>
 						<button class="btn btn-small btn-info filter"
 							data-filter="author" data-value="<%=author.authorFirstName%> <%=author.authorLastName%>"
@@ -38,8 +53,8 @@
 						j++;
 					} %>
 
-				<dt>Format</dt>
-				<dd><%=item.bookSize%></dd>
+				<dt class="<% if( partsToHide.size ) { %>list-hide<% } %>">Format</dt>
+				<dd class="<% if( partsToHide.size ) { %>list-hide<% } %>"><%=item.bookSize%></dd>
 
 				<dt>Rangement</dt>
 				<dd>
@@ -69,8 +84,8 @@
 				</dd>
 
 				<% if( item.loanHolder !== null ){ %>
-					<dt>Prêt</dt>
-					<dd>
+					<dt class="<% if( partsToHide.loan ) { %>list-hide<% } %>">Prêt</dt>
+					<dd class="<% if( partsToHide.loan ) { %>list-hide<% } %>">
 						<%=item.loanHolder%> - <%=item.loanDate%>
 						<button class="btn delete btn-danger dtn-small list-hide"
 							data-toggle="modal" data-target="#delete_loan" data-manage="loan"
@@ -87,23 +102,33 @@
 				<dd>
 					<div class="btn-group">
 						<button class="btn detail btn-info btn-small" data-toggle="modal" data-target="#detail_book" data-manage="book">
-							<i class="icon-eye-open"></i> Détail
+							<i class="icon-eye-open"></i>
+							<% if( !shrinkActions ){ %>Détail<% } %>
 						</button>
 
 						<button class="btn edit btn-warning btn-small"
 							data-toggle="modal" data-target="#edit_book" data-manage="book"
 							data-itemId="<%=item.bookID%>"
-						><i class="icon-edit"></i> Modifier</button>
+						>
+							<i class="icon-edit"></i>
+							<% if( !shrinkActions ){ %>Modifier<% } %>
+						</button>
 
 						<button class="btn delete btn-danger btn-small"
 							data-toggle="modal" data-target="#delete_book" data-manage="book"
 							data-itemId="<%=item.bookID%>"
-						><i class="icon-trash"></i> Supprimer</button>
+						>
+							<i class="icon-trash"></i>
+							<% if( !shrinkActions ){ %>Supprimer<% } %>
+						</button>
 
 						<button class="btn add btn-info btn-small"
 							data-toggle="modal" data-target="#edit_loan" data-manage="loan"
 							data-itemId="<%=item.bookID%>" data-relation="book"
-						><i class="icon-user"></i> Prêt</button>
+						>
+							<i class="icon-user"></i>
+							<% if( !shrinkActions ){ %>Prêt<% } %>
+						</button>
 					</div>
 				</dd>
 			</dl>

@@ -1,13 +1,14 @@
 @import "variables"; //use bootstrap variables
 
 /** _____________________________________________ BODY **/
-	body {
-		padding-top: 40px;
-	}
 
 /** _____________________________________________ NAV **/
-	.add {
+	.navbar .add {
 		display: none;
+
+		span {
+			padding-left: 4px;
+		}
 	}
 
 	.navbar .sort-links .btn-group {
@@ -29,83 +30,137 @@
 	.list {
 		display: none;
 
-		&.withCover {
-			.item {
-				position: relative;
-
-				float: left; /* to avoid white-space madness */
-
-				background-size: 100% 100%;
-			}
-		}
-
 		.list-hide {
 			display: none;
 		}
 	}
 
-	.withCover dl {
-		position: absolute;
-		top: 0;
-		left: 0;
+	.withCover {
+		dl {
+			position: absolute;
+			top: 0;
+			left: 0;
 
-		display: none;
-		margin: 0;
-		padding: 6px 4px;
-		width: calc(100% - 8px);
-		height: calc(100% - 12px);
+			display: none;
+			margin: 0;
+			padding: 6px 4px;
+			width: calc(100% - 8px);
+			height: calc(100% - 12px);
 
-		background-color: rgba(0, 0, 0, 0.9);
-		color: #fff;
-	}
+			background-color: rgba(0, 0, 0, 0.9);
+			color: #fff;
+		}
 
-	.withCover .item:hover dl {
-		display: block;
+		.item {
+			position: relative;
+
+			float: left; /* to avoid white-space madness */
+
+			background-size: 100% 100%;
+			display: block;
+		}
 	}
 
 /** _____________________________________________ LIST ITEM DIMESIONS **/
 	$itemWith: 195px;
 	$itemHeight: 260px;
 
-	@media (min-width: 1400px) {
+	@media screen and (min-width: 1400px) {
+		body {
+			padding-top: 40px;
+		}
+
 		.withCover .item {
 			width: $itemWith * 1.6;
 			height: $itemHeight * 1.6;
 		}
 	}
 
-	@media (min-width: 1200px) and (max-width: 1399px) {
+	@media screen and (min-width: 1200px) and (max-width: 1399px) {
+		body {
+			padding-top: 40px;
+		}
+
 		.withCover .item {
 			width: $itemWith * 1.4;
 			height: $itemHeight * 1.4;
 		}
 	}
 
-	@media (min-width: 980px) and (max-width: 1199px) {
+	@media screen and (min-width: 980px) and (max-width: 1199px) {
+		body {
+			padding-top: 40px;
+		}
+
 		.withCover .item {
 			width: $itemWith * 1.2;
 			height: $itemHeight * 1.2;
 		}
 	}
 
-	@media (min-width: 768px) and (max-width: 979px) {
+	@media screen and(min-width: 768px) and (max-width: 979px) {
+		body {
+			padding-top: 40px;
+		}
+
 		.withCover .item {
 			width: $itemWith * 1;
 			height: $itemHeight * 1;
 		}
 	}
 
-	@media (max-width: 767px) {
+	@media screen and (max-width: 767px) {
 		.withCover .item {
-			width: $itemWith * 0.8;
-			height: $itemHeight * 0.8;
+			width: $itemWith * 2.4;
+			height: $itemHeight * 2.4;
 		}
 	}
 
-	@media (max-width: 480px) {
+	@media screen and (max-width: 480px) {
+		.container-fluid.override {
+			padding: 0;
+		}
+
+		.navbar .add span {
+			display: none;
+		}
+
 		.withCover .item {
-			width: $itemWith * 0.6;
-			height: $itemHeight * 0.6;
+			width: $itemWith * 1.4;
+			height: $itemHeight * 1.4;
+		}
+
+		.filter-form {
+			.input-append {
+				select {
+					display: inline-block;
+					width: calc(100% - 42px);
+				}
+
+				.span2 {
+					width: 141px;
+				}
+			}
+		}
+
+		.filters {
+			left: -46px;
+		}
+
+		.sorts {
+			left: -58px;
+		}
+
+		.navbar .nav > li > .dropdown-menu.filters:after {
+			left: 62px;
+		}
+
+		.navbar .nav > li > .dropdown-menu.sorts:after {
+			left: 74px;
+		}
+
+		.sort-links .btn {
+			display: block;
 		}
 	}
 
@@ -212,4 +267,9 @@
 		font-weight: bold;
 		text-align: center;
 		text-shadow: 1px 1px 2px #000000;
+	}
+
+/** _____________________________________________ DETAIL MODAL **/
+	.modal-detail .detail {
+		display: none;
 	}
