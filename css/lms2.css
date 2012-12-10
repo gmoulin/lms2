@@ -1,4 +1,13 @@
 /** _____________________________________________ BODY **/
+body {
+  padding-top: 40px;
+}
+@media (max-width: 979px) {
+  body {
+    padding-top: 0;
+  }
+}
+
 /** _____________________________________________ NAV **/
 .navbar .add {
   display: none;
@@ -6,15 +15,34 @@
 .navbar .add span {
   padding-left: 4px;
 }
+@media screen and (max-width: 480px) {
+  .navbar .add span {
+    display: none;
+  }
+}
 
 .navbar .sort-links .btn-group {
   margin-top: 0;
+}
+
+.navbar .container-fluid > .nav {
+  float: right;
+}
+@media (max-width: 979px) {
+  .navbar .container-fluid > .nav {
+    float: none;
+  }
 }
 
 /** _____________________________________________ LIST **/
 .container-fluid.override {
   text-align: center;
   padding: 0 10px;
+}
+@media screen and (max-width: 480px) {
+  .container-fluid.override {
+    padding: 0;
+  }
 }
 
 .container-list {
@@ -49,43 +77,30 @@
   background-size: 100% 100%;
   display: block;
 }
+.withCover .item:hover dl {
+  display: block;
+}
 
-/** _____________________________________________ LIST ITEM DIMESIONS **/
+/** _____________________________________________ LIST ITEM DIMENSIONS **/
 @media screen and (min-width: 1400px) {
-  body {
-    padding-top: 40px;
-  }
-
   .withCover .item {
     width: 312px;
     height: 416px;
   }
 }
 @media screen and (min-width: 1200px) and (max-width: 1399px) {
-  body {
-    padding-top: 40px;
-  }
-
   .withCover .item {
     width: 273px;
     height: 364px;
   }
 }
 @media screen and (min-width: 980px) and (max-width: 1199px) {
-  body {
-    padding-top: 40px;
-  }
-
   .withCover .item {
     width: 234px;
     height: 312px;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 979px) {
-  body {
-    padding-top: 40px;
-  }
-
   .withCover .item {
     width: 195px;
     height: 260px;
@@ -98,47 +113,12 @@
   }
 }
 @media screen and (max-width: 480px) {
-  .container-fluid.override {
-    padding: 0;
-  }
-
-  .navbar .add span {
-    display: none;
-  }
-
   .withCover .item {
     width: 273px;
     height: 364px;
   }
-
-  .filter-form .input-append select {
-    display: inline-block;
-    width: calc(100% - 42px);
-  }
-  .filter-form .input-append .span2 {
-    width: 141px;
-  }
-
-  .filters {
-    left: -46px;
-  }
-
-  .sorts {
-    left: -58px;
-  }
-
-  .navbar .nav > li > .dropdown-menu.filters:after {
-    left: 62px;
-  }
-
-  .navbar .nav > li > .dropdown-menu.sorts:after {
-    left: 74px;
-  }
-
-  .sort-links .btn {
-    display: block;
-  }
 }
+
 /** _____________________________________________ FILTERS & SORTS **/
 .dropdown-menu.filters,
 .dropdown-menu.sorts {
@@ -158,6 +138,44 @@
 }
 .filter-form .span2 {
   width: 212px;
+}
+@media screen and (max-width: 480px) {
+  .filter-form .input-append select {
+    display: inline-block;
+    width: calc(100% - 42px);
+  }
+  .filter-form .input-append .span2 {
+    width: 141px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .filters {
+    left: -46px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .sorts {
+    left: -58px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .navbar .nav > li > .dropdown-menu .filters:after {
+    left: 62px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .navbar .nav > li > .dropdown-menu .sorts:after {
+    left: 74px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .sort-links .btn {
+    display: block;
+  }
 }
 
 /** _____________________________________________ EDIT FORM **/

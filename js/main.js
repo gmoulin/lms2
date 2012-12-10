@@ -7,6 +7,8 @@ var $nav,
 	$dropOverlay,
 	$listContainer,
 	$detailItem,
+	$pagiNb,
+	$pagiTotal,
 	activeTab,
 	target,
 	updating = 0,
@@ -29,6 +31,11 @@ $(document).ready(function(){
 	$dropOverlay = $('#drop-overlay');
 	$help = $('<span class="help-block"></span>');
 	$listContainer = $('.container-list');
+
+	var $pagi = $('.pagination');
+	$pagiNb = $pagi.find('.nb');
+	$pagiTotal = $pagi.find('.total');
+	$pagi = null;
 
 	$win.resize(function(){
 		responseToResize();
@@ -642,7 +649,7 @@ var tabSwitch = function(){
 	if( $('#list_'+ target).length > 0 ){ // Argument is a valid tab name
 		window.location.hash = '#' + target; //security if hash empty
 
-		if( !onLoad ){
+		if( onLoad ){
 			getList(0);
 		} else {
 			responseToResize();
@@ -695,6 +702,9 @@ var getList = function( type ){
 			}
 
 			end = (data.nb == data.total);
+
+			$pagiNb.text( data.nb );
+			$pagiTotal.text( data.total );
 
 			$list.append( tmpl('list_'+ target +'_tmpl', data) );
 

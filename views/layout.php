@@ -13,39 +13,43 @@ include('html_header.php');
 
 			<a class="brand" href="#">LMS2</a>
 
-				<ul class="nav">
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-filter"></i></a>
-						<div class="dropdown-menu filters">
-							<!-- filter forms -->
-							<?php
-								foreach( $parts as $p ){
-									if( file_exists('views/filters/'.$p.'.php') ){
-										include('views/filters/'.$p.'.php');
-									}
+			<ul class="nav">
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-filter"></i></a>
+					<div class="dropdown-menu filters">
+						<!-- filter forms -->
+						<?php
+							foreach( $parts as $p ){
+								if( file_exists('views/filters/'.$p.'.php') ){
+									include('views/filters/'.$p.'.php');
 								}
-							?>
-						</div>
-					</li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-sort"></i></a>
-						<div class="dropdown-menu sorts">
-							<!-- sort links -->
-							<?php
-								foreach( $parts as $p ){
-									if( file_exists('views/sorts/'.$p.'.php') ){
-										include('views/sorts/'.$p.'.php');
-									}
+							}
+						?>
+					</div>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-sort"></i></a>
+					<div class="dropdown-menu sorts">
+						<!-- sort links -->
+						<?php
+							foreach( $parts as $p ){
+								if( file_exists('views/sorts/'.$p.'.php') ){
+									include('views/sorts/'.$p.'.php');
 								}
-							?>
+							}
+						?>
+
+						<div class="pagination">
+							<span class="nb"><span> sur <span class="total"></span>
 						</div>
-					</li>
-					<li class="hidden-phone hidden-tablet">
-						<!-- add buttons -->
-						<button data-target="#edit_book" id="add_book" class="btn add" data-toggle="modal" data-manage="book"><i class="icon-plus-sign"></i><span>Ajouter un livre</span></button>
-						<button data-target="#edit_movie" id="add_movie" class="btn add" data-toggle="modal" data-manage="movie"><i class="icon-plus-sign"></i><span>Ajouter un film</span></button>
-					</li>
-				</ul>
+					</div>
+				</li>
+				<li class="hidden-phone hidden-tablet">
+					<!-- add buttons -->
+					<button data-target="#edit_book" id="add_book" class="btn add" data-toggle="modal" data-manage="book"><i class="icon-plus-sign"></i><span>Ajouter un livre</span></button>
+					<button data-target="#edit_movie" id="add_movie" class="btn add" data-toggle="modal" data-manage="movie"><i class="icon-plus-sign"></i><span>Ajouter un film</span></button>
+				</li>
+			</ul>
 
 			<div class="nav-collapse">
 				<ul class="nav">

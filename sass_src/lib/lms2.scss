@@ -1,6 +1,43 @@
 @import "variables"; //use bootstrap variables
 
+//widths breaks
+$phone: 480px;
+$tablet: 768px;
+$desktop: 980px;
+$large: 1200px;
+$xlarge: 1400px;
+
+@mixin respond-to($media) {
+	@if $media == phone {
+		@media screen and (max-width: $phone) { @content; }
+	}
+	@else if $media == tablet {
+		@media screen and (max-width: $tablet - 1) { @content; }
+	}
+	@else if $media == small_desktop {
+		@media screen and(min-width: $tablet) and (max-width: $desktop - 1) { @content; }
+	}
+	@else if $media == desktop {
+		@media screen and (min-width: $desktop) and (max-width: $large - 1) { @content; }
+	}
+	@else if $media == large {
+		@media screen and (min-width: $large) and (max-width: $xlarge - 1) { @content; }
+	}
+	@else if $media == xlarge {
+		@media screen and (min-width: $xlarge) { @content; }
+	}
+	@else if $media == navbar_collapsed {
+		@media (max-width: $navbarCollapseWidth) { @content; }
+	}
+}
+
+
 /** _____________________________________________ BODY **/
+	body {
+		padding-top: 40px;
+
+		@include respond-to(navbar_collapsed) { padding-top: 0; }
+	}
 
 /** _____________________________________________ NAV **/
 	.navbar .add {
@@ -8,6 +45,8 @@
 
 		span {
 			padding-left: 4px;
+
+			@include respond-to(phone) { display: none; }
 		}
 	}
 
@@ -15,10 +54,18 @@
 		margin-top: 0;
 	}
 
+	.navbar .container-fluid > .nav {
+		float: right;
+
+		@include respond-to(navbar_collapsed) { float: none; }
+	}
+
 /** _____________________________________________ LIST **/
 	.container-fluid.override {
 		text-align: center;
 		padding: 0 10px;
+
+		@include respond-to(phone) { padding: 0; }
 	}
 
 	.container-list {
@@ -58,109 +105,46 @@
 
 			background-size: 100% 100%;
 			display: block;
+
+			&:hover dl {
+				display: block;
+			}
 		}
 	}
 
-/** _____________________________________________ LIST ITEM DIMESIONS **/
+/** _____________________________________________ LIST ITEM DIMENSIONS **/
 	$itemWith: 195px;
 	$itemHeight: 260px;
 
-	@media screen and (min-width: 1400px) {
-		body {
-			padding-top: 40px;
-		}
-
-		.withCover .item {
+	.withCover .item {
+		@include respond-to(xlarge) {
 			width: $itemWith * 1.6;
 			height: $itemHeight * 1.6;
 		}
-	}
 
-	@media screen and (min-width: 1200px) and (max-width: 1399px) {
-		body {
-			padding-top: 40px;
-		}
-
-		.withCover .item {
+		@include respond-to(large) {
 			width: $itemWith * 1.4;
 			height: $itemHeight * 1.4;
 		}
-	}
 
-	@media screen and (min-width: 980px) and (max-width: 1199px) {
-		body {
-			padding-top: 40px;
-		}
-
-		.withCover .item {
+		@include respond-to(desktop) {
 			width: $itemWith * 1.2;
 			height: $itemHeight * 1.2;
 		}
-	}
 
-	@media screen and(min-width: 768px) and (max-width: 979px) {
-		body {
-			padding-top: 40px;
-		}
-
-		.withCover .item {
+		@include respond-to(small_desktop) {
 			width: $itemWith * 1;
 			height: $itemHeight * 1;
 		}
-	}
 
-	@media screen and (max-width: 767px) {
-		.withCover .item {
+		@include respond-to(tablet) {
 			width: $itemWith * 2.4;
 			height: $itemHeight * 2.4;
 		}
-	}
 
-	@media screen and (max-width: 480px) {
-		.container-fluid.override {
-			padding: 0;
-		}
-
-		.navbar .add span {
-			display: none;
-		}
-
-		.withCover .item {
+		@include respond-to(phone) {
 			width: $itemWith * 1.4;
 			height: $itemHeight * 1.4;
-		}
-
-		.filter-form {
-			.input-append {
-				select {
-					display: inline-block;
-					width: calc(100% - 42px);
-				}
-
-				.span2 {
-					width: 141px;
-				}
-			}
-		}
-
-		.filters {
-			left: -46px;
-		}
-
-		.sorts {
-			left: -58px;
-		}
-
-		.navbar .nav > li > .dropdown-menu.filters:after {
-			left: 62px;
-		}
-
-		.navbar .nav > li > .dropdown-menu.sorts:after {
-			left: 74px;
-		}
-
-		.sort-links .btn {
-			display: block;
 		}
 	}
 
@@ -185,6 +169,51 @@
 
 		.span2 {
 			width: 212px;
+		}
+
+		@include respond-to(phone) {
+			.input-append {
+				select {
+					display: inline-block;
+					width: calc(100% - 42px);
+				}
+
+				.span2 {
+					width: 141px;
+				}
+			}
+		}
+	}
+
+	.filters {
+		@include respond-to(phone) {
+			left: -46px;
+		}
+	}
+
+	.sorts {
+		@include respond-to(phone) {
+			left: -58px;
+		}
+	}
+
+	.navbar .nav > li > .dropdown-menu {
+		.filters:after {
+			@include respond-to(phone) {
+				left: 62px;
+			}
+		}
+
+		.sorts:after {
+			@include respond-to(phone) {
+				left: 74px;
+			}
+		}
+	}
+
+	.sort-links .btn {
+		@include respond-to(phone) {
+			display: block;
 		}
 	}
 
