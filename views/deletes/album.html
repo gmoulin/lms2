@@ -1,0 +1,20 @@
+<div id="delete_album" class="modal hide fade delete-modal">
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal"><i class="icon-remove-sign"></i></button>
+		<h3>Confirmation de suppression</h3>
+	</div>
+	<div class="modal-body">
+		<form id="album_delete_form" name="album_form" method="post" action="" class="delete-form" data-manage="album">
+			<input type="hidden" id="albumAction" name="action" value="delete" />
+			<input type="hidden" id="albumID" name="id" value="" />
+
+			<p class="lead">
+				Êtes-vous sûre ?
+			</p>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="reset" class="btn btn-warning" data-dismiss="modal">Annuler</button>
+		<button type="submit" class="btn btn-primary" form="album_delete_form">Confirmer</button>
+	</div>
+</div>

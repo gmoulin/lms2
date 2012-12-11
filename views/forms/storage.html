@@ -1,0 +1,62 @@
+<div id="edit_storage" class="modal hide fade modal-edit with-cover">
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal"><i class="icon-remove-sign"></i></button>
+		<h3>Formulaire de gestion des rangements</h3>
+	</div>
+	<div class="modal-body">
+		<div class="row-fluid">
+			<div class="span4">
+				<span class="cover-preview"></span>
+			</div>
+			<div class="span8">
+				<form id="storage_form" name="storage_form" method="post" action="" class="edit-form form-horizontal" data-manage="storage">
+					<input type="hidden" id="storageAction" name="action" value="" />
+					<input type="hidden" id="storageID" name="id" value="" />
+					<div class="control-group">
+						<label class="control-label" for="storageRoom">Pièce *</label>
+						<div class="controls">
+							<input type="text" id="storageRoom" name="room" class="control input-large" list="storageRoomList" placeholder="pièce du rangement" required autocomplete="off">
+							<datalist id="storageRoomList">
+								<option value="">Pièces déjà présentes</option>
+							</datalist>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="storageType">Type *</label>
+						<div class="controls">
+							<input type="text" id="storageType" name="type" class="control input-large" list="storageTypeList" placeholder="type du rangement" required autocomplete="off">
+							<datalist id="storageTypeList">
+								<option value="">Types déjà présents</option>
+							</datalist>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="storageColumn">Colonne</label>
+						<div class="controls">
+							<input type="text" id="storageColumn" name="column" class="control input-large" placeholder="colonne du rangement" maxlength="1" pattern="[A-Z]+" autocomplete="off">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="storageLine">Ligne</label>
+						<div class="controls">
+							<input type="number" id="storageLine" name="line" class="control input-large" placeholder="ligne du rangement" min="1" autocomplete="off">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="storageCoverStatus">Couverture</label>
+						<div class="controls">
+							<input type="hidden" id="storageCover" name="cover" class="" value="" />
+							<div id="storageCoverStatus" class="cover-status control well input-large">
+								<i class="icon-picture"></i> Déposer l'image
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="reset" class="btn btn-warning" data-dismiss="modal">Annuler</button>
+		<button type="submit" class="btn btn-primary" form="storage_form">Enregistrer</button>
+	</div>
+</div>

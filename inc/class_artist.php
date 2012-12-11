@@ -330,15 +330,14 @@ class artist extends commun {
 	public function delArtistImpact( $id ) {
 		try {
 			$delArtistImpact = $this->db->prepare("
-				SELECT movieID AS impactID, movieTitle AS impactTitle, 'movie' AS type
-				FROM movie
-				INNER JOIN movies_artists ON movieFK = movieID
-				WHERE artistFK = :artistFK
-				AND movieFK NOT IN ( SELECT movieFK FROM movies_artists WHERE artistFK != :artistFKsub )
-				ORDER BY impactTitle
+				SELECT movieID AS impactID, movieTitle AS impactTitle, sagaTitle
+				FROM movies_view mv
+				INNER JOIN movie_artists_view mav ON movieID = movieFK
+				WHERE artistID = :artistFK
+				ORDER BY sagaTitle, impactTitle
 			");
 
-			$delArtistImpact->execute( array( ':artistFK' => $id, ':artistFKsub' => $id ) );
+			$delArtistImpact->execute( array( ':artistFK' => $id ) );
 
 			return $delArtistImpact->fetchAll();
 

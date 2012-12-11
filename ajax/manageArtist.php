@@ -1,7 +1,7 @@
 <?php
 //manage artists related ajax requests
 try {
-	require_once('../conf.ini.php');
+	require_once('../inc/conf.ini.php');
 
 	header('Content-type: application/json');
 
@@ -78,7 +78,7 @@ try {
 				$oArtist = new artist();
 				$response = $oArtist->delArtistImpact( $id );
 
-				include( LMS_PATH . '/list/impact.php' );
+				include( '../views/impacts/artist.php' );
 				die;
 			break;
 		case 'get' :
@@ -166,7 +166,6 @@ try {
 				if( $nb > $_SESSION['artists']['total'] ) $nb = $_SESSION['artists']['total'];
 
 				$response = array('nb' => $nb, 'total' => $_SESSION['artists']['total'], 'list' => $artists);
-
 			break;
 		case 'more':
 				if( isset($_SESSION['artists']) ){

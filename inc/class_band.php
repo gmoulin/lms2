@@ -608,15 +608,14 @@ class band extends commun {
 	public function delBandImpact( $id ) {
 		try {
 			$delBandImpact = $this->db->prepare("
-				SELECT albumID AS impactID, albumTitle AS impactTitle, 'album' AS type
-				FROM album
-				INNER JOIN albums_bands ON albumFK = albumID
-				WHERE bandFK = :bandFK
-				AND albumFK NOT IN ( SELECT albumFK FROM albums_bands WHERE bandFK != :bandFKsub )
-				ORDER BY impactTitle
+				SELECT albumID AS impactID, albumTitle AS impactTitle, sagaTitle
+				FROM albums_view av
+				INNER JOIN album_bands_view abv ON albumID = albumFK
+				WHERE bandID = :bandFK
+				ORDER BY sagaTitle, impactTitle
 			");
 
-			$delBandImpact->execute( array( ':bandFK' => $id, ':bandFKsub' => $id ) );
+			$delBandImpact->execute( array( ':bandFK' => $id ) );
 
 			return $delBandImpact->fetchAll();
 

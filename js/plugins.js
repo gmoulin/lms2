@@ -29,6 +29,30 @@ String.prototype.capitalize = function(){
 };
 
 /**
+ * replace accentued characters by non accentued counterpart
+ * and remove spaces
+ * used in jquery template
+ */
+String.prototype.urlify = function(){
+	var s = this,
+		accent = 'ÀÁÂÃÄÅàáâãäåÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñŠšŸÿýŽž ',
+		without = ['A','A','A','A','A','A','a','a','a','a','a','a','O','O','O','O','O','O','O','o','o','o','o','o','o','E','E','E','E','e','e','e','e','e','C','c','D','I','I','I','I','i','i','i','i','U','U','U','U','u','u','u','u','N','n','S','s','Y','y','y','Z','z',''],
+		result = [];
+
+	s = s.split('');
+	len = s.length;
+	for (var i = 0; i < len; i++){
+		var j = accent.indexOf(s[i]);
+		if( j != -1 ){
+			result[i] = without[j];
+		} else {
+			result[i] = s[i];
+		}
+	}
+	return result.join('');
+};
+
+/**
  * localStorage method for caching javascript objects
  */
 Storage.prototype.setObject = function(key, value){

@@ -1,0 +1,39 @@
+<div id="edit_band" class="modal hide fade modal-edit">
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal"><i class="icon-remove-sign"></i></button>
+		<h3>Formulaire de gestion des groupes</h3>
+	</div>
+	<div class="modal-body">
+		<div class="row-fluid">
+			<form id="band_form" name="band_form" method="post" action="" class="edit-form form-horizontal" data-manage="band">
+				<input type="hidden" id="bandAction" name="action" value="" />
+				<input type="hidden" id="bandID" name="id" value="" />
+				<div class="control-group">
+					<label class="control-label" for="bandName">Nom *</label>
+					<div class="controls">
+						<input type="text" id="bandName" name="name" class="control input-large" placeholder="nom du groupe" required autocomplete="off">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="bandGenre">Genre *</label>
+					<div class="controls">
+						<input type="text" id="bandGenre" name="genre" class="control input-large" list="bandGenreList" placeholder="genre du groupe" autocomplete="off">
+						<datalist id="bandGenreList">
+							<option value="">Genres déjà présents</option>
+						</datalist>
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="bandWebSite">Site</label>
+					<div class="controls">
+						<input type="url" id="bandWebSite" name="webSite" class="control input-large" placeholder="site du groupe" autocomplete="off">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="reset" class="btn btn-warning" data-dismiss="modal">Annuler</button>
+		<button type="submit" class="btn btn-primary" form="band_form">Enregistrer</button>
+	</div>
+</div>

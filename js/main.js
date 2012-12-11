@@ -1,5 +1,8 @@
+'use strict';
+
 var $nav,
 	$navLinks,
+	$navDropdowns,
 	$body,
 	$win,
 	$doc,
@@ -27,6 +30,7 @@ $(document).ready(function(){
 	$doc = $(document);
 	$nav = $('.nav-collapse');
 	$navLinks = $nav.find('a');
+	$navDropdowns = $('.navbar').find('.container-fluid').children('.nav').find('.dropdown');
 	$parts = $('.list, .filter-form, .sort-links, .add');
 	$dropOverlay = $('#drop-overlay');
 	$help = $('<span class="help-block"></span>');
@@ -261,6 +265,8 @@ $(document).ready(function(){
 				} else if( rel == 'movie' ){
 					$quickLink.clone().attr('title', 'Rechercher dans Google Image').appendTo( $this.parent() );
 					$quickLink.clone().attr('title', 'Rechercher dans IMDB').appendTo( $this.parent() );
+				} else if( rel == 'album' ){
+					$quickLink.clone().attr('title', 'Rechercher dans Google Image').appendTo( $this.parent() );
 				}
 			}
 
@@ -272,6 +278,8 @@ $(document).ready(function(){
 				$this.siblings('.quicklink')
 					.first().attr('href', 'http://www.google.com/images?q=' + $this.val() + ' movie').end()
 					.last().attr('href', 'http://www.imdb.com/find?s=all&q='+ $this.val());
+			} else if( rel == 'album' ){
+				$this.siblings('.quicklink').attr('href', 'http://www.google.com/images?q=' + $this.val() + ' movie').end()
 			}
 		});
 
@@ -508,9 +516,7 @@ $(document).ready(function(){
 								$('#sagaID').val( data.sagaID );
 								$('#sagaTitle').val( decoder.html(data.sagaTitle).val() );
 								$('#sagaSearchURL').val( data.sagaSearchURL );
-								if( data.sagaRating >= 1 ){
-									$('#star'+ data.sagaRating).prop('checked', true);
-								}
+								$('#sagaRating_'+ data.sagaRating).prop('checked', true);
 							break;
 						case 'storage':
 								$('#storageID').val( data.storageID );
@@ -532,6 +538,8 @@ $(document).ready(function(){
 					$form
 						.find('#loanFor').val( $this.attr('data-relation') ).end()
 						.find('#itemID').val( $this.attr('data-itemId') );
+				} else if( rel == 'album' ){
+					$form.find('#albumStorage').data('selectedId', 56); //Miro
 				}
 			}
 
@@ -550,7 +558,32 @@ $(document).ready(function(){
 				$modal = $( $this.attr('data-target') ),
 				$form = $modal.find('.delete-form'),
 				rel = $this.attr('data-manage'),
+				r = rel.capitalize(),
 				itemId = $this.attr('data-itemId');
+
+			if( rel == 'storage' || rel == 'author' || rel == 'artist' || rel == 'band' || rel == 'saga' ){
+				$.ajax({
+					url: 'ajax/manage'+ r +'.php',
+					type: 'POST',
+					data: 'action=impact&id='+ itemId,
+					dataType: 'html',
+					async: false,
+					success: function(data){
+						if( $.trim(data) !== '' ){
+							$form
+								.find('.impact').html(data).end()
+								.find('.lead').hide();
+							$modal.find('.modal-footer').find('.btn-primary').prop({ disabled: true });
+							$('#impact'+ r +'List').loadList();
+						} else {
+							$form
+								.find('.impact').hide().end()
+								.find('.lead').show();
+							$modal.find('.modal-footer').find('.btn-primary').removeProp('disabled');
+						}
+					}
+				});
+			}
 
 			$form.data('save_clicked', 0)
 				.find('#'+ rel +'ID').val( itemId );
@@ -579,6 +612,45 @@ $(document).ready(function(){
 					}
 				});
 			}
+		});
+
+		$body.on('submit', '.impact-form', function(e){
+			e.preventDefault();
+
+			if( $('#impactStorageList').val() === '' ){
+				formErrors([['impactStorageList', 'Le nouveau rangement est requis.', 'required']]);
+			} else {
+				var $form = $(this);
+				$.post('ajax/manageStorage.php', 'action=relocate&'+ $.param( $form.find('input:checked, select'), true ), function(data){
+					if( data == 'ok' ){
+						//clean the relocated items
+						$impactStorage.find('input').filter(':checked').parent().remove();
+
+						//activate the confirm button when all items have been relocated
+						if( $form.find('input').length === 0 ){
+							$form.closest('.detele-modal')
+								.find('.modal-footer').find('.btn-primary').removeProp("disabled").end()
+								.find('.lead').show();
+
+							$form.parent()
+								.find('.modal-impact').remove().end()
+								.hide();
+						}
+					}
+				});
+			}
+		});
+
+		$body.on('click', '.impact-form h3', function(e){
+			var $this = $(this),
+				$sagaToggle = $this.find('input'),
+				$ul = $this.next('ul');
+
+			if( !$(e.target).is('input') ){
+				$sagaToggle.prop('checked', !$sagaToggle.prop('checked'));
+			}
+
+			$ul.find('input').prop('checked', $sagaToggle.prop('checked'));
 		});
 
 	/** _____________________________________________ SEARCH & FILTERS BUTTONS **/
@@ -625,7 +697,6 @@ $(document).ready(function(){
 			.on('click', 'input, select, label, button', function(e){
 				e.stopPropagation();
 			});
-
 });
 
 /**
@@ -641,6 +712,8 @@ var tabSwitch = function(){
 
 	$parts.hide()
 		.filter('[id$="_'+ target +'"]').show();
+
+	$navDropdowns.toggle( target != 'storage' && target != 'author' && target != 'artist' && target != 'band' );
 
 	if( target != activeTab && $listContainer.width() > 767 ) centeringDone = false;
 
@@ -710,7 +783,7 @@ var getList = function( type ){
 
 			if( !centeringDone ){
 				var containerWidth = $listContainer.width(),
-					itemWidth = $listContainer.find('#list_'+ activeTab).find('.item').first().width();
+					itemWidth = $listContainer.find('#list_'+ activeTab).find('.item').first().outerWidth(true);
 
 				$listContainer.width( Math.floor(containerWidth / itemWidth) * itemWidth );
 
@@ -1082,7 +1155,8 @@ var fillDetailModal = function( $modal ){
 
 	$modal.find('.modal-body')
 		.find('.cover').html( $clone.find('img') ).end()
-		.find('.data').html( $clone.find('dl') );
+		.find('.data').html( $clone.find('dl') )
+		.find('.detail').remove();
 };
 
 /**

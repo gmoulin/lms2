@@ -1,0 +1,30 @@
+<div id="edit_artist" class="modal hide fade modal-edit">
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal"><i class="icon-remove-sign"></i></button>
+		<h3>Formulaire de gestion des artistes</h3>
+	</div>
+	<div class="modal-body">
+		<div class="row-fluid">
+			<form id="artist_form" name="artist_form" method="post" action="" class="edit-form form-horizontal" data-manage="artist">
+				<input type="hidden" id="artistAction" name="action" value="" />
+				<input type="hidden" id="artistID" name="id" value="" />
+				<div class="control-group">
+					<label class="control-label" for="artistLastName">Nom *</label>
+					<div class="controls">
+						<input type="text" id="artistLastName" name="lastName" class="control input-large" placeholder="nom de l'auteur" required autocomplete="off">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="artistFirstName">Prénom</label>
+					<div class="controls">
+						<input type="text" id="artistFirstName" name="firstName" class="control input-large" placeholder="prénom de l'auteur" autocomplete="off">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="reset" class="btn btn-warning" data-dismiss="modal">Annuler</button>
+		<button type="submit" class="btn btn-primary" form="artist_form">Enregistrer</button>
+	</div>
+</div>

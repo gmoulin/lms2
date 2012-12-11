@@ -1,5 +1,5 @@
 <?php
-$parts = array('book', 'movie', 'loan');
+$parts = array('book', 'movie', 'album', 'storage', 'loan', 'author', 'artist', 'band', 'saga');
 include('html_header.php');
 ?>
 <div class="navbar navbar-inverse navbar-fixed-top">
@@ -40,7 +40,7 @@ include('html_header.php');
 						?>
 
 						<div class="pagination">
-							<span class="nb"><span> sur <span class="total"></span>
+							<span class="nb"></span> sur <span class="total"></span>
 						</div>
 					</div>
 				</li>
@@ -48,6 +48,12 @@ include('html_header.php');
 					<!-- add buttons -->
 					<button data-target="#edit_book" id="add_book" class="btn add" data-toggle="modal" data-manage="book"><i class="icon-plus-sign"></i><span>Ajouter un livre</span></button>
 					<button data-target="#edit_movie" id="add_movie" class="btn add" data-toggle="modal" data-manage="movie"><i class="icon-plus-sign"></i><span>Ajouter un film</span></button>
+					<button data-target="#edit_album" id="add_album" class="btn add" data-toggle="modal" data-manage="album"><i class="icon-plus-sign"></i><span>Ajouter un album</span></button>
+					<button data-target="#edit_storage" id="add_storage" class="btn add" data-toggle="modal" data-manage="storage"><i class="icon-plus-sign"></i><span>Ajouter un rangement</span></button>
+					<button data-target="#edit_saga" id="add_saga" class="btn add" data-toggle="modal" data-manage="saga"><i class="icon-plus-sign"></i><span>Ajouter une saga</span></button>
+					<button data-target="#edit_author" id="add_author" class="btn add" data-toggle="modal" data-manage="author"><i class="icon-plus-sign"></i><span>Ajouter un auteur</span></button>
+					<button data-target="#edit_artist" id="add_artist" class="btn add" data-toggle="modal" data-manage="artist"><i class="icon-plus-sign"></i><span>Ajouter un artiste</span></button>
+					<button data-target="#edit_band" id="add_band" class="btn add" data-toggle="modal" data-manage="band"><i class="icon-plus-sign"></i><span>Ajouter un groupe</span></button>
 				</li>
 			</ul>
 
@@ -85,11 +91,11 @@ include('html_header.php');
 		<section id="list_book" class="list withCover"></section>
 		<section id="list_movie" class="list withCover"></section>
 		<section id="list_album" class="list withCover"></section>
-		<section id="list_storage" class="list withCover"></section>
+		<section id="list_storage" class="list"></section>
 		<section id="list_saga" class="list"></section>
 		<section id="list_author" class="list"></section>
 		<section id="list_artist" class="list"></section>
-		<section id="list_brand" class="list"></section>
+		<section id="list_band" class="list"></section>
 	</div>
 </div> <!-- /container -->
 

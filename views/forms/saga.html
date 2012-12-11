@@ -1,0 +1,50 @@
+<div id="edit_saga" class="modal hide fade modal-edit with-cover">
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal"><i class="icon-remove-sign"></i></button>
+		<h3>Formulaire de gestion des rangements</h3>
+	</div>
+	<div class="modal-body">
+		<div class="row-fluid">
+			<form id="saga_form" name="saga_form" method="post" action="" class="edit-form form-horizontal" data-manage="saga">
+				<input type="hidden" id="sagaAction" name="action" value="" />
+				<input type="hidden" id="sagaID" name="id" value="" />
+				<div class="control-group">
+					<label class="control-label" for="sagaTitle">Titre *</label>
+					<div class="controls">
+						<input type="text" id="sagaTitle" name="room" class="control input-large" placeholder="titre de la saga" required autocomplete="off">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="sagaSearchURL">Recherche</label>
+					<div class="controls">
+						<input type="url" id="sagaSearchURL" name="searchURL" class="control input-large" placeholder="liste du contenu de la saga" autocomplete="off">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="sagaRating">Qualité</label>
+					<div class="controls stars">
+						<input type="radio" id="sagaRating_5" name="rating" value="5" autocomplete="off">
+						<label for="sagaRating_5" class="star empty"><i class="icon-star-empty"></i></label>
+						<label for="sagaRating_5" class="star full"><i class="icon-star"></i></label>
+						<input type="radio" id="sagaRating_4" name="rating" value="4" autocomplete="off">
+						<label for="sagaRating_4" class="star empty"><i class="icon-star-empty"></i></label>
+						<label for="sagaRating_4" class="star full"><i class="icon-star"></i></label>
+						<input type="radio" id="sagaRating_3" name="rating" value="3" autocomplete="off">
+						<label for="sagaRating_3" class="star empty"><i class="icon-star-empty"></i></label>
+						<label for="sagaRating_3" class="star full"><i class="icon-star"></i></label>
+						<input type="radio" id="sagaRating_2" name="rating" value="2" autocomplete="off">
+						<label for="sagaRating_2" class="star empty"><i class="icon-star-empty"></i></label>
+						<label for="sagaRating_2" class="star full"><i class="icon-star"></i></label>
+						<input type="radio" id="sagaRating_1" name="rating" value="1" checked autocomplete="off">
+						<label for="sagaRating_1" class="star empty"><i class="icon-star-empty"></i></label>
+						<label for="sagaRating_1" class="star full"><i class="icon-star"></i></label>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="reset" class="btn btn-warning" data-dismiss="modal">Annuler</button>
+		<button type="submit" class="btn btn-primary" form="saga_form">Enregistrer</button>
+	</div>
+</div>

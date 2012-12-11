@@ -2,7 +2,7 @@
 //manage sagas related ajax requests
 //albums have no saga
 try {
-	require_once('../conf.ini.php');
+	require_once('../inc/conf.ini.php');
 
 	header('Content-type: application/json');
 
@@ -110,56 +110,8 @@ try {
 				$oSaga = new saga();
 				$response = $oSaga->delSagaImpact( $id );
 
-				include( LMS_PATH . '/list/impact.php' );
+				include( '../views/impacts/saga.php' );
 				die;
-			break;
-		case 'moveImpact' : //on storage change
-				$id = filter_has_var(INPUT_POST, 'id');
-				if( is_null($id) || $id === false ){
-					throw new Exception('Gestion des sagas : identitifant de la saga manquant.');
-				}
-
-				$id = filter_var($_POST['id'], FILTER_VALIDATE_INT, array('min_range' => 1));
-				if( $id === false ){
-					throw new Exception('Gestion des sagas : identifiant incorrect.');
-				}
-
-				$oSaga = new saga();
-				$response = $oSaga->moveImpact( $id );
-
-				include( LMS_PATH . '/list/moveSaga.php' );
-				die;
-			break;
-		case 'move' : //save storage change
-				$id = filter_has_var(INPUT_POST, 'id');
-				if( is_null($id) || $id === false ){
-					throw new Exception('Gestion des sagas : identitifant de la saga manquant.');
-				}
-
-				$id = filter_var($_POST['id'], FILTER_VALIDATE_INT, array('min_range' => 1));
-				if( $id === false ){
-					throw new Exception('Gestion des sagas : identifiant de la saga incorrect.');
-				}
-
-				$storage_book = filter_has_var(INPUT_POST, 'storage_book');
-				if( !is_null($storage_book) && !$storage_book === false ){
-					$storage_book = filter_var($_POST['storage_book'], FILTER_VALIDATE_INT, array('min_range' => 1));
-					if( $storage_book === false ){
-						throw new Exception('Gestion des sagas : identifiant du rangement des livres incorrect.');
-					}
-				}
-
-				$storage_movie = filter_has_var(INPUT_POST, 'storage_movie');
-				if( !is_null($storage_movie) && !$storage_movie === false ){
-					$storage_movie = filter_var($_POST['storage_movie'], FILTER_VALIDATE_INT, array('min_range' => 1));
-					if( $storage_movie === false ){
-						throw new Exception('Gestion des sagas : identifiant du rangement des films incorrect.');
-					}
-				}
-
-				$oSaga = new saga();
-				$oSaga->move( $id, $storage_book, $storage_movie );
-				$response = 'ok';
 			break;
 		case 'get' :
 				$id = filter_has_var(INPUT_POST, 'id');

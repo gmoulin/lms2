@@ -34,7 +34,7 @@ $xlarge: 1400px;
 
 /** _____________________________________________ BODY **/
 	body {
-		padding-top: 40px;
+		padding-top: 41px;
 
 		@include respond-to(navbar_collapsed) { padding-top: 0; }
 	}
@@ -60,6 +60,10 @@ $xlarge: 1400px;
 		@include respond-to(navbar_collapsed) { float: none; }
 	}
 
+	.pagination {
+		margin-bottom: 0;
+	}
+
 /** _____________________________________________ LIST **/
 	.container-fluid.override {
 		text-align: center;
@@ -80,6 +84,45 @@ $xlarge: 1400px;
 		.list-hide {
 			display: none;
 		}
+
+		.item {
+			float: left; /* to avoid white-space madness */
+			display: block;
+			padding: 4px 6px;
+			margin: 4px;
+			border: 1px solid $grayLighter;
+			border-radius: 4px;
+
+			span {
+				display: inline-block;
+				line-height: 26px;
+				color: $grayLighter;
+
+				.btn-group {
+					margin-left: 10px;
+				}
+			}
+		}
+
+		hr {
+			display: block;
+			clear: left;
+			padding: 16px 0 0;
+			margin: 0 0 16px;
+			height: 1px;
+			border-width: 0 0 1px;
+		}
+
+		.icon-star,
+		.icon-star-empty {
+			@include respond-to(phone) { display: none; }
+		}
+	}
+
+	#list_storage .item span {
+		width: 315px;
+
+		@include respond-to(phone) { width: auto; }
 	}
 
 	.withCover {
@@ -101,10 +144,11 @@ $xlarge: 1400px;
 		.item {
 			position: relative;
 
-			float: left; /* to avoid white-space madness */
+			padding: 0;
+			margin: 0;
+			border: none;
 
 			background-size: 100% 100%;
-			display: block;
 
 			&:hover dl {
 				display: block;
@@ -113,38 +157,70 @@ $xlarge: 1400px;
 	}
 
 /** _____________________________________________ LIST ITEM DIMENSIONS **/
-	$itemWith: 195px;
+	$itemWidth: 195px;
 	$itemHeight: 260px;
 
 	.withCover .item {
 		@include respond-to(xlarge) {
-			width: $itemWith * 1.6;
+			width: $itemWidth * 1.6;
 			height: $itemHeight * 1.6;
 		}
 
 		@include respond-to(large) {
-			width: $itemWith * 1.4;
+			width: $itemWidth * 1.4;
 			height: $itemHeight * 1.4;
 		}
 
 		@include respond-to(desktop) {
-			width: $itemWith * 1.2;
+			width: $itemWidth * 1.2;
 			height: $itemHeight * 1.2;
 		}
 
 		@include respond-to(small_desktop) {
-			width: $itemWith * 1;
+			width: $itemWidth * 1;
 			height: $itemHeight * 1;
 		}
 
 		@include respond-to(tablet) {
-			width: $itemWith * 2.4;
+			width: $itemWidth * 2.4;
 			height: $itemHeight * 2.4;
 		}
 
 		@include respond-to(phone) {
-			width: $itemWith * 1.4;
+			width: $itemWidth * 1.4;
 			height: $itemHeight * 1.4;
+		}
+	}
+
+	#list_album .item {
+		@include respond-to(xlarge) {
+			width: $itemWidth * 1.6;
+			height: $itemWidth * 1.6;
+		}
+
+		@include respond-to(large) {
+			width: $itemWidth * 1.4;
+			height: $itemWidth * 1.4;
+		}
+
+		@include respond-to(desktop) {
+			width: $itemWidth * 1.2;
+			height: $itemWidth * 1.2;
+		}
+
+		@include respond-to(small_desktop) {
+			width: $itemWidth * 1;
+			height: $itemWidth * 1;
+		}
+
+		@include respond-to(tablet) {
+			width: $itemWidth * 2.4;
+			height: $itemWidth * 2.4;
+		}
+
+		@include respond-to(phone) {
+			width: $itemWidth * 1.4;
+			height: $itemWidth * 1.4;
 		}
 	}
 
@@ -185,29 +261,17 @@ $xlarge: 1400px;
 		}
 	}
 
-	.filters {
-		@include respond-to(phone) {
-			left: -46px;
-		}
-	}
-
+	.filters,
 	.sorts {
-		@include respond-to(phone) {
-			left: -58px;
-		}
+		left: auto;
+		right: 0;
 	}
 
 	.navbar .nav > li > .dropdown-menu {
-		.filters:after {
-			@include respond-to(phone) {
-				left: 62px;
-			}
-		}
-
-		.sorts:after {
-			@include respond-to(phone) {
-				left: 74px;
-			}
+		&.filters:after,
+		&.sorts:after {
+			left: auto;
+			right: 16px;
 		}
 	}
 
@@ -266,6 +330,37 @@ $xlarge: 1400px;
 		}
 	}
 
+	.stars {
+		padding-top: 5px;
+		margin-bottom: 5px;
+		direction: rtl;
+		text-align: left;
+
+		label {
+			display: inline-block;
+			margin: 0;
+		}
+
+		.full {
+			display: none;
+		}
+
+		input {
+			display: none;
+
+			&:checked {
+				~ .empty {
+					display: none;
+				}
+
+				~ .full {
+					display: inline-block;
+				}
+			}
+		}
+	}
+
+
 /** _____________________________________________ DROP OVERLAY **/
 	#drop-overlay {
 		position: fixed;
@@ -299,6 +394,19 @@ $xlarge: 1400px;
 	}
 
 /** _____________________________________________ DETAIL MODAL **/
-	.modal-detail .detail {
+	.modal-detail .detail-hide {
 		display: none;
+	}
+
+/** _____________________________________________ IMPACT FORM **/
+	.impact-form ul {
+		-webkit-columns: 2;
+		   -moz-columns: 2;
+			 -o-columns: 2;
+				columns: 2;
+
+		input {
+			position: relative;
+			top: -3px;
+		}
 	}

@@ -330,15 +330,14 @@ class author extends commun {
 	public function delAuthorImpact( $id ) {
 		try {
 			$delAuthorImpact = $this->db->prepare("
-				SELECT bookID AS impactID, bookTitle AS impactTitle, 'book' AS type
-				FROM book
-				INNER JOIN books_authors ON bookFK = bookID
-				WHERE authorFK = :authorFK
-				AND bookFK NOT IN ( SELECT bookFK FROM books_authors WHERE authorFK != :authorFKsub )
-				ORDER BY impactTitle
+				SELECT bookID AS impactID, bookTitle AS impactTitle, sagaTitle
+				FROM books_view bv
+				INNER JOIN book_authors_view bav ON bookID = bookFK
+				WHERE authorID = :authorFK
+				ORDER BY sagaTitle, impactTitle
 			");
 
-			$delAuthorImpact->execute( array( ':authorFK' => $id, ':authorFKsub' => $id ) );
+			$delAuthorImpact->execute( array( ':authorFK' => $id ) );
 
 			return $delAuthorImpact->fetchAll();
 

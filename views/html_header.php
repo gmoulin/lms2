@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="<?php echo $lang; ?>" class="no-js"  manifest="site.manifest">
+<html lang="<?php echo $lang; ?>" class="no-js">
 <head>
 	<meta charset="utf-8">
 	<title>Gestionnaire de Médiathèque</title>

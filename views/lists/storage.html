@@ -1,0 +1,102 @@
+<script type="text/html" id="list_storage_tmpl">
+<%	var item, i, j, url, id, currentRoom, currentType, currentColumn, newLine;
+
+	for( i = 0; i < list.length; i += 1 ){
+		item = list[i];
+		url = getFullUrl('storage/'+ item.storageRoom.urlify() +'_'+ item.storageType.urlify() + (item.storageColumn !== null || item.storageLine !== null ? '_'+ item.storageColumn + item.storageLine : '' ) +'.png', '');
+		newLine = false;
+
+		if( currentRoom != item.storageRoom ){
+			if( currentRoom !== undefined ){
+				newLine = true;
+			}
+			currentRoom = item.storageRoom;
+			currentType = currentColumn = undefined;
+		} else if( item.storageRoom != 'aucun' && currentType != item.storageType ){
+			if( currentType !== undefined ){
+				newLine = true;
+			}
+			currentType = item.storageType;
+			currentColumn = undefined;
+		} else if( item.storageColumn !== null && currentColumn != item.storageColumn ){
+			if( currentColumn !== undefined ){
+				newLine = true;
+			}
+			currentColumn = item.storageColumn;
+		}
+	%>
+		<% if( newLine ){ %>
+			<hr />
+		<%  } %>
+		<article class="item">
+			<img src="<%=url%>" class="list-hide">
+			<span class="detail-hide">
+				<div class="btn-group pull-right">
+					<button class="btn detail btn-info btn-small" data-toggle="modal" data-target="#detail_storage" data-manage="storage">
+						<i class="icon-eye-open"></i>
+					</button>
+
+					<button class="btn edit btn-warning btn-small"
+						data-toggle="modal" data-target="#edit_storage" data-manage="storage"
+						data-itemId="<%=item.storageID%>"
+					>
+						<i class="icon-edit"></i>
+					</button>
+
+					<button class="btn delete btn-danger btn-small"
+						data-toggle="modal" data-target="#delete_storage" data-manage="storage"
+						data-itemId="<%=item.storageID%>"
+					>
+						<i class="icon-trash"></i>
+					</button>
+				</div>
+
+				<%=item.storageRoom%> <%=item.storageType%>
+				<% if( item.storageColumn !== null || item.storageLine !== null ){ %>
+					- <%=item.storageColumn%><%=item.storageLine%>
+				<% } %>
+			</span>
+			<dl class="list-hide">
+				<dt>Pièce</dt>
+				<dd><%=item.storageRoom%></dd>
+
+				<dt>Type</dt>
+				<dd><%=item.storageType%></dd>
+
+				<% if( item.storageColumn !== null ){ %>
+				<dt>Colonne</dt>
+				<dd><%=item.storageColumn%></dd>
+				<% } %>
+
+				<% if( item.storageLine !== null ){ %>
+				<dt>Ligne</dt>
+				<dd><%=item.storageLine%></dd>
+				<% } %>
+
+				<dt>Actions</dt>
+				<dd>
+					<div class="btn-group">
+						<button class="btn detail btn-info btn-small" data-toggle="modal" data-target="#detail_storage" data-manage="storage">
+							<i class="icon-eye-open"></i>
+						</button>
+
+						<button class="btn edit btn-warning btn-small"
+							data-toggle="modal" data-target="#edit_storage" data-manage="storage"
+							data-itemId="<%=item.storageID%>"
+						>
+							<i class="icon-edit"></i>
+						</button>
+
+						<button class="btn delete btn-danger btn-small"
+							data-toggle="modal" data-target="#delete_storage" data-manage="storage"
+							data-itemId="<%=item.storageID%>"
+						>
+							<i class="icon-trash"></i>
+						</button>
+					</div>
+				</dd>
+			</dl>
+		</article>
+	<% } %>
+</script>
+

@@ -1,7 +1,7 @@
 <?php
 //manage bands related ajax requests
 try {
-	require_once('../conf.ini.php');
+	require_once('../inc/conf.ini.php');
 
 	header('Content-type: application/json');
 
@@ -93,7 +93,7 @@ try {
 				$oBand = new band();
 				$response = $oBand->delBandImpact( $id );
 
-				include( LMS_PATH . '/list/impact.php' );
+				include( '../views/impacts/band.php' );
 				die;
 			break;
 		case 'get' :

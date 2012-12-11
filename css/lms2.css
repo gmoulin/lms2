@@ -1,6 +1,6 @@
 /** _____________________________________________ BODY **/
 body {
-  padding-top: 40px;
+  padding-top: 41px;
 }
 @media (max-width: 979px) {
   body {
@@ -34,6 +34,10 @@ body {
   }
 }
 
+.pagination {
+  margin-bottom: 0;
+}
+
 /** _____________________________________________ LIST **/
 .container-fluid.override {
   text-align: center;
@@ -57,6 +61,46 @@ body {
 .list .list-hide {
   display: none;
 }
+.list .item {
+  float: left;
+  /* to avoid white-space madness */
+  display: block;
+  padding: 4px 6px;
+  margin: 4px;
+  border: 1px solid #eeeeee;
+  border-radius: 4px;
+}
+.list .item span {
+  display: inline-block;
+  line-height: 26px;
+  color: #eeeeee;
+}
+.list .item span .btn-group {
+  margin-left: 10px;
+}
+.list hr {
+  display: block;
+  clear: left;
+  padding: 16px 0 0;
+  margin: 0 0 16px;
+  height: 1px;
+  border-width: 0 0 1px;
+}
+@media screen and (max-width: 480px) {
+  .list .icon-star,
+  .list .icon-star-empty {
+    display: none;
+  }
+}
+
+#list_storage .item span {
+  width: 315px;
+}
+@media screen and (max-width: 480px) {
+  #list_storage .item span {
+    width: auto;
+  }
+}
 
 .withCover dl {
   position: absolute;
@@ -72,10 +116,10 @@ body {
 }
 .withCover .item {
   position: relative;
-  float: left;
-  /* to avoid white-space madness */
+  padding: 0;
+  margin: 0;
+  border: none;
   background-size: 100% 100%;
-  display: block;
 }
 .withCover .item:hover dl {
   display: block;
@@ -119,6 +163,43 @@ body {
   }
 }
 
+@media screen and (min-width: 1400px) {
+  #list_album .item {
+    width: 312px;
+    height: 312px;
+  }
+}
+@media screen and (min-width: 1200px) and (max-width: 1399px) {
+  #list_album .item {
+    width: 273px;
+    height: 273px;
+  }
+}
+@media screen and (min-width: 980px) and (max-width: 1199px) {
+  #list_album .item {
+    width: 234px;
+    height: 234px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 979px) {
+  #list_album .item {
+    width: 195px;
+    height: 195px;
+  }
+}
+@media screen and (max-width: 767px) {
+  #list_album .item {
+    width: 468px;
+    height: 468px;
+  }
+}
+@media screen and (max-width: 480px) {
+  #list_album .item {
+    width: 273px;
+    height: 273px;
+  }
+}
+
 /** _____________________________________________ FILTERS & SORTS **/
 .dropdown-menu.filters,
 .dropdown-menu.sorts {
@@ -149,27 +230,15 @@ body {
   }
 }
 
-@media screen and (max-width: 480px) {
-  .filters {
-    left: -46px;
-  }
+.filters,
+.sorts {
+  left: auto;
+  right: 0;
 }
 
-@media screen and (max-width: 480px) {
-  .sorts {
-    left: -58px;
-  }
-}
-
-@media screen and (max-width: 480px) {
-  .navbar .nav > li > .dropdown-menu .filters:after {
-    left: 62px;
-  }
-}
-@media screen and (max-width: 480px) {
-  .navbar .nav > li > .dropdown-menu .sorts:after {
-    left: 74px;
-  }
+.navbar .nav > li > .dropdown-menu.filters:after, .navbar .nav > li > .dropdown-menu.sorts:after {
+  left: auto;
+  right: 16px;
 }
 
 @media screen and (max-width: 480px) {
@@ -219,6 +288,29 @@ body {
   margin-left: 95px;
 }
 
+.stars {
+  padding-top: 5px;
+  margin-bottom: 5px;
+  direction: rtl;
+  text-align: left;
+}
+.stars label {
+  display: inline-block;
+  margin: 0;
+}
+.stars .full {
+  display: none;
+}
+.stars input {
+  display: none;
+}
+.stars input:checked ~ .empty {
+  display: none;
+}
+.stars input:checked ~ .full {
+  display: inline-block;
+}
+
 /** _____________________________________________ DROP OVERLAY **/
 #drop-overlay {
   position: fixed;
@@ -247,6 +339,18 @@ body {
 }
 
 /** _____________________________________________ DETAIL MODAL **/
-.modal-detail .detail {
+.modal-detail .detail-hide {
   display: none;
+}
+
+/** _____________________________________________ IMPACT FORM **/
+.impact-form ul {
+  -webkit-columns: 2;
+  -moz-columns: 2;
+  -o-columns: 2;
+  columns: 2;
+}
+.impact-form ul input {
+  position: relative;
+  top: -3px;
 }

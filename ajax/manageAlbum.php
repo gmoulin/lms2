@@ -1,7 +1,7 @@
 <?php
 //manage albums related ajax requests
 try {
-	require_once('../conf.ini.php');
+	require_once('../inc/conf.ini.php');
 
 	header('Content-type: application/json');
 

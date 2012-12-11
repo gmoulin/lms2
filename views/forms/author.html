@@ -1,0 +1,42 @@
+<div id="edit_author" class="modal hide fade modal-edit">
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal"><i class="icon-remove-sign"></i></button>
+		<h3>Formulaire de gestion des auteurs</h3>
+	</div>
+	<div class="modal-body">
+		<div class="row-fluid">
+			<form id="author_form" name="author_form" method="post" action="" class="edit-form form-horizontal" data-manage="author">
+				<input type="hidden" id="authorAction" name="action" value="" />
+				<input type="hidden" id="authorID" name="id" value="" />
+				<div class="control-group">
+					<label class="control-label" for="authorLastName">Nom *</label>
+					<div class="controls">
+						<input type="text" id="authorLastName" name="lastName" class="control input-large" placeholder="nom de l'auteur" required autocomplete="off">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="authorFirstName">Prénom</label>
+					<div class="controls">
+						<input type="text" id="authorFirstName" name="firstName" class="control input-large" placeholder="prénom de l'auteur" autocomplete="off">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="authorWebSite">Site</label>
+					<div class="controls">
+						<input type="url" id="authorWebSite" name="webSite" class="control input-large" placeholder="site de l'auteur" autocomplete="off">
+					</div>
+				</div>
+				<div class="control-group">
+					<label class="control-label" for="authorSearchURL">Recherche</label>
+					<div class="controls">
+						<input type="url" id="authorSearchURL" name="searchURL" class="control input-large" placeholder="bibliographie de l'auteur" autocomplete="off">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="reset" class="btn btn-warning" data-dismiss="modal">Annuler</button>
+		<button type="submit" class="btn btn-primary" form="author_form">Enregistrer</button>
+	</div>
+</div>

@@ -1,7 +1,7 @@
 <?php
 //manage storages related ajax requests
 try {
-	require_once('../conf.ini.php');
+	require_once('../inc/conf.ini.php');
 
 	header('Content-type: application/json');
 
@@ -81,7 +81,7 @@ try {
 				$oStorage = new storage();
 				$response = $oStorage->delStorageImpact( $id );
 
-				include( LMS_PATH . '/list/impactStorage.php' );
+				include( '../views/impacts/storage.php' );
 				die;
 			break;
 		case 'relocate' : //on deletion

@@ -457,18 +457,18 @@ class storage extends commun {
 		try {
 			$delStorageImpact = $this->db->prepare("
 				(
-					SELECT bookID AS impactID, bookTitle AS impactTitle, 'book' AS type
-					FROM book
-					WHERE bookStorageFK = :bookStorageFK
+					SELECT bookID AS impactID, bookTitle AS impactTitle, 'book' AS type, sagaTitle
+					FROM books_view
+					WHERE storageID = :bookStorageFK
 				) UNION (
-					SELECT movieID AS impactID, movieTitle AS impactTitle, 'movie' AS type
-					FROM movie
-					WHERE movieStorageFK = :movieStorageFK
+					SELECT movieID AS impactID, movieTitle AS impactTitle, 'movie' AS type, sagaTitle
+					FROM movies_view
+					WHERE storageID = :movieStorageFK
 				) UNION (
-					SELECT albumID AS impactID, albumTitle AS impactTitle, 'album' AS type
-					FROM album
-					WHERE albumStorageFK = :albumStorageFK
-				) ORDER BY type, impactTitle
+					SELECT albumID AS impactID, albumTitle AS impactTitle, 'album' AS type, '' as sagaTitle
+					FROM albums_view
+					WHERE storageID = :albumStorageFK
+				) ORDER BY type, sagaTitle, impactTitle
 			");
 
 			$delStorageImpact->execute( array( ':bookStorageFK' => $id, ':movieStorageFK' => $id, ':albumStorageFK' => $id ) );

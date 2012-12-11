@@ -1,0 +1,42 @@
+<script type="text/html" id="list_author_tmpl">
+<%	var item, i, id;
+
+	for( i = 0; i < list.length; i += 1 ){
+		item = list[i];
+	%>
+		<article class="item">
+			<span>
+				<div class="btn-group pull-right">
+					<% if( item.authorWebSite !== null ){ %>§
+					<a class="btn btn-info btn-small" href="<%=item.authorWebSite%>" target="_blank">
+						<i class="icon-link"></i>
+					</a>
+					<% } %>
+
+					<% if( item.authorSearchURL !== null ){ %>§
+					<a class="btn btn-info btn-small" href="<%=item.authorSearchURL%>" target="_blank">
+						<i class="icon-link"></i>
+					</a>
+					<% } %>
+
+					<button class="btn edit btn-warning btn-small"
+						data-toggle="modal" data-target="#edit_author" data-manage="author"
+						data-itemId="<%=item.authorID%>"
+					>
+						<i class="icon-edit"></i>
+					</button>
+
+					<button class="btn delete btn-danger btn-small"
+						data-toggle="modal" data-target="#delete_author" data-manage="author"
+						data-itemId="<%=item.authorID%>"
+					>
+						<i class="icon-trash"></i>
+					</button>
+				</div>
+
+				<%=item.authorFirstName%> <%=item.authorLastName%>
+			</span>
+		</article>
+	<% } %>
+</script>
+
