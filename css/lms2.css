@@ -2,7 +2,7 @@
 body {
   padding-top: 41px;
 }
-@media (max-width: 979px) {
+@media screen and (max-width: 979px) {
   body {
     padding-top: 0;
   }
@@ -20,15 +20,13 @@ body {
     display: none;
   }
 }
-
 .navbar .sort-links .btn-group {
   margin-top: 0;
 }
-
 .navbar .container-fluid > .nav {
   float: right;
 }
-@media (max-width: 979px) {
+@media screen and (max-width: 979px) {
   .navbar .container-fluid > .nav {
     float: none;
   }
@@ -39,12 +37,12 @@ body {
 }
 
 /** _____________________________________________ LIST **/
-.container-fluid.override {
+.container-fluid-override {
   text-align: center;
   padding: 0 10px;
 }
 @media screen and (max-width: 480px) {
-  .container-fluid.override {
+  .container-fluid-override {
     padding: 0;
   }
 }
@@ -62,13 +60,7 @@ body {
   display: none;
 }
 .list .item {
-  float: left;
-  /* to avoid white-space madness */
-  display: block;
-  padding: 4px 6px;
-  margin: 4px;
-  border: 1px solid #eeeeee;
-  border-radius: 4px;
+  display: inline-block;
 }
 .list .item span {
   display: inline-block;
@@ -77,6 +69,12 @@ body {
 }
 .list .item span .btn-group {
   margin-left: 10px;
+}
+.list:not(.list-with-cover) .item {
+  padding: 4px 6px;
+  margin: 4px;
+  border: 1px solid #eeeeee;
+  border-radius: 4px;
 }
 .list hr {
   display: block;
@@ -102,7 +100,7 @@ body {
   }
 }
 
-.withCover dl {
+.list-with-cover dl {
   position: absolute;
   top: 0;
   left: 0;
@@ -114,50 +112,46 @@ body {
   background-color: rgba(0, 0, 0, 0.9);
   color: #fff;
 }
-.withCover .item {
+.list-with-cover .item {
   position: relative;
+  display: block;
+  float: left;
+  /* to avoid white-space madness */
   padding: 0;
   margin: 0;
-  border: none;
   background-size: 100% 100%;
 }
-.withCover .item:hover dl {
+.list-with-cover .item:hover dl {
   display: block;
 }
 
 /** _____________________________________________ LIST ITEM DIMENSIONS **/
 @media screen and (min-width: 1400px) {
-  .withCover .item {
+  .list-with-cover .item {
     width: 312px;
     height: 416px;
   }
 }
 @media screen and (min-width: 1200px) and (max-width: 1399px) {
-  .withCover .item {
+  .list-with-cover .item {
     width: 273px;
     height: 364px;
   }
 }
 @media screen and (min-width: 980px) and (max-width: 1199px) {
-  .withCover .item {
+  .list-with-cover .item {
     width: 234px;
     height: 312px;
   }
 }
-@media screen and (min-width: 768px) and (max-width: 979px) {
-  .withCover .item {
-    width: 195px;
-    height: 260px;
-  }
-}
 @media screen and (max-width: 767px) {
-  .withCover .item {
+  .list-with-cover .item {
     width: 468px;
     height: 624px;
   }
 }
 @media screen and (max-width: 480px) {
-  .withCover .item {
+  .list-with-cover .item {
     width: 273px;
     height: 364px;
   }
@@ -181,12 +175,6 @@ body {
     height: 234px;
   }
 }
-@media screen and (min-width: 768px) and (max-width: 979px) {
-  #list_album .item {
-    width: 195px;
-    height: 195px;
-  }
-}
 @media screen and (max-width: 767px) {
   #list_album .item {
     width: 468px;
@@ -201,8 +189,8 @@ body {
 }
 
 /** _____________________________________________ FILTERS & SORTS **/
-.dropdown-menu.filters,
-.dropdown-menu.sorts {
+.dropdown-filters,
+.dropdown-sorts {
   padding: 15px;
 }
 
@@ -217,7 +205,7 @@ body {
 .filter-form {
   display: none;
 }
-.filter-form .span2 {
+.filter-form .span2-override {
   width: 212px;
 }
 @media screen and (max-width: 480px) {
@@ -225,7 +213,7 @@ body {
     display: inline-block;
     width: calc(100% - 42px);
   }
-  .filter-form .input-append .span2 {
+  .filter-form .input-append .span2-override {
     width: 141px;
   }
 }
@@ -236,7 +224,8 @@ body {
   right: 0;
 }
 
-.navbar .nav > li > .dropdown-menu.filters:after, .navbar .nav > li > .dropdown-menu.sorts:after {
+.navbar .nav > li > .dropdown-filters:after,
+.navbar .nav > li > .dropdown-sorts:after {
   left: auto;
   right: 16px;
 }
@@ -276,15 +265,15 @@ body {
   clear: left;
 }
 
-.modal.with-cover {
+.modal-with-cover {
   width: 760px;
   margin-left: -380px;
 }
-.modal.with-cover .form-horizontal .control-label {
+.modal-with-cover .form-horizontal .control-label {
   width: 85px;
   padding-right: 10px;
 }
-.modal.with-cover .form-horizontal .controls {
+.modal-with-cover .form-horizontal .controls {
   margin-left: 95px;
 }
 
@@ -323,7 +312,6 @@ body {
   opacity: 0.8;
   background: none repeat scroll 0 0 #424242;
 }
-
 #drop-overlay h1 {
   position: fixed;
   top: 50%;
@@ -339,7 +327,33 @@ body {
 }
 
 /** _____________________________________________ DETAIL MODAL **/
-.modal-detail .detail-hide {
+.detail-modal .detail-hide {
+  display: none;
+}
+
+.detail-modal .modal-header span {
+  display: none;
+}
+
+.detail-modal[data-manage="album"] .modal-header .album,
+.detail-modal[data-manage="alcohol"] .modal-header .alcohol,
+.detail-modal[data-manage="book"] .modal-header .book,
+.detail-modal[data-manage="movie"] .modal-header .movie,
+.detail-modal[data-manage="storage"] .modal-header .storage {
+  display: inline;
+}
+
+/** _____________________________________________ STORE MODAL **/
+.store-form .item-label {
+  display: none;
+}
+
+.store-form[data-manage="book"] .book,
+.store-form[data-manage="movie"] .movie {
+  display: inline;
+}
+
+.store-form .none-found {
   display: none;
 }
 

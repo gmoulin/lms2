@@ -15,7 +15,7 @@
 					<dt>Saga</dt>
 					<dd>
 						<%=item.sagaTitle%> - <%=item.movieSagaPosition%> / <%=item.movieSagaSize%>
-						<button class="btn btn-small btn-info filter"
+						<button class="btn btn-mini btn-info filter"
 							data-filter="saga" data-value="<%=item.sagaTitle%>"
 						><i class="icon-search"></i></button>
 					</dd>
@@ -29,7 +29,7 @@
 				%>
 					<dd class="<% if( j > 2 ){ %>list-hide<% } %>">
 						<%=artist.artistFirstName%> <%=artist.artistLastName%>
-						<button class="btn btn-small btn-info filter"
+						<button class="btn btn-mini btn-info filter"
 							data-filter="artist" data-value="<%=artist.artistFirstName%> <%=artist.artistLastName%>"
 						><i class="icon-search"></i></button>
 
@@ -55,21 +55,21 @@
 					<% } %>
 					<div class="btn-group list-hide">
 						<% if( item.storageColumn !== null || item.storageLine !== null ){ %>
-							<button class="btn storage-picture btn-info btn-small"
+							<button class="btn storage-picture btn-info btn-mini"
 								data-toggle="modal" data-target="#storage_picture" data-manage="movie"
 								data-storageID="<%=item.storageID%>"
 								title="Voir la photo du rangement"
 							><i class="icon-map-marker"></i></button>
 						<% } %>
 						<% if( item.sagaTitle !== null && item.storageRoom == 'aucun' ){ %>
-							<button class="btn store btn-warning btn-small"
-								data-toggle="modal" data-target="#store_movie" data-manage="movie"
+							<button class="btn store btn-warning btn-mini"
+								data-toggle="modal" data-target=".store-modal" data-manage="movie"
 								data-itemId="<%=item.movieID%>" data-sagaID="<%=item.sagaID%>"
 								title="Ranger avec la saga"
 							><i class="icon-inbox"></i></button>
 						<% } %>
 					</div>
-					<button class="btn btn-small btn-info filter"
+					<button class="btn btn-mini btn-info filter"
 						data-filter="storage" data-value="<%=item.storageID%>"
 					><i class="icon-search"></i></button>
 				</dd>
@@ -79,11 +79,11 @@
 					<dd>
 						<%=item.loanHolder%> - <%=item.loanDate%>
 						<button class="btn delete btn-danger dtn-small list-hide"
-							data-toggle="modal" data-target="#delete_loan" data-manage="loan"
+							data-toggle="modal" data-target=".delete-modal" data-manage="loan"
 							data-itemId="<%=item.movieID%>"
 							title="Supprimer le prêt"
 						><i class="icon-trash"></i></button>
-						<button class="btn btn-small btn-info filter"
+						<button class="btn btn-mini btn-info filter"
 							data-filter="loan" data-value="<%=item.loanHolder%>"
 						><i class="icon-search"></i></button>
 					</dd>
@@ -92,21 +92,21 @@
 				<dt>Actions</dt>
 				<dd>
 					<div class="btn-group">
-						<button class="btn detail btn-info btn-small" data-toggle="modal" data-target="#detail_movie" data-manage="movie">
+						<button class="btn detail btn-info btn-mini" data-toggle="modal" data-target=".detail-modal" data-manage="movie">
 							<i class="icon-eye-open"></i> Détail
 						</button>
 
-						<button class="btn edit btn-warning btn-small"
+						<button class="btn edit btn-warning btn-mini"
 							data-toggle="modal" data-target="#edit_movie" data-manage="movie"
 							data-itemId="<%=item.movieID%>"
 						><i class="icon-edit"></i> Modifier</button>
 
-						<button class="btn delete btn-danger btn-small"
-							data-toggle="modal" data-target="#delete_movie" data-manage="movie"
+						<button class="btn delete btn-danger btn-mini"
+							data-toggle="modal" data-target=".delete-modal" data-manage="movie"
 							data-itemId="<%=item.movieID%>"
 						><i class="icon-trash"></i> Supprimer</button>
 
-						<button class="btn add btn-info btn-small"
+						<button class="btn add btn-info btn-mini"
 							data-toggle="modal" data-target="#edit_loan" data-manage="loan"
 							data-itemId="<%=item.movieID%>" data-relation="movie"
 						><i class="icon-user"></i> Prêt</button>

@@ -2,7 +2,7 @@
 	<input type="hidden" name="bookSortType" id="bookSortType" value="<?php echo ( isset($_SESSION['bookListFilters']) && isset($_SESSION['bookListFilters']['bookSortType']) && !empty($_SESSION['bookListFilters']['bookSortType']) ? $_SESSION['bookListFilters']['bookSortType'] : 0 ); ?>" class="sortTypeField" autocomplete="off" />
 	<label for="bookSearch">Recherche globale</label>
 	<div class="input-append">
-		<input type="search" name="bookSearch" id="bookSearch" class="span2" value="" placeholder="dans les données textuelles" />
+		<input type="search" name="bookSearch" id="bookSearch" class="span2 span2-override" value="" placeholder="dans les données textuelles" />
 		<button type="submit" name="bookSearchSubmit" class="btn btn-primary search">Go</button>
 		<button class="btn btn-warning clear"><i class="icon-remove-sign"></i></button>
 	</div>

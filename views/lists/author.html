@@ -8,26 +8,26 @@
 			<span>
 				<div class="btn-group pull-right">
 					<% if( item.authorWebSite !== null ){ %>§
-					<a class="btn btn-info btn-small" href="<%=item.authorWebSite%>" target="_blank">
+					<a class="btn btn-info btn-mini" href="<%=item.authorWebSite%>" target="_blank">
 						<i class="icon-link"></i>
 					</a>
 					<% } %>
 
 					<% if( item.authorSearchURL !== null ){ %>§
-					<a class="btn btn-info btn-small" href="<%=item.authorSearchURL%>" target="_blank">
+					<a class="btn btn-info btn-mini" href="<%=item.authorSearchURL%>" target="_blank">
 						<i class="icon-link"></i>
 					</a>
 					<% } %>
 
-					<button class="btn edit btn-warning btn-small"
+					<button class="btn edit btn-warning btn-mini"
 						data-toggle="modal" data-target="#edit_author" data-manage="author"
 						data-itemId="<%=item.authorID%>"
 					>
 						<i class="icon-edit"></i>
 					</button>
 
-					<button class="btn delete btn-danger btn-small"
-						data-toggle="modal" data-target="#delete_author" data-manage="author"
+					<button class="btn delete btn-danger btn-mini"
+						data-toggle="modal" data-target=".delete-modal" data-manage="author"
 						data-itemId="<%=item.authorID%>"
 					>
 						<i class="icon-trash"></i>

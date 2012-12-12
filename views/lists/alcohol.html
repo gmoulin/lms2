@@ -1,0 +1,103 @@
+<script type="text/html" id="list_alcohol_tmpl">
+<%	var item, i, j, url, id, maker,
+		shrinkActions = false;
+
+	if( matchMedia('screen and (max-width: 480px)').matches ){
+		if( matchMedia('screen and (orientation: portrait)').matches ){
+			shrinkActions = true;
+		}
+	}
+	for( i = 0; i < list.length; i += 1 ){
+		item = list[i];
+		url = getFullUrl('image.php?cover=alcohol&id=', item.alcoholID);
+	%>
+		<article class="item" style="background-image: url(<%=url%>);">
+			<img src="<%=url%>" class="list-hide">
+			<dl>
+				<dt>Nom</dt>
+				<dd><%=item.alcoholName%></dd>
+
+				<dt>Type</dt>
+				<dd><%=item.alcoholType%></dd>
+
+				<dt>Année</dt>
+				<dd><%=item.alcoholYear%></dd>
+
+				<dt>producteur<% if( item.makers.length > 1 ){ %>s<% } %></dt>
+				<%  j = 0;
+					for( id in item.makers ){
+						if( item.makers.hasOwnProperty(id) ){
+							maker = item.makers[ id ];
+				%>
+					<dd class="<% if( j > 2 ){ %>list-hide<% } %>">
+						<%=maker.makerName%>
+						<button class="btn btn-mini btn-info filter"
+							data-filter="maker" data-value="<%=maker.makerName%>"
+						><i class="icon-search"></i></button>
+
+					</dd>
+					<%  }
+						j++;
+					} %>
+
+				<dt>Qualité</dt>
+				<dd>
+					<% for( j = 1; j <= item.sagaRating; j += 1 ){ %>
+						<i class="icon-star"></i>
+					<% } %>
+					<% for( j = item.sagaRating; j <= 5; j += 1 ){ %>
+						<i class="icon-star-empty"></i>
+					<% } %>
+				</dd>
+
+				<dt>Rangement</dt>
+				<dd>
+					<%=item.storageRoom%> - <%=item.storageType%>
+					<% if( item.storageColumn !== null || item.storageLine !== null ){ %>
+						- <%=item.storageColumn%><%=item.storageLine%>
+					<% } %>
+					<% if( item.storageColumn !== null || item.storageLine !== null ){ %>
+						<button class="btn storage-picture btn-info btn-mini list-hide"
+							data-toggle="modal" data-target="#storage_picture" data-manage="alcohol"
+							data-storageID="<%=item.storageID%>"
+							title="Voir la photo du rangement"
+						><i class="icon-map-marker"></i></button>
+					<% } %>
+					<button class="btn btn-mini btn-info filter"
+						data-filter="storage" data-value="<%=item.storageID%>"
+					><i class="icon-search"></i></button>
+				</dd>
+
+				<dt>Offert par</dt>
+				<dd><%=item.alcoholOfferedBy%></dd>
+
+				<dt>Actions</dt>
+				<dd>
+					<div class="btn-group">
+						<button class="btn detail btn-info btn-mini" data-toggle="modal" data-target=".detail-modal" data-manage="alcohol">
+							<i class="icon-eye-open"></i>
+							<% if( !shrinkActions ){ %>Détail<% } %>
+						</button>
+
+						<button class="btn edit btn-warning btn-mini"
+							data-toggle="modal" data-target="#edit_alcohol" data-manage="alcohol"
+							data-itemId="<%=item.alcoholID%>"
+						>
+							<i class="icon-edit"></i>
+							<% if( !shrinkActions ){ %>Modifier<% } %>
+						</button>
+
+						<button class="btn delete btn-danger btn-mini"
+							data-toggle="modal" data-target=".delete-modal" data-manage="alcohol"
+							data-itemId="<%=item.alcoholID%>"
+						>
+							<i class="icon-trash"></i>
+							<% if( !shrinkActions ){ %>Supprimer<% } %>
+						</button>
+					</div>
+				</dd>
+			</dl>
+		</article>
+	<% } %>
+</script>
+

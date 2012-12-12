@@ -26,8 +26,8 @@ $xlarge: 1400px;
 	@else if $media == xlarge {
 		@media screen and (min-width: $xlarge) { @content; }
 	}
-	@else if $media == navbar_collapsed {
-		@media (max-width: $navbarCollapseWidth) { @content; }
+	@else if $media == navbarCollapsed {
+		@media screen and (max-width: $navbarCollapseWidth) { @content; }
 	}
 }
 
@@ -36,28 +36,30 @@ $xlarge: 1400px;
 	body {
 		padding-top: 41px;
 
-		@include respond-to(navbar_collapsed) { padding-top: 0; }
+		@include respond-to(navbarCollapsed) { padding-top: 0; }
 	}
 
 /** _____________________________________________ NAV **/
-	.navbar .add {
-		display: none;
+	.navbar {
+		.add {
+			display: none;
 
-		span {
-			padding-left: 4px;
+			span {
+				padding-left: 4px;
 
-			@include respond-to(phone) { display: none; }
+				@include respond-to(phone) { display: none; }
+			}
 		}
-	}
 
-	.navbar .sort-links .btn-group {
-		margin-top: 0;
-	}
+		.sort-links .btn-group {
+			margin-top: 0;
+		}
 
-	.navbar .container-fluid > .nav {
-		float: right;
+		.container-fluid > .nav {
+			float: right;
 
-		@include respond-to(navbar_collapsed) { float: none; }
+			@include respond-to(navbarCollapsed) { float: none; }
+		}
 	}
 
 	.pagination {
@@ -65,7 +67,7 @@ $xlarge: 1400px;
 	}
 
 /** _____________________________________________ LIST **/
-	.container-fluid.override {
+	.container-fluid-override {
 		text-align: center;
 		padding: 0 10px;
 
@@ -86,12 +88,7 @@ $xlarge: 1400px;
 		}
 
 		.item {
-			float: left; /* to avoid white-space madness */
-			display: block;
-			padding: 4px 6px;
-			margin: 4px;
-			border: 1px solid $grayLighter;
-			border-radius: 4px;
+			display: inline-block;
 
 			span {
 				display: inline-block;
@@ -101,6 +98,15 @@ $xlarge: 1400px;
 				.btn-group {
 					margin-left: 10px;
 				}
+			}
+		}
+
+		&:not(.list-with-cover) {
+			.item {
+				padding: 4px 6px;
+				margin: 4px;
+				border: 1px solid $grayLighter;
+				border-radius: 4px;
 			}
 		}
 
@@ -125,7 +131,7 @@ $xlarge: 1400px;
 		@include respond-to(phone) { width: auto; }
 	}
 
-	.withCover {
+	.list-with-cover {
 		dl {
 			position: absolute;
 			top: 0;
@@ -143,10 +149,11 @@ $xlarge: 1400px;
 
 		.item {
 			position: relative;
+			display: block;
+			float: left; /* to avoid white-space madness */
 
 			padding: 0;
 			margin: 0;
-			border: none;
 
 			background-size: 100% 100%;
 
@@ -160,7 +167,7 @@ $xlarge: 1400px;
 	$itemWidth: 195px;
 	$itemHeight: 260px;
 
-	.withCover .item {
+	.list-with-cover .item {
 		@include respond-to(xlarge) {
 			width: $itemWidth * 1.6;
 			height: $itemHeight * 1.6;
@@ -176,7 +183,7 @@ $xlarge: 1400px;
 			height: $itemHeight * 1.2;
 		}
 
-		@include respond-to(small_desktop) {
+		@include respond-to(smallDesktop) {
 			width: $itemWidth * 1;
 			height: $itemHeight * 1;
 		}
@@ -208,7 +215,7 @@ $xlarge: 1400px;
 			height: $itemWidth * 1.2;
 		}
 
-		@include respond-to(small_desktop) {
+		@include respond-to(smallDesktop) {
 			width: $itemWidth * 1;
 			height: $itemWidth * 1;
 		}
@@ -225,8 +232,8 @@ $xlarge: 1400px;
 	}
 
 /** _____________________________________________ FILTERS & SORTS **/
-	.dropdown-menu.filters,
-	.dropdown-menu.sorts {
+	.dropdown-filters,
+	.dropdown-sorts {
 		padding: 15px;
 	}
 
@@ -243,7 +250,7 @@ $xlarge: 1400px;
 	.filter-form {
 		display: none;
 
-		.span2 {
+		.span2-override {
 			width: 212px;
 		}
 
@@ -254,7 +261,7 @@ $xlarge: 1400px;
 					width: calc(100% - 42px);
 				}
 
-				.span2 {
+				.span2-override {
 					width: 141px;
 				}
 			}
@@ -267,12 +274,10 @@ $xlarge: 1400px;
 		right: 0;
 	}
 
-	.navbar .nav > li > .dropdown-menu {
-		&.filters:after,
-		&.sorts:after {
-			left: auto;
-			right: 16px;
-		}
+	.navbar .nav > li > .dropdown-filters:after,
+	.navbar .nav > li > .dropdown-sorts:after {
+		left: auto;
+		right: 16px;
 	}
 
 	.sort-links .btn {
@@ -314,7 +319,7 @@ $xlarge: 1400px;
 		clear: left;
 	}
 
-	.modal.with-cover {
+	.modal-with-cover {
 		width: 760px;
 		margin-left: -380px;
 
@@ -374,27 +379,53 @@ $xlarge: 1400px;
 		opacity: 0.8;
 
 		background: none repeat scroll 0 0 #424242;
-	}
 
-	#drop-overlay h1 {
-		position: fixed;
-		top: 50%;
-		left: 0;
-		width: 100%;
+		h1 {
+			position: fixed;
+			top: 50%;
+			left: 0;
+			width: 100%;
 
-		padding: 0;
-		margin: 0;
+			padding: 0;
+			margin: 0;
 
-		color: #FFFFFF;
+			color: #FFFFFF;
 
-		font-size: 10em;
-		font-weight: bold;
-		text-align: center;
-		text-shadow: 1px 1px 2px #000000;
+			font-size: 10em;
+			font-weight: bold;
+			text-align: center;
+			text-shadow: 1px 1px 2px #000000;
+		}
 	}
 
 /** _____________________________________________ DETAIL MODAL **/
-	.modal-detail .detail-hide {
+	.detail-modal .detail-hide {
+		display: none;
+	}
+
+	.detail-modal .modal-header span {
+			display: none;
+	}
+
+	.detail-modal[data-manage="album"] .modal-header .album,
+	.detail-modal[data-manage="alcohol"] .modal-header .alcohol,
+	.detail-modal[data-manage="book"] .modal-header .book,
+	.detail-modal[data-manage="movie"] .modal-header .movie,
+	.detail-modal[data-manage="storage"] .modal-header .storage {
+		display: inline;
+	}
+
+/** _____________________________________________ STORE MODAL **/
+	.store-form .item-label {
+		display: none;
+	}
+
+	.store-form[data-manage="book"] .book,
+	.store-form[data-manage="movie"] .movie {
+		display: inline;
+	}
+
+	.store-form .none-found {
 		display: none;
 	}
 

@@ -8,27 +8,27 @@
 			<span>
 				<div class="btn-group pull-right">
 					<% if( item.sagaSearchURL !== null ){ %>§
-					<a class="btn btn-info btn-small" href="<%=item.sagaSearchURL%>" target="_blank">
+					<a class="btn btn-info btn-mini" href="<%=item.sagaSearchURL%>" target="_blank">
 						<i class="icon-link"></i>
 					</a>
 					<% } %>
 
-					<button class="btn delete btn-warning btn-small"
-						data-toggle="modal" data-target="#delete_saga" data-manage="saga"
+					<button class="btn delete move btn-warning btn-mini"
+						data-toggle="modal" data-target=".delete-modal" data-manage="saga"
 						data-itemId="<%=item.sagaID%>"
 					>
 						<i class="icon-download-alt"></i>
 					</button>
 
-					<button class="btn edit btn-warning btn-small"
+					<button class="btn edit btn-warning btn-mini"
 						data-toggle="modal" data-target="#edit_saga" data-manage="saga"
 						data-itemId="<%=item.sagaID%>"
 					>
 						<i class="icon-edit"></i>
 					</button>
 
-					<button class="btn delete btn-danger btn-small"
-						data-toggle="modal" data-target="#delete_saga" data-manage="saga"
+					<button class="btn delete btn-danger btn-mini"
+						data-toggle="modal" data-target=".delete-modal" data-manage="saga"
 						data-itemId="<%=item.sagaID%>"
 					>
 						<i class="icon-trash"></i>

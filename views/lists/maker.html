@@ -1,4 +1,4 @@
-<script type="text/html" id="list_artist_tmpl">
+<script type="text/html" id="list_maker_tmpl">
 <%	var item, i, id;
 
 	for( i = 0; i < list.length; i += 1 ){
@@ -8,21 +8,21 @@
 			<span>
 				<div class="btn-group pull-right">
 					<button class="btn edit btn-warning btn-mini"
-						data-toggle="modal" data-target="#edit_artist" data-manage="artist"
-						data-itemId="<%=item.artistID%>"
+						data-toggle="modal" data-target="#edit_maker" data-manage="maker"
+						data-itemId="<%=item.makerID%>"
 					>
 						<i class="icon-edit"></i>
 					</button>
 
 					<button class="btn delete btn-danger btn-mini"
-						data-toggle="modal" data-target=".delete-modal" data-manage="artist"
-						data-itemId="<%=item.artistID%>"
+						data-toggle="modal" data-target=".delete-modal" data-manage="maker"
+						data-itemId="<%=item.makerID%>"
 					>
 						<i class="icon-trash"></i>
 					</button>
 				</div>
 
-				<%=item.artistFirstName%> <%=item.artistLastName%>
+				<%=item.makerName%>
 			</span>
 		</article>
 	<% } %>

@@ -19,9 +19,9 @@ try {
 		//multiple list call for the same function
 		if( stripos($field, 'storage') !== false && $field != 'storageTypeList' && $field != 'storageRoomList'){
 			if( stripos($field, 'filter') !== false ){
-				$field = 'movie_book_album_storagesForFilterList';
+				$field = 'movie_book_album_alcohol_storagesForFilterList';
 			} else {
-				$field = 'movie_book_album_storagesForDropDownList';
+				$field = 'movie_book_album_alcohol_storagesForDropDownList';
 			}
 		}
 
@@ -52,6 +52,38 @@ try {
 					}
 
 					list($lastModified, $list) = $oAlbum->getAlbumsTypes( true );
+				break;
+			case 'alcoholTypeList' :
+					$oAlcohol = new alcohol();
+
+					if( $browserHasCache && $modifiedSince != 0 ){
+						$ts = $oAlcohol->getAlcoholsTypes( null, true );
+						if( !is_null($ts) ){
+							//browser has list in cache and list was not modified
+							if( $modifiedSince == $ts ){
+								header($_SERVER["SERVER_PROTOCOL"]." 304 Not Modified");
+								die;
+							}
+						}
+					}
+
+					list($lastModified, $list) = $oAlcohol->getAlcoholsTypes( true );
+				break;
+			case 'alcoholOfferedByList' :
+					$oAlcohol = new alcohol();
+
+					if( $browserHasCache && $modifiedSince != 0 ){
+						$ts = $oAlcohol->getAlcoholsOfferedBys( null, true );
+						if( !is_null($ts) ){
+							//browser has list in cache and list was not modified
+							if( $modifiedSince == $ts ){
+								header($_SERVER["SERVER_PROTOCOL"]." 304 Not Modified");
+								die;
+							}
+						}
+					}
+
+					list($lastModified, $list) = $oAlcohol->getAlcoholsOfferedBys( true );
 				break;
 			case 'bookSizeList' :
 					$oBook = new book();
@@ -149,7 +181,7 @@ try {
 
 					list($lastModified, $list) = $oSaga->getSagasTitles( 'movie', true );
 				break;
-			case 'movie_book_album_storagesForDropDownList' :
+			case 'movie_book_album_alcohol_storagesForDropDownList' :
 					$oStorage = new storage();
 
 					if( $browserHasCache && $modifiedSince != 0 ){
@@ -180,6 +212,22 @@ try {
 					}
 
 					list($lastModified, $list) = $oBand->getBandsForDropDownList( true );
+				break;
+			case 'alcoholMakerList' :
+					$oMaker = new maker();
+
+					if( $browserHasCache && $modifiedSince != 0 ){
+						$ts = $oMaker->getMakersForDropDownList( null, true );
+						if( !is_null($ts) ){
+							//browser has list in cache and list was not modified
+							if( $modifiedSince == $ts ){
+								header($_SERVER["SERVER_PROTOCOL"]." 304 Not Modified");
+								die;
+							}
+						}
+					}
+
+					list($lastModified, $list) = $oMaker->getMakersForDropDownList( true );
 				break;
 			case 'bookAuthorList' :
 					$oAuthor = new author();
@@ -247,7 +295,7 @@ try {
 				break;
 
 			/* common filters */
-			case 'movie_book_album_storagesForFilterList' :
+			case 'movie_book_album_alcohol_storagesForFilterList' :
 					$oStorage = new storage();
 
 					if( $browserHasCache && $modifiedSince != 0 ){
@@ -444,6 +492,56 @@ try {
 					}
 
 					list($lastModified, $list) = $oLoan->getAlbumsLoansForFilterList( true );
+				break;
+
+			/* alcohol filters */
+			case 'alcoholNameFilterList' :
+					$oAlcohol = new alcohol();
+
+					if( $browserHasCache && $modifiedSince != 0 ){
+						$ts = $oAlcohol->getAlcoholsNameForFilterList( null, true );
+						if( !is_null($ts) ){
+							//browser has list in cache and list was not modified
+							if( $modifiedSince == $ts ){
+								header($_SERVER["SERVER_PROTOCOL"]." 304 Not Modified");
+								die;
+							}
+						}
+					}
+
+					list($lastModified, $list) = $oAlcohol->getAlcoholsNameForFilterList( true );
+				break;
+			case 'alcoholOfferedByFilterList' :
+					$oAlcohol = new alcohol();
+
+					if( $browserHasCache && $modifiedSince != 0 ){
+						$ts = $oAlcohol->getAlcoholsOfferedByForFilterList( null, true );
+						if( !is_null($ts) ){
+							//browser has list in cache and list was not modified
+							if( $modifiedSince == $ts ){
+								header($_SERVER["SERVER_PROTOCOL"]." 304 Not Modified");
+								die;
+							}
+						}
+					}
+
+					list($lastModified, $list) = $oAlcohol->getAlcoholsOfferedByForFilterList( true );
+				break;
+			case 'alcoholMakerFilterList' :
+					$oMaker = new maker();
+
+					if( $browserHasCache && $modifiedSince != 0 ){
+						$ts = $oMaker->getMakersForFilterList( null, true );
+						if( !is_null($ts) ){
+							//browser has list in cache and list was not modified
+							if( $modifiedSince == $ts ){
+								header($_SERVER["SERVER_PROTOCOL"]." 304 Not Modified");
+								die;
+							}
+						}
+					}
+
+					list($lastModified, $list) = $oMaker->getMakersForFilterList( true );
 				break;
 
 			/* band filters */

@@ -33,7 +33,7 @@
 				%>
 					<dd class="<% if( partsToHide.bands || j > 3 ){ %>list-hide<% } %>">
 						<%=band.bandName%>
-						<button class="btn btn-small btn-info filter"
+						<button class="btn btn-mini btn-info filter"
 							data-filter="band" data-value="<%=band.bandName%>"
 						><i class="icon-search"></i></button>
 
@@ -49,13 +49,13 @@
 						- <%=item.storageColumn%><%=item.storageLine%>
 					<% } %>
 					<% if( item.storageColumn !== null || item.storageLine !== null ){ %>
-						<button class="btn storage-picture btn-info btn-small list-hide"
+						<button class="btn storage-picture btn-info btn-mini list-hide"
 							data-toggle="modal" data-target="#storage_picture" data-manage="album"
 							data-storageID="<%=item.storageID%>"
 							title="Voir la photo du rangement"
 						><i class="icon-map-marker"></i></button>
 					<% } %>
-					<button class="btn btn-small btn-info filter"
+					<button class="btn btn-mini btn-info filter"
 						data-filter="storage" data-value="<%=item.storageID%>"
 					><i class="icon-search"></i></button>
 				</dd>
@@ -65,11 +65,11 @@
 					<dd class="<% if( partsToHide.loan ) { %>list-hide<% } %>">
 						<%=item.loanHolder%> - <%=item.loanDate%>
 						<button class="btn delete btn-danger dtn-small list-hide"
-							data-toggle="modal" data-target="#delete_loan" data-manage="loan"
+							data-toggle="modal" data-target=".delete-modal" data-manage="loan"
 							data-itemId="<%=item.albumID%>"
 							title="Supprimer le prêt"
 						><i class="icon-trash"></i></button>
-						<button class="btn btn-small btn-info filter"
+						<button class="btn btn-mini btn-info filter"
 							data-filter="loan" data-value="<%=item.loanHolder%>"
 						><i class="icon-search"></i></button>
 					</dd>
@@ -78,12 +78,12 @@
 				<dt>Actions</dt>
 				<dd>
 					<div class="btn-group">
-						<button class="btn detail btn-info btn-small" data-toggle="modal" data-target="#detail_album" data-manage="album">
+						<button class="btn detail btn-info btn-mini" data-toggle="modal" data-target=".detail-modal" data-manage="album">
 							<i class="icon-eye-open"></i>
 							<% if( !shrinkActions ){ %>Détail<% } %>
 						</button>
 
-						<button class="btn edit btn-warning btn-small"
+						<button class="btn edit btn-warning btn-mini"
 							data-toggle="modal" data-target="#edit_album" data-manage="album"
 							data-itemId="<%=item.albumID%>"
 						>
@@ -91,15 +91,15 @@
 							<% if( !shrinkActions ){ %>Modifier<% } %>
 						</button>
 
-						<button class="btn delete btn-danger btn-small"
-							data-toggle="modal" data-target="#delete_album" data-manage="album"
+						<button class="btn delete btn-danger btn-mini"
+							data-toggle="modal" data-target=".delete-modal" data-manage="album"
 							data-itemId="<%=item.albumID%>"
 						>
 							<i class="icon-trash"></i>
 							<% if( !shrinkActions ){ %>Supprimer<% } %>
 						</button>
 
-						<button class="btn add btn-info btn-small"
+						<button class="btn add btn-info btn-mini"
 							data-toggle="modal" data-target="#edit_loan" data-manage="loan"
 							data-itemId="<%=item.albumID%>" data-relation="album"
 						>

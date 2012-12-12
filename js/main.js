@@ -340,7 +340,8 @@ $(document).ready(function(){
 	/** _____________________________________________ DETAIL **/
 		$body.on('click', '.detail', function(){
 			var $this = $(this),
-				$modal = $( $this.attr('data-target') );
+				rel = $this.attr('data-manage'),
+				$modal = $( $this.attr('data-target') ).attr('data-manage', rel);
 
 			$detailItem = $this.closest('.item');
 			fillDetailModal( $modal );
@@ -356,9 +357,10 @@ $(document).ready(function(){
 				$inputs = $modal.find('input');
 
 			$inputs.filter('[name="id"]').val( itemId );
+			$modal.find('.store-form').attr('data-manage', rel);
 
 			//hide detail if visible
-			$('#detail_'+ rel).modal('hide');
+			$('.detail-modal').modal('hide');
 
 			$.post('ajax/manage'+ rel.capitalize() +'.php', 'action=getSagaStorage&sagaId='+ sagaId, function(data){
 				if( data.storageID && data.storageID > 0 ){
@@ -366,7 +368,17 @@ $(document).ready(function(){
 
 					var $decoder = $('<textarea/>');
 
+					$modal.find('p').show()
+						.filter('.none-found').hide().end()
+						.end()
+						.find('.btn-primary').show;
+
 					$modal.find('.storage-description').html( $decoder.html(data.storageRoom +' '+ data.storageType +' - '+ data.storageColumn + data.storageLine).val() );
+				} else {
+					$modal.find('p').hide()
+						.filter('.none-found').show().end()
+						.end()
+						.find('.btn-primary').hide();
 				}
 			});
 		});
@@ -394,7 +406,7 @@ $(document).ready(function(){
 				$another = $form.find('.another');
 
 			//hide detail if visible
-			$('#detail_'+ rel).modal('hide');
+			$('.detail-modal').modal('hide');
 
 			$another.filter(':gt(0)').remove();
 
@@ -494,6 +506,25 @@ $(document).ready(function(){
 									indice++;
 								});
 							break;
+						case 'alcohol':
+								$('#alcoholID').val( data.alcoholID );
+								$('#alcoholName').val( decoder.html(data.alcoholName).val() ).change();
+								$('#alcoholType').val( data.alcoholType );
+								$('#alcoholYear').val( data.alcoholYear );
+								$('#alcoholCover').val( data.alcoholCover );
+								$('#alcoholRating_'+ data.alcoholRating).prop('checked', true);
+								$form.find('.cover-preview').html( $('<img>', { src: 'image.php?cover=alcohol&id='+ data.alcoholID }) );
+
+								//options for this select are reseted by initalcoholFormList()
+								//at this point the list can be empty
+								$('#alcoholStorage').data('selectedId', data.storageID);
+
+								$.each(data.makers, function(i, maker){
+									if( indice > 1 ) $another.click();
+									$('#alcoholMaker_'+ indice).val( decoder.html(maker.makerName).val() );
+									indice++;
+								});
+							break;
 						case 'author':
 								$('#authorID').val( data.authorID );
 								$('#authorFirstName').val( decoder.html(data.authorFirstName).val() );
@@ -524,7 +555,8 @@ $(document).ready(function(){
 								$('#storageType').val( data.storageType );
 								$('#storageColumn').val( data.storageColumn );
 								$('#storageLine').val( data.storageLine );
-								$form.find('.cover-preview').html( $('<img>', { src: 'image.php?cover=storage&id='+ data.storageID }) );
+								var url = getFullUrl('storage/'+ data.storageRoom.urlify() +'_'+ data.storageType.urlify() + (data.storageColumn !== null || data.storageLine !== null ? '_'+ data.storageColumn + data.storageLine : '' ) +'.png', '');
+								$form.find('.cover-preview').html( $('<img>', { src: url }) );
 							break;
 						default:
 							break;
@@ -561,7 +593,13 @@ $(document).ready(function(){
 				r = rel.capitalize(),
 				itemId = $this.attr('data-itemId');
 
-			if( rel == 'storage' || rel == 'author' || rel == 'artist' || rel == 'band' || rel == 'saga' ){
+			//modify modal according to rel
+			$form.attr('data-manage', rel)
+				.find('input')
+					.filter('[name="action"]').attr('id', rel +'Action').end()
+					.filter('[name="id"]').attr('id', rel +'ID');
+
+			if( rel == 'storage' || rel == 'author' || rel == 'artist' || rel == 'band' || rel == 'maker' || rel == 'saga' ){
 				$.ajax({
 					url: 'ajax/manage'+ r +'.php',
 					type: 'POST',
@@ -571,9 +609,9 @@ $(document).ready(function(){
 					success: function(data){
 						if( $.trim(data) !== '' ){
 							$form
-								.find('.impact').html(data).end()
+								.find('.impact').html(data).show().end()
 								.find('.lead').hide();
-							$modal.find('.modal-footer').find('.btn-primary').prop({ disabled: true });
+							$modal.find('.modal-footer').find('.btn-primary').prop('disabled', true);
 							$('#impact'+ r +'List').loadList();
 						} else {
 							$form
@@ -583,6 +621,10 @@ $(document).ready(function(){
 						}
 					}
 				});
+			} else {
+				$form
+					.find('.impact').hide().end()
+					.find('.lead').show();
 			}
 
 			$form.data('save_clicked', 0)
@@ -713,9 +755,9 @@ var tabSwitch = function(){
 	$parts.hide()
 		.filter('[id$="_'+ target +'"]').show();
 
-	$navDropdowns.toggle( target != 'storage' && target != 'author' && target != 'artist' && target != 'band' );
+	$navDropdowns.toggle( target != 'storage' && target != 'author' && target != 'artist' && target != 'band' && target != 'maker' );
 
-	if( target != activeTab && $listContainer.width() > 767 ) centeringDone = false;
+	if( target != activeTab && $parts.filter('[id="list_'+ target +'"]').hasClass('withCover') && $listContainer.width() > 767 ) centeringDone = false;
 
 	activeTab = target;
 
@@ -788,7 +830,9 @@ var getList = function( type ){
 				$listContainer.width( Math.floor(containerWidth / itemWidth) * itemWidth );
 
 				centeringDone = true;
-			 }
+			} else {
+				$listContainer.css('width', 'auto');
+			}
 		});
 	}
 };
@@ -1165,7 +1209,7 @@ var fillDetailModal = function( $modal ){
 var responseToResize = function(){
 	if( matchMedia('screen and (max-width: 480px)').matches ){
 		$('.sorts').find('.btn-group').addClass('responseTo').removeClass('btn-group');
-
-		getList(1);
 	}
+
+	getList(1);
 };

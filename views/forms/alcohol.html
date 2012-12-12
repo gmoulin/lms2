@@ -1,0 +1,102 @@
+<div id="edit_alcohol" class="modal hide fade modal-edit modal-with-cover">
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal"><i class="icon-remove-sign"></i></button>
+		<h3>Formulaire de gestion des alcools</h3>
+	</div>
+	<div class="modal-body">
+		<div class="row-fluid">
+			<div class="span4">
+				<span class="cover-preview"></span>
+			</div>
+			<div class="span8">
+				<form id="alcohol_form" name="alcohol_form" method="post" action="" class="edit-form form-horizontal" data-manage="alcohol">
+					<input type="hidden" id="alcoholAction" name="action" value="" />
+					<input type="hidden" id="alcoholID" name="id" value="" />
+					<div class="control-group">
+						<label class="control-label" for="alcoholName">Nom *</label>
+						<div class="controls">
+							<input type="text" id="alcoholName" name="title" class="control input-large" value="" placeholder="nom de l'alcool" required autocomplete="off">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="alcoholType">Type *</label>
+						<div class="controls">
+							<input type="text" id="alcoholType" name="type" class="control input-large" value="" list="alcoholTypeList" placeholder="type de l'alcool" required autocomplete="off">
+						</div>
+						<datalist id="alcoholTypeList">
+							<option value="">Types déjà présents</option>
+						</datalist>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="alcoholYear">Année *</label>
+						<div class="controls">
+							<input type="number" id="alcoholYear" name="year" class="control input-large" value="" placeholder="année de l'alcool" maxlength="4" required autocomplete="off">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="alcoholRating">Qualité</label>
+						<div class="controls stars">
+							<input type="radio" id="alcoholRating_5" name="rating" value="5" autocomplete="off">
+							<label for="alcoholRating_5" class="star empty"><i class="icon-star-empty"></i></label>
+							<label for="alcoholRating_5" class="star full"><i class="icon-star"></i></label>
+							<input type="radio" id="alcoholRating_4" name="rating" value="4" autocomplete="off">
+							<label for="alcoholRating_4" class="star empty"><i class="icon-star-empty"></i></label>
+							<label for="alcoholRating_4" class="star full"><i class="icon-star"></i></label>
+							<input type="radio" id="alcoholRating_3" name="rating" value="3" autocomplete="off">
+							<label for="alcoholRating_3" class="star empty"><i class="icon-star-empty"></i></label>
+							<label for="alcoholRating_3" class="star full"><i class="icon-star"></i></label>
+							<input type="radio" id="alcoholRating_2" name="rating" value="2" autocomplete="off">
+							<label for="alcoholRating_2" class="star empty"><i class="icon-star-empty"></i></label>
+							<label for="alcoholRating_2" class="star full"><i class="icon-star"></i></label>
+							<input type="radio" id="alcoholRating_1" name="rating" value="1" checked autocomplete="off">
+							<label for="alcoholRating_1" class="star empty"><i class="icon-star-empty"></i></label>
+							<label for="alcoholRating_1" class="star full"><i class="icon-star"></i></label>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="alcoholCoverStatus">Couverture</label>
+						<div class="controls">
+							<input type="hidden" id="alcoholCover" name="cover" class="" value="" />
+							<div id="alcoholCoverStatus" class="cover-status control well input-large">
+								<i class="icon-picture"></i> Déposer l'image
+							</div>
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="alcoholStorage">Rangement *</label>
+						<div class="controls">
+							<select id="alcoholStorage" name="storage" class="control input-large" required autocomplete="off">
+								<option value="">Choississez</option>
+							</select>
+						</div>
+					</div>
+					<div class="control-group another" id="alcoholMakers">
+						<label class="control-label" for="alcoholMaker_1">Producteur *</label>
+						<div class="controls">
+							<div class="input-append">
+								<input type="text" id="alcoholMaker_1" name="author_1" class="control input-large" list="alcoholMakerList" placeholder="nom du producteur" required autocomplete="off">
+								<button class="btn btn-warning delete-another" title="Supprimer cet producteur"><i class="icon-trash"></i></button>
+							</div>
+						</div>
+					</div>
+					<datalist id="alcoholMakerList">
+						<option value="">Producteurs déjà présents</option>
+					</datalist>
+					<div class="control-group">
+						<label class="control-label" for="alcoholOfferedBy">Offert par </label>
+						<div class="controls">
+							<input type="text" id="alcoholOfferedBy" name="offeredBy" class="control input-large" value="" list="alcoholOfferedByList" placeholder="nom" required autocomplete="off">
+						</div>
+						<datalist id="alcoholOfferedByList">
+							<option value="">Offreurs déjà présents</option>
+						</datalist>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="reset" class="btn btn-warning" data-dismiss="modal">Annuler</button>
+		<button type="submit" class="btn btn-primary" form="alcohol_form">Enregistrer</button>
+	</div>
+</div>

@@ -8,20 +8,20 @@
 			<span>
 				<div class="btn-group pull-right">
 					<% if( item.bandWebSite !== null ){ %>§
-					<a class="btn btn-info btn-small" href="<%=item.bandWebSite%>" target="_blank">
+					<a class="btn btn-info btn-mini" href="<%=item.bandWebSite%>" target="_blank">
 						<i class="icon-link"></i>
 					</a>
 					<% } %>
 
-					<button class="btn edit btn-warning btn-small"
+					<button class="btn edit btn-warning btn-mini"
 						data-toggle="modal" data-target="#edit_band" data-manage="band"
 						data-itemId="<%=item.bandID%>"
 					>
 						<i class="icon-edit"></i>
 					</button>
 
-					<button class="btn delete btn-danger btn-small"
-						data-toggle="modal" data-target="#delete_band" data-manage="band"
+					<button class="btn delete btn-danger btn-mini"
+						data-toggle="modal" data-target=".delete-modal" data-manage="band"
 						data-itemId="<%=item.bandID%>"
 					>
 						<i class="icon-trash"></i>

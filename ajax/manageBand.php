@@ -26,7 +26,7 @@ try {
 					$response = 'ok';
 
 					if( isset($_SESSION['bands']) ) unset($_SESSION['bands']['list']);
-					if( isset($_SESSION['books']) ) unset($_SESSION['books']['list']);
+					if( isset($_SESSION['albums']) ) unset($_SESSION['albums']['list']);
 				} else {
 					$response = $formData['errors'];
 				}
@@ -41,7 +41,7 @@ try {
 					$response = 'ok';
 
 					if( isset($_SESSION['bands']) ) unset($_SESSION['bands']['list']);
-					if( isset($_SESSION['books']) ) unset($_SESSION['books']['list']);
+					if( isset($_SESSION['albums']) ) unset($_SESSION['albums']['list']);
 				} else {
 					$response = $formData['errors'];
 				}
@@ -77,7 +77,7 @@ try {
 				$response = "ok";
 
 				if( isset($_SESSION['bands']) ) unset($_SESSION['bands']['list']);
-				if( isset($_SESSION['books']) ) unset($_SESSION['books']['list']);
+				if( isset($_SESSION['albums']) ) unset($_SESSION['albums']['list']);
 			break;
 		case 'impact' : //on deletion
 				$id = filter_has_var(INPUT_POST, 'id');

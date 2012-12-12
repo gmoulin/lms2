@@ -1,0 +1,24 @@
+<div id="edit_maker" class="modal hide fade modal-edit">
+	<div class="modal-header">
+		<button class="close" data-dismiss="modal"><i class="icon-remove-sign"></i></button>
+		<h3>Formulaire de gestion des producteurs</h3>
+	</div>
+	<div class="modal-body">
+		<div class="row-fluid">
+			<form id="maker_form" name="maker_form" method="post" action="" class="edit-form form-horizontal" data-manage="maker">
+				<input type="hidden" id="makerAction" name="action" value="" />
+				<input type="hidden" id="makerID" name="id" value="" />
+				<div class="control-group">
+					<label class="control-label" for="makerName">Nom *</label>
+					<div class="controls">
+						<input type="text" id="makerName" name="name" class="control input-large" placeholder="nom du producteur" required autocomplete="off">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button type="reset" class="btn btn-warning" data-dismiss="modal">Annuler</button>
+		<button type="submit" class="btn btn-primary" form="maker_form">Enregistrer</button>
+	</div>
+</div>

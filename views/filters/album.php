@@ -2,7 +2,7 @@
 	<input type="hidden" name="albumSortType" id="albumSortType" value="<?php echo ( isset($_SESSION['albumListFilters']) && isset($_SESSION['albumListFilters']['albumSortType']) && !empty($_SESSION['albumListFilters']['albumSortType']) ? $_SESSION['albumListFilters']['albumSortType'] : 0 ); ?>" class="sortTypeField" autocomplete="off" />
 	<label for="albumSearch">Recherche globale</label>
 	<div class="input-append">
-		<input type="search" name="albumSearch" id="albumSearch" class="span2" value="" placeholder="dans les données textuelles" />
+		<input type="search" name="albumSearch" id="albumSearch" class="span2 span2-override" value="" placeholder="dans les données textuelles" />
 		<button type="submit" name="albumSearchSubmit" class="btn btn-primary search">Go</button>
 		<button class="btn btn-warning clear"><i class="icon-remove-sign"></i></button>
 	</div>

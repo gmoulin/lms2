@@ -1,16 +1,22 @@
-<div id="store_movie" class="modal hide fade">
+<div class="modal hide fade store-modal">
 	<div class="modal-header">
 		<button class="close" data-dismiss="modal"><i class="icon-remove-sign"></i></button>
 		<h3>Confirmation de rangement</h3>
 	</div>
 	<div class="modal-body">
-		<form id="movie_store_form" name="movie_form" method="post" action="" class="store-form" data-manage="movie">
+		<form id="store_form" name="book_form" method="post" action="" class="store-form" data-manage="">
 			<input type="hidden" name="action" value="store" />
 			<input type="hidden" name="id" value="" />
 			<input type="hidden" name="storageId" value="" />
 
+			<p class="none-found">
+				Aucun rangement n'est associé à cette saga.
+			</p>
 			<p>
-				Le film sera rangé dans &laquo;<span class="storage-description"></span>&raquo;
+				Le
+				<span class="item-label book">livre</span>
+				<span class="item-label movie">film</span>
+				sera rangé dans &laquo;<span class="storage-description"></span>&raquo;
 			</p>
 			<p class="lead">
 				Êtes-vous sûre ?
@@ -19,7 +25,7 @@
 	</div>
 	<div class="modal-footer">
 		<button type="reset" class="btn btn-warning" data-dismiss="modal">Annuler</button>
-		<button type="submit" class="btn btn-primary" form="movie_store_form">Confirmer</button>
+		<button type="submit" class="btn btn-primary" form="store_form">Confirmer</button>
 	</div>
 </div>
 

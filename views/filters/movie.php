@@ -2,7 +2,7 @@
 	<input type="hidden" name="movieSortType" id="movieSortType" value="<?php echo ( isset($_SESSION['movieListFilters']) && isset($_SESSION['movieListFilters']['movieSortType']) && !empty($_SESSION['movieListFilters']['movieSortType']) ? $_SESSION['movieListFilters']['movieSortType'] : 0 ); ?>" class="sortTypeField" autocomplete="off" />
 	<label for="movieSearch">Recherche globale</label>
 	<div class="input-append">
-		<input type="search" name="movieSearch" id="movieSearch" class="span2" value="" placeholder="dans les données textuelles" />
+		<input type="search" name="movieSearch" id="movieSearch" class="span2 span2-override" value="" placeholder="dans les données textuelles" />
 		<button type="submit" name="movieSearchSubmit" class="btn btn-primary search">Go</button>
 		<button class="btn btn-warning clear"><i class="icon-remove-sign"></i></button>
 	</div>

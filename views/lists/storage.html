@@ -32,19 +32,19 @@
 			<img src="<%=url%>" class="list-hide">
 			<span class="detail-hide">
 				<div class="btn-group pull-right">
-					<button class="btn detail btn-info btn-small" data-toggle="modal" data-target="#detail_storage" data-manage="storage">
+					<button class="btn detail btn-info btn-mini" data-toggle="modal" data-target=".detail-modal" data-manage="storage">
 						<i class="icon-eye-open"></i>
 					</button>
 
-					<button class="btn edit btn-warning btn-small"
+					<button class="btn edit btn-warning btn-mini"
 						data-toggle="modal" data-target="#edit_storage" data-manage="storage"
 						data-itemId="<%=item.storageID%>"
 					>
 						<i class="icon-edit"></i>
 					</button>
 
-					<button class="btn delete btn-danger btn-small"
-						data-toggle="modal" data-target="#delete_storage" data-manage="storage"
+					<button class="btn delete btn-danger btn-mini"
+						data-toggle="modal" data-target=".delete-modal" data-manage="storage"
 						data-itemId="<%=item.storageID%>"
 					>
 						<i class="icon-trash"></i>
@@ -76,19 +76,19 @@
 				<dt>Actions</dt>
 				<dd>
 					<div class="btn-group">
-						<button class="btn detail btn-info btn-small" data-toggle="modal" data-target="#detail_storage" data-manage="storage">
+						<button class="btn detail btn-info btn-mini" data-toggle="modal" data-target=".detail-modal" data-manage="storage">
 							<i class="icon-eye-open"></i>
 						</button>
 
-						<button class="btn edit btn-warning btn-small"
+						<button class="btn edit btn-warning btn-mini"
 							data-toggle="modal" data-target="#edit_storage" data-manage="storage"
 							data-itemId="<%=item.storageID%>"
 						>
 							<i class="icon-edit"></i>
 						</button>
 
-						<button class="btn delete btn-danger btn-small"
-							data-toggle="modal" data-target="#delete_storage" data-manage="storage"
+						<button class="btn delete btn-danger btn-mini"
+							data-toggle="modal" data-target=".delete-modal" data-manage="storage"
 							data-itemId="<%=item.storageID%>"
 						>
 							<i class="icon-trash"></i>
