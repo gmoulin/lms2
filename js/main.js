@@ -162,7 +162,21 @@ $(document).ready(function(){
 			}
 		});
 
+	/** _____________________________________________ MODALS **/
+		$('.modal').on('hide', function(){
+			if( $(this).find('.cover-status').length > 0 ){
+				$('html, .modal-backdrop')
+					.unbind('dragenter')
+					.unbind('dragover')
+					.unbind('dragleave');
+
+				$('html')[0].removeEventListener("drop", dropCover, true);
+			}
+		});
+
 	/** _____________________________________________ EDIT FORM **/
+		//quick links for title in form
+		var $quickLink = $('<a class="btn btn-info quicklink" target="_blank"><i class="icon-link"></i></a>');
 		$('.edit-form')
 			.on('click', '.add-another', function(e){
 				e.preventDefault();
@@ -228,6 +242,43 @@ $(document).ready(function(){
 					e.preventDefault();
 				}
 			})
+			.on('change', '.title', function(){
+				var $this = $(this),
+					rel = $this.closest('.edit-form').attr('data-manage');
+				if( $this.val() === '' ){
+					$this.parent().removeClass('input-append')
+						.find('.quicklink').remove();
+				}
+
+				if( $this.siblings('.quicklink').length === 0 ){
+					$this.parent().addClass('input-append');
+					if( rel == 'book' ){
+						$quickLink.clone().attr('title', 'Rechercher dans Google Image').appendTo( $this.parent() );
+						$quickLink.clone().attr('title', 'Rechercher dans Fantastic Fiction').appendTo( $this.parent() );
+					} else if( rel == 'movie' ){
+						$quickLink.clone().attr('title', 'Rechercher dans Google Image').appendTo( $this.parent() );
+						$quickLink.clone().attr('title', 'Rechercher dans IMDB').appendTo( $this.parent() );
+					} else if( rel == 'album' ){
+						$quickLink.clone().attr('title', 'Rechercher dans Google Image').appendTo( $this.parent() );
+					} else if( rel == 'band' ){
+						$quickLink.clone().attr('title', 'Rechercher sur Wikipedia').appendTo( $this.parent() );
+					}
+				}
+
+				if( rel == 'book' ){
+					$this.siblings('.quicklink')
+						.first().attr('href', 'http://www.google.com/images?q=' + $this.val() + ' book').end()
+						.last().attr('href', 'http://www.fantasticfiction.co.uk/search/?searchfor=book&keywords='+ $this.val());
+				} else if( rel == 'movie' ){
+					$this.siblings('.quicklink')
+						.first().attr('href', 'http://www.google.com/images?q=' + $this.val() + ' movie').end()
+						.last().attr('href', 'http://www.imdb.com/find?s=all&q='+ $this.val());
+				} else if( rel == 'album' ){
+					$this.siblings('.quicklink').attr('href', 'http://www.google.com/images?q=' + $this.val() + ' movie').end()
+				} else if( rel == 'band' ){
+					$this.siblings('.quicklink').attr('href', 'http://en.wikipedia.org/w/index.php?search=' + $this.val());
+				}
+			})
 			.each(function(){
 				//add event listener for dynamic form validation
 				this.addEventListener("invalid", checkField, true);
@@ -235,53 +286,6 @@ $(document).ready(function(){
 				this.addEventListener("input", checkField, true);
 			});
 
-		$('.modal').on('hide', function(){
-			if( $(this).find('.cover-status').length > 0 ){
-				$('html, .modal-backdrop')
-					.unbind('dragenter')
-					.unbind('dragover')
-					.unbind('dragleave');
-
-				$('html')[0].removeEventListener("drop", dropCover, true);
-			}
-		});
-
-		//quick links for title in form
-		var $quickLink = $('<a class="btn btn-info quicklink" target="_blank"><i class="icon-link"></i></a>');
-
-		$body.on('change', '.title', function(){
-			var $this = $(this),
-				rel = $this.closest('.edit-form').attr('data-manage');
-			if( $this.val() === '' ){
-				$this.parent().removeClass('input-append')
-					.find('.quicklink').remove();
-			}
-
-			if( $this.siblings('.quicklink').length === 0 ){
-				$this.parent().addClass('input-append');
-				if( rel == 'book' ){
-					$quickLink.clone().attr('title', 'Rechercher dans Google Image').appendTo( $this.parent() );
-					$quickLink.clone().attr('title', 'Rechercher dans Fantastic Fiction').appendTo( $this.parent() );
-				} else if( rel == 'movie' ){
-					$quickLink.clone().attr('title', 'Rechercher dans Google Image').appendTo( $this.parent() );
-					$quickLink.clone().attr('title', 'Rechercher dans IMDB').appendTo( $this.parent() );
-				} else if( rel == 'album' ){
-					$quickLink.clone().attr('title', 'Rechercher dans Google Image').appendTo( $this.parent() );
-				}
-			}
-
-			if( rel == 'book' ){
-				$this.siblings('.quicklink')
-					.first().attr('href', 'http://www.google.com/images?q=' + $this.val() + ' book').end()
-					.last().attr('href', 'http://www.fantasticfiction.co.uk/search/?searchfor=book&keywords='+ $this.val());
-			} else if( rel == 'movie' ){
-				$this.siblings('.quicklink')
-					.first().attr('href', 'http://www.google.com/images?q=' + $this.val() + ' movie').end()
-					.last().attr('href', 'http://www.imdb.com/find?s=all&q='+ $this.val());
-			} else if( rel == 'album' ){
-				$this.siblings('.quicklink').attr('href', 'http://www.google.com/images?q=' + $this.val() + ' movie').end()
-			}
-		});
 
 		//saga title in form
 		$('#bookSagaTitle, #movieSagaTitle').change(function(){
@@ -383,7 +387,7 @@ $(document).ready(function(){
 			});
 		});
 
-		$body.on('submit', '.store-form', function(e){
+		$('.store-form').submit(function(e){
 			e.preventDefault();
 			var $form = $(this),
 				rel = $form.attr('data-manage');
@@ -631,7 +635,7 @@ $(document).ready(function(){
 				.find('#'+ rel +'ID').val( itemId );
 		});
 
-		$body.on('submit', '.delete-form', function(e){
+		$('.delete-form').submit(function(e){
 			e.preventDefault();
 			var $this = $(this),
 				$modal = $this.closest('.modal'),

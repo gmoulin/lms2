@@ -218,8 +218,8 @@ body {
   }
 }
 
-.filters,
-.sorts {
+.dropdown-filters,
+.dropdown-sorts {
   left: auto;
   right: 0;
 }
