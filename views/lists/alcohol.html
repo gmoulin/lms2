@@ -56,16 +56,19 @@
 					<% if( item.storageColumn !== null || item.storageLine !== null ){ %>
 						- <%=item.storageColumn%><%=item.storageLine%>
 					<% } %>
-					<% if( item.storageColumn !== null || item.storageLine !== null ){ %>
-						<button class="btn storage-picture btn-info btn-mini list-hide"
-							data-toggle="modal" data-target="#storage_picture" data-manage="alcohol"
-							data-storageID="<%=item.storageID%>"
-							title="Voir la photo du rangement"
-						><i class="icon-map-marker"></i></button>
-					<% } %>
+
 					<button class="btn btn-mini btn-info filter"
 						data-filter="storage" data-value="<%=item.storageID%>"
 					><i class="icon-search"></i></button>
+
+					<% if( item.storageColumn !== null || item.storageLine !== null ){
+						url = getFullUrl('storage/'+ item.storageRoom.urlify() +'_'+ item.storageType.urlify() +'_'+ item.storageColumn + item.storageLine +'.png', '');
+					%>
+						<button class="btn storage-picture btn-info btn-mini"
+							data-toggle="lightbox" data-target="#lightbox" data-src="<%=url%>"
+							title="Voir la photo du rangement"
+						><i class="icon-map-marker"></i></button>
+					<% } %>
 				</dd>
 
 				<dt>Offert par</dt>

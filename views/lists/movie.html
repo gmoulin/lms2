@@ -53,25 +53,27 @@
 					<% if( item.storageColumn !== null || item.storageLine !== null ){ %>
 						- <%=item.storageColumn%><%=item.storageLine%>
 					<% } %>
-					<div class="btn-group list-hide">
-						<% if( item.storageColumn !== null || item.storageLine !== null ){ %>
-							<button class="btn storage-picture btn-info btn-mini"
-								data-toggle="modal" data-target="#storage_picture" data-manage="movie"
-								data-storageID="<%=item.storageID%>"
-								title="Voir la photo du rangement"
-							><i class="icon-map-marker"></i></button>
-						<% } %>
-						<% if( item.sagaTitle !== null && item.storageRoom == 'aucun' ){ %>
-							<button class="btn store btn-warning btn-mini"
-								data-toggle="modal" data-target=".store-modal" data-manage="movie"
-								data-itemId="<%=item.movieID%>" data-sagaID="<%=item.sagaID%>"
-								title="Ranger avec la saga"
-							><i class="icon-inbox"></i></button>
-						<% } %>
-					</div>
+
+					<% if( item.sagaTitle !== null && item.storageRoom == 'aucun' ){ %>
+						<button class="btn store btn-warning btn-mini list-hide"
+							data-toggle="modal" data-target=".store-modal" data-manage="movie"
+							data-itemId="<%=item.movieID%>" data-sagaID="<%=item.sagaID%>"
+							title="Ranger avec la saga"
+						><i class="icon-inbox"></i></button>
+					<% } %>
+
 					<button class="btn btn-mini btn-info filter"
 						data-filter="storage" data-value="<%=item.storageID%>"
 					><i class="icon-search"></i></button>
+
+					<% if( item.storageColumn !== null || item.storageLine !== null ){
+						url = getFullUrl('storage/'+ item.storageRoom.urlify() +'_'+ item.storageType.urlify() +'_'+ item.storageColumn + item.storageLine +'.png', '');
+					%>
+						<button class="btn storage-picture btn-info btn-mini"
+							data-toggle="lightbox" data-target="#lightbox" data-src="<%=url%>"
+							title="Voir la photo du rangement"
+						><i class="icon-map-marker"></i></button>
+					<% } %>
 				</dd>
 
 				<% if( item.loanHolder !== null ){ %>

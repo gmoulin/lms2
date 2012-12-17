@@ -12,6 +12,8 @@
 
 	<link rel="stylesheet" href="css/vendor/bootstrap.css?v=<?php echo $bsTS; ?>">
 	<link rel="stylesheet" href="css/vendor/bootstrap-responsive.css?v=<?php echo $bsrTS; ?>">
+	<link rel="stylesheet" href="css/vendor/bootstrap-lightbox.css">
+	<link rel="stylesheet" href="css/vendor/bootstrap-notify.css">
 	<link rel="stylesheet" href="css/lms2.css?v=<?php echo $cssTS; ?>">
 
 	<script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>

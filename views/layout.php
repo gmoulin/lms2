@@ -103,6 +103,8 @@ include('html_header.php');
 	<h1>Drop</h1>
 </div>
 
+<div id="notify" class="notifications bottom-right"></div>
+
 <?php
 //list templates
 foreach( $parts as $p ){
@@ -126,6 +128,9 @@ include('views/details/generic.html');
 
 //store with saga popup
 include('views/stores/generic.html');
+
+//lightbox
+include('views/lightbox.html');
 
 //scripts and footer
 include('html_footer.php');

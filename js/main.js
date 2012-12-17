@@ -1,27 +1,15 @@
 'use strict';
 
-var $nav,
-	$navLinks,
-	$navDropdowns,
-	$body,
-	$win,
-	$doc,
-	$parts,
-	$dropOverlay,
-	$listContainer,
-	$detailItem,
-	$pagiNb,
-	$pagiTotal,
-	activeTab,
-	target,
+var $nav, $navLinks, $navDropdowns, $body, $win, $doc,
+	$parts, $dropOverlay, $listContainer, $detailItem,
+	$pagiNb, $pagiTotal, $help, $lightboxImg, $notify,
+	activeTab, target, dropTimeout,
 	updating = 0,
-	dropTimeout,
 	scrolling = false,
 	end = false,
-	$help,
-	centeringDone = true;
-
-var subDomains = ['s1', 's2', 's3'],
+	centeringDone = true,
+	responding = false,
+	subDomains = ['s1', 's2', 's3'],
 	useSubDomains = false;
 
 $(document).ready(function(){
@@ -34,7 +22,9 @@ $(document).ready(function(){
 	$parts = $('.list, .filter-form, .sort-links, .add');
 	$dropOverlay = $('#drop-overlay');
 	$help = $('<span class="help-block"></span>');
+	$lightboxImg = $('#lightbox').find('img');
 	$listContainer = $('.container-list');
+	$notify = $('#notify');
 
 	var $pagi = $('.pagination');
 	$pagiNb = $pagi.find('.nb');
@@ -78,7 +68,7 @@ $(document).ready(function(){
 		});
 
 		//sort links
-		$('.sorts')
+		$('.dropdown-sorts')
 			.find('.sort-links').each(function(){ //sort init if present
 				var $this = $(this),
 					id = $this.attr('id'),
@@ -208,6 +198,7 @@ $(document).ready(function(){
 				}
 			})
 			.on('submit', function(e){
+				e.preventDefault();
 				var $this = $(this),
 					rel = $this.attr('data-manage');
 
@@ -230,6 +221,7 @@ $(document).ready(function(){
 							$('#edit_'+ rel).modal('hide');
 
 							//inform user
+							$notify.notify({message: {text: 'Enregistrement réussi'}, type: 'success'}).show();
 
 							getList(2);
 
@@ -238,8 +230,6 @@ $(document).ready(function(){
 							formErrors(data);
 						}
 					});
-				} else {
-					e.preventDefault();
 				}
 			})
 			.on('change', '.title', function(){
@@ -395,7 +385,10 @@ $(document).ready(function(){
 			$.post('ajax/manage'+ rel.capitalize() +'.php', $form.serialize(), function(data){
 				if( data == 'ok' ){
 					$form.closest('.modal').modal('hide');
+					$notify.notify({message: {text: 'Déplacement réussi'}, type: 'success'}).show();
 					getList(2);
+				} else {
+					$notify.notify({message: {text: 'Échec du déplacement'}, type: 'error'}).show();
 				}
 			});
 		});
@@ -563,6 +556,7 @@ $(document).ready(function(){
 								$form.find('.cover-preview').html( $('<img>', { src: url }) );
 							break;
 						default:
+							$notify.notify({message: {text: 'Élément inconnu'}, type: 'error'}).show();
 							break;
 					}
 				});
@@ -609,20 +603,20 @@ $(document).ready(function(){
 					type: 'POST',
 					data: 'action=impact&id='+ itemId,
 					dataType: 'html',
-					async: false,
-					success: function(data){
-						if( $.trim(data) !== '' ){
-							$form
-								.find('.impact').html(data).show().end()
-								.find('.lead').hide();
-							$modal.find('.modal-footer').find('.btn-primary').prop('disabled', true);
-							$('#impact'+ r +'List').loadList();
-						} else {
-							$form
-								.find('.impact').hide().end()
-								.find('.lead').show();
-							$modal.find('.modal-footer').find('.btn-primary').removeProp('disabled');
-						}
+					async: false
+				})
+				.done(function(data){
+					if( $.trim(data) !== '' ){
+						$form
+							.find('.impact').html(data).show().end()
+							.find('.lead').hide();
+						$modal.find('.modal-footer').find('.btn-primary').prop('disabled', true);
+						$('#impact'+ r +'List').loadList();
+					} else {
+						$form
+							.find('.impact').hide().end()
+							.find('.lead').show();
+						$modal.find('.modal-footer').find('.btn-primary').removeProp('disabled');
 					}
 				});
 			} else {
@@ -648,6 +642,8 @@ $(document).ready(function(){
 				//send delete
 				$.post('ajax/manage'+ rel.capitalize() +'.php', $this.serialize(), function(data){
 					if( data == 'ok' ){
+						//inform user
+						$notify.notify({message: {text: 'Suppression réussie'}, type: 'success'}).show();
 						//refresh list
 						getList(2);
 						//modal close
@@ -669,6 +665,8 @@ $(document).ready(function(){
 				var $form = $(this);
 				$.post('ajax/manageStorage.php', 'action=relocate&'+ $.param( $form.find('input:checked, select'), true ), function(data){
 					if( data == 'ok' ){
+						//inform user
+						$notify.notify({message: {text: 'Déplacement réussi'}, type: 'success'}).show();
 						//clean the relocated items
 						$impactStorage.find('input').filter(':checked').parent().remove();
 
@@ -743,6 +741,23 @@ $(document).ready(function(){
 			.on('click', 'input, select, label, button', function(e){
 				e.stopPropagation();
 			});
+
+	/** _____________________________________________ BAND AND SAGA LAST CHECK DATE **/
+		$body.on('click', '.last-check-date', function(){
+			var $this = $(this),
+				rel = $this.attr('data-manage'),
+				itemId = $this.attr('data-itemId');
+
+			//update the date on web site link click
+			$.post('ajax/manage'+ rel.capitalize() +'.php', { action: 'updateLastCheckDate', id: itemId });
+
+			//list will be updated by responseToResize function as changing tab in browser fires it
+		});
+
+	/** _____________________________________________ STORAGE PICTURE **/
+		$body.on('click', '.storage-picture', function(){
+			$lightboxImg.attr('src', $(this).attr('data-src'));
+		});
 });
 
 /**
@@ -759,7 +774,7 @@ var tabSwitch = function(){
 	$parts.hide()
 		.filter('[id$="_'+ target +'"]').show();
 
-	$navDropdowns.toggle( target != 'storage' && target != 'author' && target != 'artist' && target != 'band' && target != 'maker' );
+	$navDropdowns.toggle( target != 'storage' && target != 'author' && target != 'artist' && target != 'maker' );
 
 	if( target != activeTab && $parts.filter('[id="list_'+ target +'"]').hasClass('withCover') && $listContainer.width() > 767 ) centeringDone = false;
 
@@ -808,6 +823,7 @@ var getList = function( type ){
 		.always(function(){
 			updating = 0;
 			scrolling = false;
+			responding = false;
 			$body.css('cursor', '');
 		})
 		.done(function(data){
@@ -837,6 +853,10 @@ var getList = function( type ){
 			} else {
 				$listContainer.css('width', 'auto');
 			}
+		})
+		.fail(function(){
+			//inform user
+			$notify.notify({message: {text: 'Échec du chargement de la liste'}, type: 'error'}).show();
 		});
 	}
 };
@@ -928,6 +948,10 @@ $.fn.loadList = function(){
 				$this.val( $this.data('selectedId') );
 				$this.removeData('selectedId');
 			}
+		})
+		.fail(function(){
+			//inform user
+			$notify.notify({message: {text: 'Échec du chargement de la liste d\'auto-complétion'}, type: 'error'}).show();
 		});
 	});
 };
@@ -1060,6 +1084,8 @@ function dropCover(event){
 		.fail(function(XMLHttpRequest, textStatus, errorThrown){
 			$coverStatus.parent().append( $help.clone().text(errorThrown) );
 			$controlGroup.addClass('error');
+			//inform user
+			$notify.notify({message: {text: 'Échec du chargement de l\'image'}, type: 'error'}).show();
 		});
 		return;
 	}
@@ -1113,6 +1139,8 @@ function upload(file, rel, $coverStatus, $controlGroup){
 								$coverStatus.parent().append( $help.clone().text(xhr.responseText) );
 							}
 							$controlGroup.addClass('error');
+							//inform user
+							$notify.notify({message: {text: 'Échec du chargement de l\'image'}, type: 'error'}).show();
 						}
 					}
 				};
@@ -1122,17 +1150,17 @@ function upload(file, rel, $coverStatus, $controlGroup){
 				$coverStatus.siblings('.help-block').remove();
 				switch(event.target.error.code){
 					case event.target.error.NOT_FOUND_ERR:
-							$coverStatus.parent().append( $help.clone().text('File not found !') );
+							$coverStatus.parent().append( $help.clone().text('Fichier introuvable !') );
 							$controlGroup.addClass('error').removeClass('upload');
 						break;
 					case event.target.error.NOT_READABLE_ERR:
-							$coverStatus.parent().append( $help.clone().text('File not readable !') );
+							$coverStatus.parent().append( $help.clone().text('Fichier illisible !') );
 							$controlGroup.addClass('error').removeClass('upload');
 						break;
 					case event.target.error.ABORT_ERR:
 						break;
 					default:
-							$coverStatus.parent().append( $help.clone().text('Reading error !') );
+							$coverStatus.parent().append( $help.clone().text('Erreur de lecture du fichier !') );
 							$controlGroup.addClass('error').removeClass('upload');
 						break;
 				}
@@ -1176,6 +1204,8 @@ function upload(file, rel, $coverStatus, $controlGroup){
 						} else {
 							$coverStatus.parent().append( $help.clone().text(xhr.responseText) );
 							$controlGroup.addClass('error');
+							//inform user
+							$notify.notify({message: {text: 'Échec du chargement de l\'image'}, type: 'error'}).show();
 						}
 					}
 				};
@@ -1190,7 +1220,7 @@ function upload(file, rel, $coverStatus, $controlGroup){
 		reader.readAsBinaryString( file );
 	} else {
 		$controlGroup.removeClass('upload').addClass('error');
-		$coverStatus.parent().append( $help.clone().text('Upload functionnality is not supported') );
+		$coverStatus.parent().append( $help.clone().text('Téléchargement d\'image non supporté') );
 	}
 }
 
@@ -1211,9 +1241,13 @@ var fillDetailModal = function( $modal ){
  * called when window resize
  */
 var responseToResize = function(){
+	if( responding ) return;
+
 	if( matchMedia('screen and (max-width: 480px)').matches ){
 		$('.sorts').find('.btn-group').addClass('responseTo').removeClass('btn-group');
 	}
+
+	responding = true;
 
 	getList(1);
 };

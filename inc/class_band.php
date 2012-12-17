@@ -530,6 +530,8 @@ class band extends commun {
 
 			$updBandLastCheckDate->execute( array(':id' => $id) );
 
+			$this->_cleanCaches();
+
 		} catch ( PDOException $e ) {
 			erreur_pdo( $e, get_class( $this ), __FUNCTION__ );
 		}

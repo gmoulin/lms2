@@ -7,8 +7,8 @@
 		<article class="item">
 			<span>
 				<div class="btn-group pull-right">
-					<% if( item.bandWebSite !== null ){ %>§
-					<a class="btn btn-info btn-mini" href="<%=item.bandWebSite%>" target="_blank">
+					<% if( item.bandWebSite !== null ){ %>
+					<a class="btn btn-info btn-mini last-check-date" href="<%=item.bandWebSite%>" target="_blank" data-manage="band" data-itemId="<%=item.bandID%>">
 						<i class="icon-link"></i>
 					</a>
 					<% } %>
